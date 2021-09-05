@@ -1,0 +1,28 @@
+<div class="main-menu">
+  <nav class="main-menu-wrap">
+    <ul class="menu-ul">
+      <ng-container *ngFor="let group of navigation">
+        <li class="menu-item" *ngIf="group.Title">
+          <span class="group-title" [innerText]="group.Title"></span>
+        </li>
+        <ng-container *ngFor="let item of group.Children">
+          <li class="menu-item" [ngClass]="{'has-sub': item.Children}">
+            <a class="item-link" [routerLink]="item.Path" [ngClass]="{'cursor-pointer': item.Children}">
+              <span [attr.class]="item.IconClass"></span>
+              <span class="link-text" [innerText]="item.Title"></span>
+              <span class="link-caret icofont-thin-right" *ngIf="item.Children"></span>
+            </a>
+            <ul class="sub" *ngIf="item.Children">
+              <li class="menu-item" *ngFor="let child of item.Children">
+                <a class="item-link" [routerLink]="child.Path">
+                  <span [attr.class]="item.IconClass"></span>
+                  <span class="link-text" [innerText]="child.Title"></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ul>
+  </nav>
+</div>

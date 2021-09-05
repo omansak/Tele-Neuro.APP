@@ -1,0 +1,15 @@
+.page-404 {
+  background: url('../content/404-page.jpg') 50% 50% no-repeat;
+
+  .content-box {
+    background: rgba(#fff,.9) !important;
+
+    .content-body {
+      .icon {
+        color: rgba($error-color,.5);
+        font-size: inherit;
+        padding: 0;
+      }
+    }
+  }
+}

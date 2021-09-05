@@ -1,0 +1,7 @@
+<div class="form-group" [ngClass]="containerClass">
+    <label [innerHtml]="header"></label>
+    <textarea class="form-control" [ngClass]="[resize ? 'resize' : '',textareaClass ? textareaClass : '']"
+        [placeholder]="placeholder" [attr.rows]="rows" [(ngModel)]="value"
+        (change)="emitChangeEvent($event)"></textarea>
+    <div class="form-text text-muted" [innerHtml]="description"></div>
+</div>

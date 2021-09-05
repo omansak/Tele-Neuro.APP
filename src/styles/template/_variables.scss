@@ -1,0 +1,148 @@
+@use "sass:math";
+
+@import "./mixins";
+
+//Main palette
+$palette: (
+  50: #e4e4e4,
+  100: #bcbcbd,
+  200: #8f9091,
+  300: #626364,
+  400: #414143,
+  500: #1f2022,
+  600: #1b1c1e,
+  700: #171819,
+  800: #121314,
+  900: #0a0b0c,
+  A100: #52ffff,
+  A200: #1fffff,
+  A400: #00ebeb,
+  A700: #00d2d2,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+@function main-palette($key: $palette) {
+  @return map-get($palette, $key);
+}
+@function main-contrast($key: $palette) {
+  @return map-get(map-get($palette, contrast), $key);
+}
+
+//Accent palette
+$accent-palette: (
+  50: #e7edff,
+  100: #c2d3fe,
+  200: #99b6fd,
+  300: #7098fc,
+  400: #5282fc,
+  500: #336cfb,
+  600: #2e64fa,
+  700: #2759fa,
+  800: #204ff9,
+  900: #143df8,
+  A100: #ffffff,
+  A200: #f4f6ff,
+  A400: #c1caff,
+  A700: #a7b4ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+@function accent-palette($key: $accent-palette) {
+  @return map-get($accent-palette, $key);
+}
+@function accent-contrast($key: $accent-palette) {
+  @return map-get(map-get($accent-palette, contrast), $key);
+}
+
+:root {
+  --main-color: #{main-palette(500)};
+  --main-bg: #fff;
+  --boxed-width: 1140px;
+  --navbar-color: #000;
+  --navbar-bg: #fff;
+  --navbar-2-color: #000;
+  --navbar-2-bg: #fbfbfb;
+  --navbar-dark-color: #{main-contrast(500)};
+  --navbar-dark-bg: #{main-palette(500)};
+}
+$main-color: main-palette(500);
+$main-bg: #fff;
+$boxed-width: 1140px;
+
+$success-color: #b7ce63;
+$success-contrast: #000;
+$info-color: #64b5f6;
+$info-contrast: #000;
+$warning-color: #e9e165;
+$warning-contrast: #000;
+$error-color: #ed5564;
+$error-contrast: #fff;
+
+//Main
+$main-fs: 14px;
+$main-ff: "Lato", sans-serif;
+$main-fw: 400;
+$module: 10px;
+$main-lh: decimal-round(math.div($module * 2, $main-fs));
+$module-rem: (math.div($module, $main-fs)) * 1rem;
+$shape: 6px;
+$shadow: 0 18px 24px rgba(#000, 0.12);
+$shadow-hover: 0px 8px 24px rgba(#000, 0.12);
+$animation: ease-in-out;
+
+//Second
+$second-ff: $main-ff;
+
+//Media
+$max543: "only screen and (max-width: 543px)";
+$min544: "only screen and (min-width: 544px)";
+$max767: "only screen and (max-width: 767px)";
+$min768: "only screen and (min-width: 768px)";
+$max991: "only screen and (max-width: 991px)";
+$min992: "only screen and (min-width: 992px)";
+$max1199: "only screen and (max-width: 1199px)";
+$min1200: "only screen and (min-width: 1200px)";
+
+//Headers
+$headers-ff: $second-ff;
+$headers-fw: 700;
+
+//Navbar
+$navbar-bg: #eeeeef;
+$navbar-color: rgba(main-palette(500), 0.5);
+$vertical-navbar-width: $module-rem * 24;
+
+//Footer
+$footer-height: $module-rem * 6;
+
+//Preloader
+$loader-overlay-bg: #fff;
+$loader-color: accent-palette(500);

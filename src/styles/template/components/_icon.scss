@@ -1,0 +1,19 @@
+$_module-rem: $module-rem;
+$_border-width: 1px;
+$_border-style: solid;
+$_fs: #{$main-lh}rem;
+$_padding: $_module-rem * 0.5;
+$_shape: $shape;
+$_transition: $animation;
+
+.icon {
+  border-radius: $_shape;
+  display: inline-flex;
+  font-size: $_fs;
+  padding: $_padding;
+  transition:
+    background .2s $_transition,
+    border .2s $_transition,
+    color .2s $_transition;
+  vertical-align: top;
+}

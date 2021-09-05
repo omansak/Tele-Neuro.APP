@@ -1,0 +1,73 @@
+@use "sass:math";
+
+$_bg: (
+  default: #EBEBEB,
+  hover: #EBEBEB,
+  focus: rgba(accent-palette(500),.01),
+  disabled: rgba(#ccc,.1)
+);
+$_border: (
+  default: #EBEBEB,
+  hover: #EBEBEB,
+  focus: accent-palette(500),
+  disabled: rgba(#ccc,.5)
+);
+$_color: (
+  default: main-palette(500),
+  hover: main-palette(500),
+  focus: main-palette(500),
+  disabled: #bdbdbd
+);
+
+$_module-rem: $module-rem;
+$_fs: 1rem;
+$_lh: math.div($_module-rem * 2, $_fs);
+$_padding-h: $_module-rem * 2;
+$_padding-v: $_module-rem;
+$_error-color: $error-color;
+$_shape: 20px;
+$_animation: $animation;
+$_shadow-hover: $shadow-hover;
+$_list-height: $_module-rem * 21;
+$_list-bg: #fff;
+$_list-border-color: #fff;
+$_list-shadow: $shadow;
+
+.bootstrap-select {
+  &,
+  .dropdown-toggle,
+  .dropdown-toggle:focus {
+    outline: none !important;
+  }
+
+  &, &:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+  }
+  &.show {
+    .form-control {
+      background: map-get($_bg, focus);
+      border-color: map-get($_border, focus);
+      box-shadow: $_shadow-hover;
+      color: map-get($_color, focus);
+    }
+  }
+  &.rounded,
+  &.rounded-0,
+  &.rounded-20,
+  &.rounded-500,
+  &.rounded-pill {
+    > .dropdown-toggle {
+      border-radius: inherit;
+    }
+  }
+  .dropdown-menu {
+    li {
+      a {
+        span.check-mark {
+          font-size: 1.5em;
+          top: 2px;
+        }
+      }
+    }
+  }
+}

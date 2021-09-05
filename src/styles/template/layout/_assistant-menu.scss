@@ -1,0 +1,22 @@
+.assistant-menu {
+  display: block;
+  padding: 0 ($module-rem * 4) ($module-rem * 2);
+
+  .link {
+    color: inherit;
+    display: block;
+    font-weight: 700;
+    opacity: .3;
+    padding: ($module-rem * 0.5) 0;
+    transition: opacity .2s $animation;
+
+    .link-icon {
+      font-size: 1.3em;
+      margin-right: $module-rem;
+      padding: 0;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

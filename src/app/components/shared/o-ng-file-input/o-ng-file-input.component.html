@@ -1,0 +1,10 @@
+<label [innerHtml]="header" *ngIf="header"></label>
+<div class="form-group" [ngClass]="containerClass">
+    <input [attr.id]="fileInputId" type="file" [ngClass]="inputClass" [attr.data-show-preview]="showPreview"
+        [disabled]="disabled">
+    <div class="form-text text-muted" [innerHtml]="description"></div>
+</div>
+<div [attr.id]="errorContainerId"></div>
+
+<o-ng-cropper [image]="value" [cropperWidth]="cropperWidth" [cropperHeight]="cropperHeight"
+    *ngIf="showCropper" (croppedImage)="onImageCropped($event)"></o-ng-cropper>

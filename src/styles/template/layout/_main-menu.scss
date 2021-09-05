@@ -1,0 +1,264 @@
+
+$_accent-palette: accent-palette(500);
+$_animation: $animation;
+
+//item
+$_item-color: currentColor;
+$_item-hover-color: accent-palette(500);
+$_item-active-color: accent-palette(500);
+$_item-group-color: currentColor;
+$_item-bg: transparent;
+$_item-hover-bg: transparent;
+$_item-active-bg: rgba(main-palette(600),.1);
+$_item-group-bg-compress: main-palette(200);
+$_item-h-indents: 0;
+
+//separator
+$_separator: main-palette(300);
+
+//icon
+$_icon-color: inherit;
+$_icon-hover-color: inherit;
+$_icon-active-color: accent-palette(500);
+$_icon-br: 50%;
+
+//badge
+$_badge-color: rgba(accent-palette(500),.2);
+$_badge-bg: accent-palette(500);
+
+//sub
+$_sub-bg: transparent;
+$_sub-separator: main-palette(300);
+
+.main-menu {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  padding: 0;
+  width: inherit;
+
+  .main-menu-wrap {
+    width: inherit;
+
+    .menu-ul {
+      list-style-type: none;
+      margin: 0;
+      padding: ($module-rem * 3) ($module-rem * 2) 0;
+
+      .menu-item {
+        font-weight: 700;
+        padding: 0 ($module-rem * 1.5);
+        position: relative;
+
+        .group-title {
+          color: $_item-group-color;
+          display: block;
+          opacity: .3;
+          padding: ($module-rem * 3) ($_item-h-indents + ($module-rem * 0.5)) $module-rem;
+          text-transform: uppercase;
+        }
+        &:first-child {
+          .group-title {
+            padding-top: 0;
+          }
+        }
+        .item-link {
+          align-items: center;
+          background: $_item-bg;
+          color: $_item-color;
+          display: flex;
+          height: 100%;
+          justify-content: space-between;
+          min-height: ($module-rem * 3);
+          padding: ($module-rem * 0.5) $_item-h-indents;
+          position: relative;
+          text-decoration: none;
+          transition:
+            background .2s $_animation,
+            color .2s $_animation;
+
+          .link-text {
+            flex-grow: 2;
+            flex-shrink: 1;
+            margin: 0 ($module-rem * 0.5);
+          }
+          .link-badge {
+            margin: 0 ($module-rem * 0.5);
+          }
+          .link-icon {
+            font-size: 1.3em;
+            margin: 0 ($module-rem * 0.5);
+            opacity: .25;
+            padding: 0;
+            transition: none;
+          }
+          .link-caret {
+            margin: 0 ($module-rem * 0.5);
+            transition: transform .1s $_animation;
+          }
+          &:hover {
+            background: $_item-hover-bg;
+            color: $_item-hover-color;
+          }
+        }
+        .sub {
+          background: $_sub-bg;
+          max-height: 0;
+          list-style-type: none;
+          overflow: hidden;
+          margin: 0;
+          padding: 0;
+          visibility: hidden;
+
+          .menu-item {
+            font-weight: 400;
+            padding-left: $module-rem * 0.5;
+            padding-right: $module-rem * 0.5;
+
+            &:after {
+              display: none;
+            }
+          }
+        }
+        &.active {
+          &:after {
+            transform: translateX(4px);
+            transition: .2s transform .2s $_animation;
+          }
+          > .item-link {
+            color: $_item-active-color;
+
+            .link-caret {
+              transform: rotate(90deg);
+            }
+          }
+          > .sub {
+            max-height: 1000px;
+            visibility: visible;
+          }
+        }
+        &.has-sub {
+          position: relative;
+
+          > .item-link {
+            position: relative;
+
+            .caret {
+              display: block;
+            }
+          }
+          &.active {
+            > .item-link {
+              .caret {
+                transform: rotate(90deg);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .app-navbar.horizontal-vertical & {
+    @media #{$min992} {
+      margin: 0 !important;
+      overflow: visible;
+    }
+
+    .main-menu-wrap {
+      @media #{$min992} {
+        .mCustomScrollBox {
+          overflow: visible;
+
+          .mCSB_container {
+            overflow: visible;
+          }
+        }
+        .mCSB_scrollTools {
+          display: none !important;
+        }
+        .menu-ul {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 0;
+
+          > .menu-item {
+            > .group-title {
+              display: none;
+            }
+          }
+          .menu-item {
+            padding: 0;
+
+            .item-link {
+              padding: $module-rem $module-rem;
+
+              .link-caret {
+                transform: rotate(90deg);
+              }
+            }
+            .sub {
+              background: #fff;
+              border-radius: $shape;
+              box-shadow: $shadow;
+              display: block !important;
+              color: #000;
+              height: auto !important;
+              left: 0;
+              max-height: initial;
+              opacity: 0;
+              padding: $module-rem 0;
+              position: absolute;
+              transition:
+                .2s opacity 0s $animation,
+                0s visibility .2s $animation;
+              visibility: hidden !important;
+              width: $module-rem * 25;
+              z-index: 500;
+
+              &:before {
+                bottom: ($module-rem * 4);
+              }
+              .menu-item {
+                width: 100%;
+
+                .item-link {
+                  height: auto;
+                  min-height: initial;
+                  padding-top: $module-rem * 0.5;
+                  padding-bottom: $module-rem * 0.5;
+                }
+              }
+            }
+            &:hover {
+              > .sub {
+                opacity: 1;
+                transition:
+                  .2s opacity 0s $animation,
+                  0s visibility 0s $animation;
+                visibility: visible !important;
+              }
+            }
+            &.active {
+              > .item-link {
+
+              }
+            }
+            &:last-child {
+              .sub {
+                left: auto;
+                right: 0;
+              }
+            }
+            &.full-sub {
+              position: static;
+
+              .sub {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

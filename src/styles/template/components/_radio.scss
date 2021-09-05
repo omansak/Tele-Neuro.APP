@@ -1,0 +1,124 @@
+$_bg: (
+  default: #ebebeb,
+  hover: #ebebeb,
+  active: accent-palette(500),
+  disabled: rgba(#ccc,.1)
+);
+$_border: (
+  default: #ebebeb,
+  hover: #ebebeb,
+  active: accent-palette(500),
+  disabled: rgba(#ccc,.5)
+);
+$_color: (
+  default: accent-palette(500),
+  hover: accent-palette(500),
+  active: accent-contrast(500),
+  disabled: #bdbdbd
+);
+$_label-color: (
+  default: inherit,
+  hover: inherit,
+  active: inherit,
+  disabled: #bdbdbd
+);
+
+$_module-rem: $module-rem;
+$_border-style: solid;
+$_border-width: 1px;
+$_fs: 1rem;
+$_height: $_module-rem * 2;
+$_width: $_module-rem * 2;
+$_shape: 50%;
+$_animation: $animation;
+
+.custom-radio {
+  .custom-control-label {
+    color: map-get($_label-color, default);
+    cursor: pointer;
+    font-weight: 500;
+
+    &:before,
+    &:after {
+      align-items: center;
+      border-radius: $_shape;
+      box-shadow: none !important;
+      display: flex;
+      height: $_height;
+      justify-content: center;
+      left: -($_width + $_module-rem);
+      margin: 0;
+      outline: none !important;
+      padding: 0;
+      top: 0;
+      transition:
+        background .2s $_animation,
+        border .2s $_animation,
+        transform .2s $_animation;
+      width: $_width;
+    }
+    &:before {
+      background: map-get($_bg, default);
+      border: $_border-width $_border-style map-get($_border, default);
+      content: '';
+      pointer-events: initial;
+    }
+    &:after {
+      background: map-get($_color, default);
+      border-radius: $_shape;
+      height: calc(#{$_height} - 8px);
+      margin: 4px 0 0 4px;
+      transform: scale(0);
+      transition:
+        background .2s $animation,
+        transform .2s $animation;
+      width: calc(#{$_height} - 8px);
+    }
+    &:hover {
+      color: map-get($_label-color, hover);
+
+      &:before {
+        background: map-get($_bg, hover);
+        border-color: map-get($_border, hover);
+      }
+      &:after {
+        background: map-get($_color, hover);
+        transform: scale(1);
+      }
+    }
+  }
+  .custom-control-input {
+    &:checked ~ .custom-control-label {
+      &:before {
+        background: map-get($_bg, active);
+        border-color: map-get($_border, active);
+      }
+      &:after {
+        background: map-get($_color, active);
+        transform: scale(1);
+      }
+    }
+    &:disabled ~ .custom-control-label {
+      color: map-get($_color, disabled);
+      cursor: not-allowed;
+
+      &:before {
+        background: map-get($_bg, disabled);
+        border-color: map-get($_border, disabled);
+      }
+      &:after {
+        background: map-get($_color, disabled);
+        transform: scale(0);
+      }
+    }
+    &:disabled:checked ~ .custom-control-label {
+      &:before {
+        background: map-get($_bg, disabled);
+        border-color: map-get($_border, disabled);
+      }
+      &:after {
+        transform: scale(1);
+      }
+    }
+  }
+}

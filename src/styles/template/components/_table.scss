@@ -1,0 +1,259 @@
+$_module-rem: $module-rem;
+$_bg: rgba(#ebebeb,0.3);
+$_border-color: #fff;
+$_color: inherit;
+$_border-width: 2px;
+$_header-bg: rgba(main-palette(500),.1);
+$_header-color: main-palette(500);
+$_shape: 0;
+$_animation: $animation;
+$_shadow: 0 0 10px rgba(#000,.12);
+$_padding: $_module-rem;
+
+// dark
+$_bg-dark: main-palette(400);
+$_border-color-dark: main-palette(200);
+$_color-dark: main-contrast(400);
+$_header-bg-dark: main-palette(700);
+$_header-color-dark: main-contrast(700);
+// striped
+$_striped-bg: rgba(main-palette(500),.08);
+// bordered
+$_bordered-border-color: #ebebeb;
+// sm
+$_padding-sm: $_module-rem * 0.5;
+// types
+$_types: (
+  active: (
+    bg: main-palette(900),
+    color: main-contrast(900)
+  ),
+  secondary: (
+    bg: rgba(#ebebeb,.3),
+    color: inherit
+  ),
+  primary: (
+    bg: accent-palette(500),
+    color: accent-contrast(500)
+  ),
+  success: (
+    bg: $success-color,
+    color: $success-contrast
+  ),
+  info: (
+    bg: $info-color,
+    color: $info-contrast
+  ),
+  warning: (
+    bg: $warning-color,
+    color: $warning-contrast
+  ),
+  danger: (
+    bg: $error-color,
+    color: $error-contrast
+  ),
+  light: (
+    bg: main-palette(50),
+    color: main-contrast(50)
+  ),
+  dark: (
+    bg: main-palette(400),
+    color: main-contrast(400)
+  )
+);
+
+.table {
+  border-color: $_border-color;
+  border-radius: $_shape;
+  color: $_color;
+
+  tr {
+    transition:
+      background .2s $_animation,
+      border .2s $_animation,
+      box-shadow .2s $_animation,
+      color .2s $_animation;
+    will-change: background, border, box-shadow, color;
+    width: 100%;
+
+    th,
+    td {
+      border: 0;
+      border-bottom: $_border-width solid $_border-color;
+      padding: $_padding;
+      vertical-align: middle;
+
+      &:first-child {
+        padding-left: $_padding * 2;
+      }
+      &:last-child {
+        padding-right: $_padding * 2;
+      }
+    }
+    th {
+      background: $_header-bg;
+      position: relative;
+    }
+    td {
+      background: $_bg;
+    }
+  }
+  tbody {
+    tr {
+      &:last-child {
+        th,
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  .thead-dark {
+    th {
+      background: $_header-bg-dark;
+      border-color: $_header-bg-dark;
+      color: $_header-color-dark;
+    }
+  }
+  .thead-light {
+    th {
+      background: $_header-bg;
+      border-color: $_header-bg;
+      color: $_header-color;
+    }
+  }
+  &.table-dark {
+    background: $_bg-dark;
+    border-color: $_border-color-dark;
+    color: $_color-dark;
+
+    tr {
+      th,
+      td {
+        background: inherit;
+      }
+      th {
+        background: $_header-bg-dark;
+        color: $_header-color-dark;
+      }
+    }
+  }
+  &.table-hover {
+    tbody {
+      tr {
+        background: none;
+        color: inherit;
+
+        &:hover {
+          box-shadow: $_shadow;
+          transform: scale(1);
+          z-index: 1;
+        }
+      }
+    }
+  }
+  &.table-bordered {
+    thead,
+    tbody {
+      tr {
+        td,
+        th {
+          border: $_border-width solid $_bordered-border-color;
+        }
+      }
+    }
+  }
+  &.table-striped {
+    tbody {
+      tr {
+        &:nth-of-type(odd) {
+          background: none;
+        }
+        &:nth-of-type(even) {
+          th,
+          td {
+            background: $_striped-bg;
+          }
+        }
+      }
+    }
+  }
+  &.table-borderless {
+    thead,
+    tbody {
+      tr {
+        td,
+        th {
+          border: 0 none;
+        }
+      }
+    }
+  }
+  &.table-sm {
+    tr {
+      th,
+      td {
+        padding: $_padding-sm;
+
+        &:first-child {
+          padding-left: $_padding-sm * 2;
+        }
+        &:last-child {
+          padding-right: $_padding-sm * 2;
+        }
+      }
+    }
+  }
+  @each $_type, $_color in $_types {
+    &.table-#{$_type},
+    .table-#{$_type} {
+      &,
+      & > th,
+      & > td {
+        background: map-get($_color, bg);
+        color: map-get($_color, color);
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    margin: -$module-rem * 0.25;
+
+    .btn {
+      margin: $module-rem * 0.25;
+    }
+  }
+}
+.table-responsive {
+  margin: -10px;
+  padding: 10px;
+  width: auto;
+}
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before,
+table.dataTable thead .sorting_desc_disabled:after {
+  bottom: .7em;
+}
+@media #{$max767} {
+  .dataTables_wrapper {
+    > .row {
+      > .col-sm-12 {
+        overflow: auto;
+      }
+      .dataTables_paginate {
+        .pagination {
+          justify-content: center;
+          margin-top: $_module-rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,115 @@
+$_module-rem: $module-rem;
+$_border-width: 1px;
+$_shape: $shape;
+$_animation: $animation;
+$_padding: calc(#{$_module-rem} * 2 - #{$_border-width});
+
+$_types: (
+  secondary: (
+    bg: rgba(#ebebeb,.3),
+    color: inherit,
+    border-color: rgba(#ebebeb,.3)
+  ),
+  primary: (
+    bg: accent-palette(500),
+    color: accent-contrast(500),
+    border-color: accent-palette(500)
+  ),
+  success: (
+    bg: $success-color,
+    color: $success-contrast,
+    border-color: $success-color
+  ),
+  info: (
+    bg: $info-color,
+    color: $info-contrast,
+    border-color: $info-color
+  ),
+  warning: (
+    bg: $warning-color,
+    color: $warning-contrast,
+    border-color: $warning-color
+  ),
+  danger: (
+    bg: $error-color,
+    color: $error-contrast,
+    border-color: $error-color
+  ),
+  light: (
+    bg: main-palette(50),
+    color: main-contrast(50),
+    border-color: main-palette(50)
+  ),
+  dark: (
+    bg: main-palette(500),
+    color: main-contrast(500),
+    border-color: main-palette(500)
+  )
+);
+
+.alert {
+  border: $_border-width solid transparent;
+  border-radius: $_shape;
+  position: relative;
+  padding: $_padding;
+
+  .title {
+    font-size: 1.25em;
+    font-weight: 500;
+    margin-bottom: $_module-rem * 0.5;
+  }
+  .close {
+    align-self: flex-start;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.25em;
+    line-height: 1;
+    margin: $_module-rem;
+    padding: 0;
+    opacity: 0;
+    text-shadow: none;
+    transition: opacity .2s $_animation;
+  }
+  .alert-icon {
+    align-items: center;
+    background: rgba(#fff,.2);
+    display: flex;
+    font-size: 1.43em;
+    line-height: 1;
+    min-height: 100%;
+    padding: $_module-rem ($_module-rem * 1.5);
+  }
+  @each $_type, $_color in $_types {
+    &.alert-#{$_type} {
+      background: map-get($_color, bg);
+      color: map-get($_color, color);
+      border-color: map-get($map: $_color, $key: border-color);
+
+      &.outline {
+        background: transparent;
+        color: map-get($_color, bg);
+      }
+    }
+  }
+  &.with-before-icon,
+  &.with-after-icon {
+    display: flex;
+    padding: 0 $_module-rem;
+
+    .alert-content {
+      flex: 1;
+      padding: $_padding $_module-rem;
+    }
+  }
+  &.with-before-icon {
+    padding-left: 0;
+  }
+  &.with-after-icon {
+    padding-right: 0;
+  }
+  &:hover {
+    .close {
+      opacity: 1;
+    }
+  }
+}

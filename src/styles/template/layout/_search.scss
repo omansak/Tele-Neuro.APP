@@ -1,0 +1,9 @@
+.app-search {
+  display: block;
+  max-width: $module-rem * 35;
+  width: 50%;
+
+  .typeahead__query {
+    z-index: initial;
+  }
+}

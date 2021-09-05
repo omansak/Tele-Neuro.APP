@@ -1,0 +1,57 @@
+<div #modal class="modal fade" role="dialog" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <image-cropper [imageFile]="imageFile" [canvasRotation]="canvasRotation" [transform]="transform"
+                    [style.display]="showCropper ? null : 'none'" [containWithinAspectRatio]="containWithinAspectRatio"
+                    [cropperMinWidth]="cropperWidth" [cropperMinHeight]="cropperHeight" [cropperMaxWidth]="cropperWidth"
+                    [cropperMaxHeight]="cropperHeight" [resizeToWidth]="cropperWidth" [resizeToHeight]="cropperHeight"
+                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)"
+                    (loadImageFailed)="loadImageFailed()" [aspectRatio]="aspectRatio" [imageQuality]="100">
+                </image-cropper>
+                <div class="form-group text-center mt-2">
+                    <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Sola Dönder"
+                        (click)="rotateLeft()">
+                        <span class="btn-icon icofont-rounded-double-left"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Sağa Dönder"
+                        (click)="rotateRight()">
+                        <span class="btn-icon icofont-rounded-double-right"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Yatay Çevir"
+                        (click)="flipHorizontal()">
+                        <span class="btn-icon icofont-caret-right"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Dikey Çevir"
+                        (click)="flipVertical()">
+                        <span class="btn-icon icofont-caret-down"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Temizle"
+                        (click)="resetImage()">
+                        <span class="btn-icon icofont-rotation"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Büyüt"
+                        (click)="zoomIn()">
+                        <span class="btn-icon icofont-ui-zoom-in"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill" title="Küçült" (click)="zoomOut()">
+                        <span class="btn-icon icofont-ui-zoom-out"></span>
+                    </button>
+                    <button class="btn btn-outline-primary btn-square rounded-pill" title="Doldur"
+                        (click)="toggleContainWithinAspectRatio()">
+                        <span class="btn-icon"
+                            [ngClass]="{'icofont-collapse': !containWithinAspectRatio,'icofont-expand-alt' : containWithinAspectRatio}"></span>
+                    </button>
+                    <div class="col-4 m-auto mt-2">
+                        <o-ng-input header="Rotasyon" type="number" inputClass="text-center" [(ngModel)]="rotation"
+                            (change)="updateRotation()">
+                        </o-ng-input>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="save()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>

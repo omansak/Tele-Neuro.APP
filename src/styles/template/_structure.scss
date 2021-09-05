@@ -1,0 +1,225 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.page-box {
+  display: block;
+  height: 100%;
+
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .main-content {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      margin-bottom: $footer-height;
+      position: relative;
+      transition: .2s padding 0s $animation;
+      -webkit-overflow-scrolling: touch;
+
+      .main-content-wrap {
+        min-height: calc(100% - #{$module-rem * 4});
+        margin: 0 auto;
+        opacity: 0;
+        padding: ($module-rem * 3) ($module-rem * 2) ($module-rem * 4);
+        transition: .2s opacity 0s $animation;
+
+        &.full-filled {
+          height: 100%;
+          max-width: 100% !important;
+          min-height: 100%;
+          padding: 0;
+
+          .page-content {
+            height: 100%;
+          }
+        }
+        .page-header {
+          display: flex;
+          justify-content: space-between;
+
+          .page-title {
+            //color: rgba(main-palette(500),.5);
+            //font-size: 2rem;
+            margin: 0 0 ($module-rem * 3);
+            @media #{$max767} {
+              font-size: 2rem;
+            }
+          }
+          .page-breadcrumbs {
+            color: rgba(main-palette(500),.5);
+            font-size: .8rem;
+            line-height: 2;
+            margin: 0 0 ($module-rem * 2);
+          }
+        }
+      }
+      &.loaded {
+        .main-content-wrap {
+          opacity: 1;
+          transition: 0s opacity 0s $animation;
+        }
+      }
+    }
+    .content-overlay {
+      background: rgba(main-palette(500),.1);
+      height: 100%;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      transition:
+        .2s opacity 0s $animation,
+        0s visibility .2s $animation;
+      visibility: hidden;
+      width: 100%;
+
+      &.show {
+        opacity: 1;
+        transition:
+          .2s opacity 0s $animation,
+          0s visibility 0s $animation;
+        visibility: visible;
+        @media #{$min992} {
+          z-index: 9998;
+        }
+      }
+    }
+  }
+}
+body {
+  &.vertical-layout {
+    .page-box {
+      .app-container {
+        padding-left: $vertical-navbar-width;
+        @media #{$max991} {
+          padding-left: 0;
+        }
+
+        .app-navbar.horizontal {
+          .navbar-skeleton {
+            .sk-logo {
+              display: none !important;
+            }
+          }
+        }
+        .app-footer {
+          left: $vertical-navbar-width;
+          @media #{$max991} {
+            left: 0;
+          }
+        }
+      }
+    }
+    &.scrolled {
+      .app-navbar.horizontal {
+        box-shadow: 0 2px 5px rgba(#000, .05);
+        //z-index: 9997;
+      }
+    }
+  }
+  &.horizontal-layout {
+    .app-navbar.horizontal {
+      &:not(.horizontal-vertical) {
+        .app-logo {
+          @media #{$max991} {
+            display: none;
+          }
+        }
+      }
+      .app-logo {
+        .logo-wrap {
+          @media #{$min992} {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+    .app-navbar.horizontal-vertical {
+      background: #fbfbfb;
+
+      .app-logo {
+        @media #{$min992} {
+          display: none;
+        }
+      }
+    }
+    &.scrolled {
+      .app-navbar.horizontal {
+
+      }
+    }
+  }
+  //Boxed
+  &.boxed {
+    .page-box {
+      .app-container {
+        .main-content {
+          .main-content-wrap {
+            max-width: $boxed-width;
+            max-width: var(--boxed-width);
+          }
+        }
+      }
+    }
+  }
+  // Public layout
+  &.public-layout {
+    .page-box {
+      .app-container {
+        background-size: cover;
+        display: block;
+        height: 100%;
+        overflow: auto;
+        width: 100%;
+
+        .content-box {
+          background: #fff;
+          box-shadow: $shadow;
+          display: flex;
+          flex-direction: column;
+          max-width: 400px;
+          min-height: 100%;
+
+          .content-header {
+            padding-top: $module-rem * 2;
+          }
+          .content-body {
+            align-items: center;
+            display: flex;
+            flex-grow: 1;
+            padding: $module-rem ($module-rem * 4);
+            width: 100%;
+
+            @media #{$max767} {
+              padding-left: ($module-rem * 2);
+              padding-right: ($module-rem * 2);
+            }
+          }
+        }
+      }
+    }
+  }
+  // loaded content
+  &.loaded {
+    .page-box {
+      .app-container {
+        .main-content {
+          .main-content-wrap {
+            opacity: 1;
+            transition: 0s opacity 0s $animation;
+          }
+        }
+      }
+    }
+  }
+}

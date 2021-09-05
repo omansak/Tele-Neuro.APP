@@ -1,0 +1,33 @@
+<div class="card department bg-light bg-gradient">
+    <img src="/assets/content/department-1.jpg" class="card-img-top" width="400" height="250" alt="">
+    <div class="card-body">
+        <h3 class="h4 mt-0">Cardiology</h3>
+        <div class="team d-flex align-items-center float-right">
+            <span class="badge badge-info mr-3">
+                <strong class="text-white">3 Program</strong>
+            </span>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non
+            omnis temporibus? Blanditiis culpa labore velit.</p>
+        <div class="button-box pb-2">
+            <ng-container *ngIf="isAdmin">
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dahası<span class="btn-icon icofont-prescription ml-2"></span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Görüntüle</a>
+                        <a class="dropdown-item" href="#">Düzenle</a>
+                        <a class="dropdown-item" href="#">Sil</a>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isAdmin">
+                <button class="btn btn-outline-primary" type="button">
+                    Görüntüle<span class="btn-icon icofont-prescription ml-2"></span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</div>

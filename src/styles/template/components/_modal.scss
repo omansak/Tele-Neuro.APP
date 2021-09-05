@@ -1,0 +1,76 @@
+$_module-rem: $module-rem;
+$_bg: #fff;
+$_overlay-bg: rgba(#000,.1);
+$_width: $_module-rem * 50;
+$_h-paddig: $_module-rem * 2;
+$_v-padding: $_module-rem * 2;
+$_title-fs: 2rem;
+$_title-fw: 500;
+$_footer-bg: rgba(#000,.05);
+$_animation: $animation;
+$_shadow: $shadow;
+$_shape: $shape;
+$_error-color: $error-color;
+
+.modal {
+  z-index: 9999;
+}
+.modal-content {
+  background: $_bg;
+  border: 0;
+  border-radius: $_shape;
+  box-shadow: $_shadow;
+
+  .close {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+  }
+  .modal-header {
+    align-items: center;
+    border: 0;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    display: flex;
+    margin: 0;
+    padding: $_v-padding ($_h-paddig - ($_module-rem * 0.5));
+
+    > * {
+      margin: 0 ($_module-rem * 0.5);
+    }
+    .modal-title {
+      font-size: $_title-fs;
+      font-weight: $_title-fw;
+      line-height: 1;
+    }
+  }
+  .modal-body {
+    padding: $_v-padding $_h-paddig;
+  }
+  .modal-footer {
+    background: $_footer-bg;
+    border: 0;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    padding: $_v-padding $_h-paddig;
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -$_module-rem * 0.5;
+
+      > * {
+        margin: $_module-rem * 0.5;
+      }
+    }
+  }
+}
+.modal-dialog-bottom {
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(100% - 3.5rem);
+}
+.modal-backdrop {
+  background: $_overlay-bg;
+  z-index: 9998;
+}

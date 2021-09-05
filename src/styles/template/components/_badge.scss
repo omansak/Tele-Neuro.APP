@@ -1,0 +1,99 @@
+@use "sass:math";
+
+$_module-rem: $module-rem;
+$_border-width: 1px;
+$_shape: 500px;
+$_fz: 1rem;
+$_lh: $main-lh;
+$_padding: calc(#{$_module-rem} / 2) calc(#{$_module-rem} * 2 - #{$_border-width});
+
+$_fz-xs: $_fz * .7;
+$_lh-xs: math.div($_module-rem * 1.5, $_fz-xs);
+$_padding-xs: 0 calc(#{$_module-rem} / 2 - #{$_border-width});
+
+$_fz-sm: $_fz * .7;
+$_lh-sm: math.div($_module-rem * 1.5, $_fz-sm);
+$_padding-sm: calc(#{$_module-rem} / 4 - #{$_border-width}) calc(#{$_module-rem} - #{$_border-width});
+
+$_fz-lg: $_fz * 1.2;
+$_lh-lg: math.div($_module-rem * 2, $_fz-lg);
+$_padding-lg: calc(#{$_module-rem} - #{$_border-width}) calc(#{$_module-rem} * 3 - #{$_border-width});
+
+$_types: (
+  primary: (
+    bg: accent-palette(500),
+    color: accent-contrast(500)
+  ),
+  secondary: (
+    bg: main-palette(300),
+    color: main-contrast(300)
+  ),
+  success: (
+    bg: $success-color,
+    color: $success-contrast
+  ),
+  info: (
+    bg: $info-color,
+    color: $info-contrast
+  ),
+  warning: (
+    bg: $warning-color,
+    color: $warning-contrast
+  ),
+  error: (
+    bg: $error-color,
+    color: $error-contrast
+  ),
+  light: (
+    bg: main-palette(50),
+    color: main-contrast(50)
+  ),
+  dark: (
+    bg: main-palette(900),
+    color: main-contrast(900)
+  )
+);
+.badge {
+  align-items: center;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: $_shape;
+  display: inline-flex;
+  font-size: $_fz;
+  font-weight: 400;
+  line-height: $_lh;
+  padding: $_padding;
+  vertical-align: top;
+
+  &.badge-xs {
+    font-size: $_fz-xs;
+    line-height: $_lh-xs;
+    padding: $_padding-xs;
+  }
+  &.badge-sm {
+    font-size: $_fz-sm;
+    line-height: $_lh-sm;
+    padding: $_padding-sm;
+  }
+  &.badge-lg {
+    font-size: $_fz-lg;
+    line-height: $_lh-lg;
+    padding: $_padding-lg;
+  }
+  &.badge-inside {
+    font-size: 75%;
+    padding: .1em 1em;
+  }
+  @each $_type, $_color in $_types {
+    &.badge-#{$_type} {
+      background: map-get($_color, bg);
+      border-color: map-get($_color, bg);
+      color: map-get($_color, color);
+
+      &.badge-pill {
+        background: transparent !important;
+        color: map-get($_color, bg);
+      }
+    }
+  }
+}

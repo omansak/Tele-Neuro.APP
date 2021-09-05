@@ -1,0 +1,30 @@
+<div class="page-box">
+  <div class="app-container">
+    <app-horizontal-navbar></app-horizontal-navbar>
+    <!-- Vertical navbar -->
+    <app-navbar>
+      <app-main-menu menu [navigation]="adminNavigation"></app-main-menu>
+    </app-navbar>
+    <!-- Vertical navbar -->
+
+    <main class="main-content">
+      <div class="app-loader">
+        <i class="icofont-spinner-alt-4 rotate"></i>
+      </div>
+      <div class="main-content-wrap">
+        <div class="page-content">
+          <!--Page Header-->
+          <header class="page-header">
+            <h1 class="page-title" [innerText]="pageTitle || '' "></h1>
+          </header>
+          <!--Page Header-->
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </main>
+    <!-- Footer -->
+    <app-footer></app-footer>
+    <!-- Footer -->
+    <div class="content-overlay"></div>
+  </div>
+</div>

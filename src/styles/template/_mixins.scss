@@ -1,0 +1,105 @@
+@use "sass:math";
+//Headings
+@function h1($key: $h1) {
+  @return map-get($h1, $key);
+}
+@function h2($key: $h2) {
+  @return map-get($h2, $key);
+}
+@function h3($key: $h3) {
+  @return map-get($h3, $key);
+}
+@function h4($key: $h4) {
+  @return map-get($h4, $key);
+}
+@function h5($key: $h5) {
+  @return map-get($h5, $key);
+}
+@function h6($key: $h6) {
+  @return map-get($h6, $key);
+}
+
+//Preloader
+@function loader-colors($key: $loader-colors) {
+  @return map-get($loader-colors, $key);
+}
+
+//Font Awesome
+%fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+//Placeholder
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+//Shadow
+%shadow {
+  box-shadow: 0 2px 6px 0 rgba(#000, 0.1);
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  right: 10px;
+  z-index: -1;
+}
+
+//Font size
+@function calculateRem($size) {
+  $remSize: $size / $main-fs;
+  @return #{$remSize}rem;
+}
+@mixin font-size($size) {
+  font-size: calculateRem($size);
+}
+
+@function decimal-round($number, $digits: 2, $mode: round) {
+  $n: 1;
+  // $number must be a number
+  @if type-of($number) != number {
+    @warn '#{ $number } is not a number.';
+    @return $number;
+  }
+  // $digits must be a unitless number
+  @if type-of($digits) != number {
+    @warn '#{ $digits } is not a number.';
+    @return $number;
+  } @else if not unitless($digits) {
+    @warn '#{ $digits } has a unit.';
+    @return $number;
+  }
+  @if $digits > 0 {
+    @for $i from 1 through $digits {
+      $n: $n * 10;
+    }
+  }
+  @if $mode == round {
+    @return math.div(round($number * $n), $n);
+  } @else if $mode == ceil {
+    @return math.div(ceil($number * $n), $n);
+  } @else if $mode == floor {
+    @return math.div(floor($number * $n), $n);
+  } @else {
+    @warn '#{ $mode } is undefined keyword.';
+    @return $number;
+  }
+}

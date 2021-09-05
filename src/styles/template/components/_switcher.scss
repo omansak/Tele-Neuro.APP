@@ -1,0 +1,105 @@
+@use "sass:math";
+
+$_bg: (
+  default: #ebebeb,
+  hover: #ebebeb,
+  active: accent-palette(500),
+  disabled: rgba(#ccc,.1)
+);
+$_border: (
+  default: #ebebeb,
+  hover: #ebebeb,
+  active: accent-palette(500),
+  disabled: rgba(#ccc,.5)
+);
+$_color: (
+  default: main-palette(500),
+  hover: accent-palette(500),
+  active: accent-contrast(500),
+  disabled: #bdbdbd
+);
+$_label-color: (
+  default: inherit,
+  hover: inherit,
+  active: inherit,
+  disabled: #bdbdbd
+);
+
+$_module-rem: $module-rem;
+$_border-style: solid;
+$_border-width: 1px;
+$_fs: 1rem;
+$_shape: 500px;
+$_animation: $animation;
+$_height: $_module-rem * 2;
+$_width: $_module-rem * 4;
+
+.custom-switch {
+  padding-left: $_width + $_module-rem;
+
+  .custom-control-label {
+    color: map-get($_label-color, default);
+    cursor: pointer;
+    font-weight: 500;
+
+    &:before {
+      background: map-get($_bg, default);
+      border: $_border-width $_border-style map-get($_border, default);
+      border-radius: $_shape;
+      cursor: inherit;
+      display: block;
+      height: $_height;
+      left: -($_width + $_module-rem);
+      margin: 0;
+      top: 0;
+      transition:
+        background .2s $_animation,
+        border .2s $_animation;
+      width: $_width;
+    }
+    &:after {
+      background: map-get($_color, default);
+      border-radius: 50%;
+      display: block;
+      height: math.div($_height, 1.6);
+      left: -($_width + $_module-rem);
+      margin-top: ($_height - math.div($_height, 1.6)) * 0.5;
+      top: 0;
+      transform: translateX(($_height - math.div($_height, 1.6)) * 0.5);
+      transition:
+        background .2s $_animation,
+        transform .2s $_animation;
+      width: math.div($_height, 1.6);
+    }
+    &:hover {
+      &:after {
+        background: map-get($_color, hover);
+      }
+    }
+  }
+  .custom-control-input {
+    &:checked ~ .custom-control-label {
+      &:before {
+        background: map-get($_bg, active);
+        border-color: map-get($_border, active);
+      }
+      &:after {
+        background: map-get($_color, active);
+        transform: translateX($_width - math.div($_height, 1.6) - (($_height - math.div($_height, 1.6)) * 0.5));
+      }
+    }
+    &:disabled ~ .custom-control-label,
+    &:disabled:checked ~ .custom-control-label {
+      color: map-get($_color, disabled);
+      cursor: not-allowed;
+
+      &:before {
+        background: map-get($_bg, disabled);
+        border-color: map-get($_border, disabled);
+      }
+      &:after {
+        background: map-get($_color, disabled);
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+$_bg: #D4D3D3;
+$_color: #fff;
+$_bg-active: accent-palette(500);
+$_color-aclive: accent-contrast(500);
+$_bg-disabled: rgba($_bg,.6);
+$_color-disabled: $_color;
+$_module-rem: $module-rem;
+$_shape: 500px;
+$_animation: $animation;
+
+.pagination {
+  list-style-type: none;
+  display: flex;
+  margin: 0 (-$_module-rem * 0.25);
+  padding: 0;
+
+  .page-item {
+    margin: 0 ($_module-rem * 0.25);
+
+    .page-link {
+      background: $_bg;
+      border-color: $_bg;
+      border-radius: $_shape;
+      color: $_color;
+      cursor: pointer;
+      display: block;
+      min-height: $_module-rem * 3;
+      min-width: $_module-rem * 3;
+      padding: ($_module-rem * 0.5) ($_module-rem * 0.5);
+      text-align: center;
+      text-decoration: none;
+      transition:
+        background-color .2s $_animation,
+        border-color .2s $_animation,
+        color .2s $_animation;
+
+      &:hover,
+      &.active {
+        background: $_bg-active;
+        border-color: $_bg-active;
+        color: $_color-aclive;
+      }
+    }
+    &.active {
+      .page-link {
+        background: $_bg-active;
+        border-color: $_bg-active;
+        color: $_color-aclive;
+      }
+    }
+    &.disabled {
+      .page-link {
+        background: $_bg-disabled;
+        border-color: $_bg-disabled;
+        color: $_color-disabled;
+        pointer-events: none;
+      }
+    }
+  }
+}

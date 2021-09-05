@@ -1,0 +1,74 @@
+@import 'variables';
+
+$width: 30px;
+$height: 30px;
+$bounce_height: 60px;
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY($bounce_height);
+  }
+  0% {
+    transform: translateY(0);
+  }
+}
+.app-loader {
+  align-items: center;
+  background: $loader-overlay-bg;
+  color: $loader-color;
+  display: flex;
+  font-size: 30px;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 99999;
+
+  &.main-loader {
+    z-index: 999999;
+
+    .loader-box {
+      align-items: flex-end;
+      display: flex !important;
+
+      .bounceball {
+        display: inline-block;
+        height: 95px;
+        position: relative;
+        animation: bounce .5s alternate infinite ease-in;
+        width: $width;
+
+        &:before {
+          background: accent-palette(500);
+          border-radius: 50%;
+          content: '';
+          display: block;
+          height: $height;
+          position: absolute;
+          top: 0;
+          transform-origin: 50%;
+          width: $width;
+        }
+      }
+      .text {
+        display: flex;
+        color: main-palette(500);
+        margin-left: 15px;
+
+        span {
+          color: accent-palette(500);
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .loaded & {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

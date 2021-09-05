@@ -1,0 +1,267 @@
+@use "sass:math";
+
+$_bg: (
+  default: #ebebeb,
+  hover: #ebebeb,
+  focus: #fff,
+  disabled: rgba(#ccc,.1)
+);
+$_border: (
+  default: #ebebeb,
+  hover: #ebebeb,
+  focus: accent-palette(500),
+  disabled: rgba(#ccc,.5)
+);
+$_color: (
+  default: main-palette(500),
+  hover: main-palette(500),
+  focus: main-palette(500),
+  disabled: #bdbdbd
+);
+
+$_module-rem: $module-rem;
+$_placeholder-color: #a8a8a8;
+$_border-style: solid;
+$_border-width: 1px;
+$_fs: 1rem;
+$_lh: decimal-round(math.div($_module-rem * 2, $_fs));
+$_padding-h: $_module-rem * 2;
+$_padding-v: calc(#{$_module-rem} - #{$_border-width});
+$_shape: 20px;
+$_animation: $animation;
+$_shadow-hover: $shadow-hover;
+
+// size sm
+$_fs-sm: ($_fs * .9);
+$_lh-sm: math.div($_module-rem * 2, $_fs-sm);
+$_shape-sm: ($_shape * .8);
+$_padding-v-sm: ($_module-rem * 0.5);
+
+// size lg
+$_fs-lg: ($_fs * 1.3);
+$_lh-lg: math.div($_module-rem * 2, $_fs-lg);
+$_shape-lg: ($_shape * 1.5);
+$_padding-v-lg: $_module-rem * 1.5;
+
+@-webkit-keyframes autofill {
+  to {
+    color: #666;
+    background: transparent;
+  }
+}
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  ::-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}
+}
+
+.form-control {
+  background: map-get($_bg, default);
+  border: $_border-width $_border-style map-get($_border, default);
+  border-radius: $_shape;
+  color: map-get($_color, default);
+  display: block;
+  font-size: $_fs;
+  height: auto;
+  line-height: $_lh;
+  outline: none;
+  padding: $_padding-v $_padding-h;
+  transition:
+    background .2s $_animation,
+    border .2s $_animation,
+    box-shadow .2s $_animation,
+    color .2s $_animation;
+  will-change: background, border, box-shadow, color;
+  width: 100%;
+
+  @include placeholder {
+    color: $_placeholder-color;
+  }
+  &:hover {
+    background: map-get($_bg, hover);
+    border-color: map-get($_border, hover);
+    box-shadow: $_shadow-hover;
+    color: map-get($_color, hover);
+  }
+  &:focus {
+    background: map-get($_bg, focus);
+    border-color: map-get($_border, focus);
+    box-shadow: $_shadow-hover;
+    color: map-get($_color, focus);
+  }
+  .tc-input-wrap {
+    .input-prefix,
+    .input-suffix {
+      color: $_placeholder-color;
+      flex: none;
+      padding: 0 .2em;
+    }
+    .input-icon {
+      font-size: 1.3em;
+    }
+    .char-limiting {
+      align-items: center;
+      color: $_placeholder-color;
+      display: flex;
+      font-size: .9em;
+      justify-content: center;
+      padding: 0 .2em;
+      pointer-events: none;
+    }
+  }
+  &.ng-invalid.ng-touched,
+  .has-error & {
+    .tc-input-wrap {
+      background-color: rgba($error-color, .1);
+      border: 1px solid $error-color;
+    }
+  }
+  &.form-control-sm {
+    border-radius: $_shape-sm;
+    font-size: $_fs-sm;
+    height: $_module-rem * 3;
+    line-height: $_lh-sm;
+    padding-top: $_padding-v-sm;
+    padding-bottom: $_padding-v-sm;
+
+    .input-icon {
+      font-size: 1.1em;
+    }
+  }
+  &.form-control-lg {
+    border-radius: $_shape-lg;
+    font-size: $_fs-lg;
+    height: $_module-rem * 5;
+    line-height: $_lh-lg;
+    padding-top: $_padding-v-lg;
+    padding-bottom: $_padding-v-lg;
+  }
+  &:disabled,
+  &.disabled,
+  &[readonly] {
+    background-color: map-get($_bg, disabled);
+    border-color:  map-get($_border, disabled);
+    box-shadow: none !important;
+    color: map-get($_color, disabled);
+    cursor: not-allowed;
+  }
+}
+.form-control-plaintext {
+  color: map-get($_color, default);
+  font-size: $_fs;
+  height: $_module-rem * 4;
+  line-height: $_lh;
+  padding-top: $_padding-v;
+  padding-bottom: $_padding-v;
+
+  &.form-control-sm {
+    font-size: $_fs-sm;
+    height: $_module-rem * 3;
+    line-height: $_lh-sm;
+    padding-top: $_padding-v-sm;
+    padding-bottom: $_padding-v-sm;
+  }
+  &.form-control-lg {
+    font-size: $_fs-lg;
+    height: $_module-rem * 5;
+    line-height: $_lh-lg;
+    padding-top: $_padding-v-lg;
+    padding-bottom: $_padding-v-lg;
+  }
+}
+.form-group {
+  margin-bottom: $module-rem * 2;
+  position: relative;
+}
+.form-text {
+  display: block;
+  margin: $module-rem 0 0;
+}
+label {
+  font-weight: 600;
+  margin: 0 0 $module-rem;
+}
+.input-group-text {
+  background: map-get($_bg, default);
+  border: $_border-width $_border-style map-get($_border, default);
+  border-radius: $_shape;
+  padding-left: $_padding-h;
+  padding-right: $_padding-h;
+}
+.input-group {
+  .btn {
+    border-radius: $_shape;
+  }
+  .typeahead__cancel-button {
+    z-index: 1;
+
+    + .form-control {
+      border-top-left-radius: $_shape;
+      border-bottom-left-radius: $_shape;
+    }
+  }
+  .input-group-prepend {
+    ~ .form-control {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+.with-prefix-icon,
+.with-suffix-icon {
+  position: relative;
+
+  .prefix-icon,
+  .suffix-icon {
+    align-items: center;
+    color: $_placeholder-color;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: $_module-rem * 4;
+  }
+  .prefix-icon {
+    left: 0;
+  }
+  .suffix-icon {
+    right: 0;
+  }
+}
+.with-prefix-icon {
+  .form-control {
+    padding-left: $_module-rem * 4;
+  }
+}
+.with-suffix-icon {
+  .form-control {
+    padding-right: $_module-rem * 4;
+  }
+}
+textarea.form-control {
+  min-height: $_module-rem * 4;
+  resize: none;
+
+  &.resize {
+    resize: vertical;
+  }
+}
+.form-control.is-valid,
+.was-validated .form-control:valid,
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  background-position: top 50% right $_module-rem;
+}
+.was-validated textarea.form-control:valid,
+textarea.form-control.is-valid,
+.was-validated textarea.form-control:invalid,
+textarea.form-control.is-invalid {
+  background-position: top $_module-rem right $_module-rem;
+}
