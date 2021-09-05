@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { CDN_CSS_FILE_INPUT, CDN_JS_FILE_INPUT, CDN_JS_FILE_INPUT_LOCALE } from 'src/app/consts/cdns';
@@ -17,7 +17,7 @@ import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.se
   }],
   encapsulation: ViewEncapsulation.None
 })
-export class ONgFileInputComponent implements OnInit, ControlValueAccessor, AfterViewInit {
+export class ONgFileInputComponent implements ControlValueAccessor, AfterViewInit {
   //Inputs
   @Input()
   public header: string;
@@ -52,14 +52,14 @@ export class ONgFileInputComponent implements OnInit, ControlValueAccessor, Afte
   public changeEvent = new EventEmitter();
   // Publics
   public value: File | File[];
-  public errorContainerId = Helper.RandomString();
-  public fileInputId = Helper.RandomString();
   public showCropper: boolean = false;
   // Privates
-  private fileInput: any;
+  private bootstrapFileInput: any;
   private _onChange = (_: any) => { };
   private _onTouched = () => { };
 
+  @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
+  @ViewChild('errorContainer', { static: true }) errorContainer: ElementRef;
   constructor(private _lazyLoaderService: LazyLoaderService) { }
   ngAfterViewInit(): void {
     forkJoin([
@@ -70,9 +70,6 @@ export class ONgFileInputComponent implements OnInit, ControlValueAccessor, Afte
       .subscribe(() => {
         this.initFileInput();
       });
-  }
-
-  ngOnInit(): void {
   }
 
   writeValue(obj: any): void {
@@ -105,33 +102,65 @@ export class ONgFileInputComponent implements OnInit, ControlValueAccessor, Afte
     }
   }
 
+  onImageCropped(e: File) {
+    this.value = e;
+    this.showCropper = false;
+
+    this.initFileInput(e);
+    this.emitChangeEvent(e);
+  }
+
   initCropper() {
     this.showCropper = true;
   }
 
-  initFileInput(initialPreview: any = null) {
-    $(`#${this.fileInputId}`).val("");
-    this.fileInput = $(`#${this.fileInputId}`)
-      .fileinput({
-        overwriteInitial: true,
-        maxFileSize: this.maxFileSize,
-        showUpload: false,
-        elErrorContainer: $(`#${this.errorContainerId}`),
-        showZoom: false,
-        language: 'tr',
-        allowedFileTypes: this.allowedFileTypes,
-        allowedFileExtensions: this.allowedFileExtensions,
-        maxFileCount: this.multiple ? null : 0,
-        initialPreviewAsData: true,
-        initialPreview: [initialPreview],
-        initialPreviewShowDelete: false,
-        fileActionSettings: {
-          showDrag: false
-        },
-        previewZoomButtonClasses: {
-          close: 'd-none'
-        }
-      })
+  initFileInput(initialFile: File | null = null) {
+    let config: any = {
+      overwriteInitial: true,
+      maxFileSize: this.maxFileSize,
+      showUpload: false,
+      elErrorContainer: this.errorContainer.nativeElement,
+      showZoom: false,
+      language: 'tr',
+      allowedFileTypes: this.allowedFileTypes,
+      allowedFileExtensions: this.allowedFileExtensions,
+      maxFileCount: this.multiple ? null : 0,
+      fileActionSettings: {
+        showDrag: false
+      },
+      previewZoomButtonClasses: {
+        close: 'd-none'
+      }
+    }
+
+    if (initialFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(initialFile);
+      reader.onload = () => {
+        config.initialPreview = [`<img src="${reader.result}" class="kv-preview-data file-preview-image">`];
+        config.initialPreviewConfig = [
+          { previewAsData: false, size: initialFile.size, caption: initialFile.name, filetype: initialFile.type },
+        ];
+        config.initialPreviewShowDelete = false;
+        this.initBootstrapFileInput(config);
+      }
+    }
+    else {
+      this.initBootstrapFileInput(config);
+    }
+  }
+
+  destroyFileInput() {
+    this.bootstrapFileInput.fileinput('destroy');
+  }
+
+  private initBootstrapFileInput(config: any) {
+    if (this.bootstrapFileInput) {
+      this.destroyFileInput();
+    }
+    this.fileInput.nativeElement.value = null;
+    this.bootstrapFileInput = $(this.fileInput.nativeElement)
+      .fileinput(config)
       .on('change', (e: any) => {
         if (!this.cropperActive) {
           this.changeValueFromEvent(e);
@@ -156,21 +185,5 @@ export class ONgFileInputComponent implements OnInit, ControlValueAccessor, Afte
       .on('fileerror', (event: any, data: any, msg: string) => {
         console.error(msg);
       });
-  }
-
-  destroyFileInput() {
-    this.fileInput.fileinput('destroy');
-  }
-
-  onImageCropped(e: File) {
-    this.value = e;
-    this.showCropper = false;
-    const reader = new FileReader();
-    reader.readAsDataURL(e);
-    reader.onload = () => {
-      this.destroyFileInput();
-      this.initFileInput(reader.result);
-      this.emitChangeEvent(e);
-    };
   }
 }

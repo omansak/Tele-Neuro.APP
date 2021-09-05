@@ -28,6 +28,7 @@ export class ONgCropperComponent implements OnInit {
   public showCropper = false;
   public transform: ImageTransform = {};
   public containWithinAspectRatio = false;
+  
   @ViewChild('modal', { static: true }) modal: ElementRef;
   constructor() { }
   ngOnInit(): void { }
@@ -50,7 +51,7 @@ export class ONgCropperComponent implements OnInit {
   }
 
   loadImageFailed() {
-    console.error('Load failed');
+    console.error('Cropper image load failed');
   }
 
   rotateLeft() {
