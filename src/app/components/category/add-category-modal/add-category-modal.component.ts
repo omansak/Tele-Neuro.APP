@@ -21,8 +21,4 @@ export class AddCategoryModalComponent implements OnInit {
     if (this.bsModalRef)
       this.bsModalRef.hide();
   }
-  foo(e: any) {
-    console.log(111,e);
-
-  }
 }

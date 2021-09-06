@@ -6,4 +6,4 @@
 <div #errorContainer></div>
 
 <o-ng-cropper [image]="value" [cropperWidth]="cropperWidth" [cropperHeight]="cropperHeight" *ngIf="showCropper"
-    (croppedImage)="onImageCropped($event)"></o-ng-cropper>
+    (croppedImage)="onImageCropped($event)" [format]="format"></o-ng-cropper>

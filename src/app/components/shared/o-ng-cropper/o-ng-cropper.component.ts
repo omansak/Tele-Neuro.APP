@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ImageTransform, ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
+import { ImageTransform, ImageCroppedEvent, base64ToFile } from 'ngx-image-cropper';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'o-ng-cropper',
@@ -17,6 +18,9 @@ export class ONgCropperComponent implements OnInit {
   public cropperHeight: number = 0;
   @Input()
   public aspectRatio = 1 / 1;
+  @Input()
+  public format: 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico' = 'png';
+
   // Outputs
   @Output("croppedImage")
   public croppedImageEvent = new EventEmitter()
@@ -28,14 +32,23 @@ export class ONgCropperComponent implements OnInit {
   public showCropper = false;
   public transform: ImageTransform = {};
   public containWithinAspectRatio = false;
-  
+  // Privates
+  private static MimeTypeDb: any | null = null;
+
   @ViewChild('modal', { static: true }) modal: ElementRef;
-  constructor() { }
+  constructor(httpClient: HttpClient) {
+    httpClient.get("https://cdn.jsdelivr.net/gh/jshttp/mime-db@master/db.json").subscribe((i) => {
+      ONgCropperComponent.MimeTypeDb = i;
+    });
+  }
   ngOnInit(): void { }
 
   imageCropped(event: ImageCroppedEvent) {
     let blob = base64ToFile(event.base64 as string);
-    this.croppedImage = new File([blob], this.imageFile.name, { type: blob.type });
+    let fileName = ONgCropperComponent.MimeTypeDb ?
+      `${this.imageFile.name.split('.').slice(0, -1).join('.')}.${ONgCropperComponent.MimeTypeDb[blob.type]?.extensions[0]}` :
+      this.imageFile.name;
+    this.croppedImage = new File([blob], fileName, { type: blob.type });
   }
 
   save() {

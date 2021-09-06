@@ -6,7 +6,7 @@
                     [style.display]="showCropper ? null : 'none'" [containWithinAspectRatio]="containWithinAspectRatio"
                     [cropperMinWidth]="cropperWidth" [cropperMinHeight]="cropperHeight" [cropperMaxWidth]="cropperWidth"
                     [cropperMaxHeight]="cropperHeight" [resizeToWidth]="cropperWidth" [resizeToHeight]="cropperHeight"
-                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)"
+                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" [format]="format"
                     (loadImageFailed)="loadImageFailed()" [aspectRatio]="aspectRatio" [imageQuality]="100">
                 </image-cropper>
                 <div class="form-group text-center mt-2">

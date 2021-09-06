@@ -30,7 +30,7 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   @Input()
   public inputClass: string;
   @Input()
-  public maxFileSize: number = 10 * 1024;
+  public maxFileSize: number = 1024;
   @Input()
   public disabled: boolean = false;
   @Input()
@@ -47,6 +47,8 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   public cropperWidth: number = 0;
   @Input()
   public cropperHeight: number = 0;
+  @Input()
+  public format: 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico' = 'png';
   // Outputs
   @Output('change')
   public changeEvent = new EventEmitter();
@@ -110,11 +112,11 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
     this.emitChangeEvent(e);
   }
 
-  initCropper() {
+  private initCropper() {
     this.showCropper = true;
   }
 
-  initFileInput(initialFile: File | null = null) {
+  private initFileInput(initialFile: File | null = null) {
     let config: any = {
       overwriteInitial: true,
       maxFileSize: this.maxFileSize,
@@ -150,7 +152,7 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
     }
   }
 
-  destroyFileInput() {
+  private destroyFileInput() {
     this.bootstrapFileInput.fileinput('destroy');
   }
 
