@@ -4,6 +4,7 @@ import { AddCategoryModalComponent } from './add-category-modal/add-category-mod
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '../shared/shared.components.module';
+import { CategoryService } from 'src/app/services/category/category-service';
 
 @NgModule({
     imports: [
@@ -11,12 +12,11 @@ import { SharedComponentsModule } from '../shared/shared.components.module';
         CommonModule,
         FormsModule,
         ModalModule.forChild(),
-
         //App
         SharedComponentsModule
     ],
     exports: [AddCategoryModalComponent],
     declarations: [AddCategoryModalComponent],
-    providers: [],
+    providers: [CategoryService],
 })
 export class CategoryComponentsModule { }
