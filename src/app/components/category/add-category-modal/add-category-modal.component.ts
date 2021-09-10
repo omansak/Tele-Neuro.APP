@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { CategoryModel } from 'src/app/models/category/category-model';
 import { CategoryService } from 'src/app/services/category/category-service';
+import { ToastService } from 'src/app/services/common/toastr-service';
 
 @Component({
-  selector: 'shared-add-category-modal',
-  templateUrl: './add-category-modal.component.html'
+  templateUrl: './add-category-modal.component.html',
+  providers: [CategoryService]
 })
 export class AddCategoryModalComponent implements OnInit {
   public model: CategoryModel;
 
-  constructor(public bsModalRef: BsModalRef, private _categoryService: CategoryService) { }
+  constructor(public bsModalRef: BsModalRef, private _categoryService: CategoryService, private _toastService: ToastService) { }
 
   ngOnInit(): void {
     if (!this.model) {
@@ -24,12 +25,19 @@ export class AddCategoryModalComponent implements OnInit {
   }
 
   save() {
-    console.log(this.model);
-
+    let toast = this._toastService.continuing("Kategori ekleniyor/güncelleniyor.", "Kategori ekleme/güncelleme tamamlandı.", "Kategori eklenemedi.");
     this._categoryService
       .updateCategory(this.model)
-      .subscribe((i) => {
-        console.log(i);
-      });
+      .subscribe(
+        (i) => {
+          this.model.Id = i;
+          toast.success();
+        },
+        (err) => {
+          console.log(1, err);
+
+          toast.error();
+        }
+      );
   }
 }

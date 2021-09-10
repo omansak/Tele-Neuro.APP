@@ -4,6 +4,7 @@ import { Observable, empty } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
 import { BaseResponse, IBaseModel } from 'src/app/models/base-model';
 import { environment } from 'src/environments/environment';
+import { DEFAULT_BASE_SERVICE_CONFIGURATION } from '../consts/defaults';
 
 export interface IExceptionHandler {
     handler: (any: any) => Observable<never>;
@@ -16,24 +17,13 @@ export interface IBaseServiceConfiguration {
     Headers?: [{ Key: string, Value: string }]
 }
 
-export const DefaultBaseServiceConfiguration: IBaseServiceConfiguration = {
-    Timeout: 90,
-    Host: environment.request.host,
-    EndPoint: environment.request.rootEndPoint,
-    Headers: [
-        {
-            Key: 'Content-Type', Value: 'application/json'
-        }
-    ]
-}
-
 export class BaseService {
     private _baseResponse: BaseResponse;
     private _header: HttpHeaders;
     private _catchError: boolean;
+    private _configuration: IBaseServiceConfiguration = DEFAULT_BASE_SERVICE_CONFIGURATION
     constructor(
         private _httpClient: HttpClient,
-        private _configuration: IBaseServiceConfiguration = DefaultBaseServiceConfiguration,
         private _exceptionHandler?: IExceptionHandler) {
         this._header = new HttpHeaders();
         this._configuration.Headers?.forEach(i => {
@@ -50,9 +40,7 @@ export class BaseService {
             );
     }
     private httpPost<T>(operation: string, body?: any, params?: HttpParams): Observable<T> {
-        var asd = this.operationUri(operation);
-        console.log(asd)
-        return this._httpClient.post<T>(asd as string, body, { params: params, headers: this._header })
+        return this._httpClient.post<T>(this.operationUri(operation), body, { params: params, headers: this._header })
             .pipe(
                 timeout(this._configuration.Timeout),
                 catchError(err => this.handleError(err))

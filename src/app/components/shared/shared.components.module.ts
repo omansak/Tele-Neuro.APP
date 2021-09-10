@@ -33,8 +33,6 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
         ONgFileInputComponent,
         ONgCropperComponent
     ],
-    providers: [
-        LazyLoaderService // --> For ONgFileInputComponent
-    ],
+    providers: [],
 })
 export class SharedComponentsModule { }

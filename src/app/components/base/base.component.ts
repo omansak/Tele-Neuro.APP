@@ -1,7 +1,9 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { CDN_JS_MAIN } from 'src/app/consts/cdns';
 import { MENU_ADMIN } from 'src/app/consts/menu';
+import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 
 @Component({
   selector: 'app-base',
@@ -11,8 +13,8 @@ export class BaseComponent implements AfterViewInit {
 
   public adminNavigation = MENU_ADMIN;
   public pageTitle!: string;
-  
-  constructor(router: Router, activatedRoute: ActivatedRoute) {
+
+  constructor(router: Router, activatedRoute: ActivatedRoute, private _lazyLoaderService: LazyLoaderService) {
     router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
@@ -34,6 +36,8 @@ export class BaseComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    init();
+    this._lazyLoaderService.loadScript(CDN_JS_MAIN).subscribe(() => {
+      init();
+    });
   }
 }

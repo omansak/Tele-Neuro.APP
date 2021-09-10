@@ -20,4 +20,11 @@ export class CategoryModel implements IBaseModel<CategoryModel> {
         this.DocumentGuid = json.documentGuid
         return this;
     }
+    postModel() {
+        return {
+            Id: this.Id,
+            Name: this.Name,
+            Description: this.Description
+        }
+    }
 }
