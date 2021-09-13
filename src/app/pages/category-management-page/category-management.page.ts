@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { FileType } from 'src/app/consts/enums';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
-import { CategoryModel } from 'src/app/models/category/category-model';
+import { CategoryInfo } from 'src/app/models/category/category-info';
 import { CategoryService } from 'src/app/services/category/category-service';
 import { ToastService } from 'src/app/services/common/toastr-service';
 
@@ -12,11 +12,18 @@ import { ToastService } from 'src/app/services/common/toastr-service';
 })
 export class CategoryManagementPage implements AfterViewInit {
   //Publics
-  public categories: Array<CategoryModel>
+  public categories: Array<CategoryInfo>
   public showStatusAddCategoryModal: boolean = false;
-  public forEditCategory: CategoryModel | undefined;
+  public forEditCategory: CategoryInfo | undefined;
   @ViewChild(CardLoaderDirective)
   public cardLoaderDirective: CardLoaderDirective;
+  public get totalProgramCount(): number {
+    return this.categories?.reduce((result, current) => result + current.ProgramCount, 0) ?? 0;
+  };
+  public get totalCategoryCount(): number {
+    return this.categories?.filter(i => i.Category.IsActive).length ?? 0;
+  };
+
   constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
 
   ngAfterViewInit(): void {
@@ -30,6 +37,8 @@ export class CategoryManagementPage implements AfterViewInit {
       .pipe(finalize(() => this.cardLoaderDirective.stop()))
       .subscribe(
         (i) => {
+          console.log(i);
+
           if (i && i.length > 0) {
             this.categories = i;
           }
@@ -45,9 +54,9 @@ export class CategoryManagementPage implements AfterViewInit {
       .subscribe(
         (i) => {
           if (i) {
-            let category = this.categories.find(i => i.Id == id);
+            let category = this.categories.find(i => i.Category.Id == id);
             if (category) {
-              category.IsActive = !category.IsActive;
+              category.Category.IsActive = !category.Category.IsActive;
               toast.success();
             }
             else {
@@ -57,9 +66,9 @@ export class CategoryManagementPage implements AfterViewInit {
         });
   }
 
-  showAddCategoryModal(e?: CategoryModel) {
+  showAddCategoryModal(e?: CategoryInfo) {
     if (e?.Document) {
-      e.Image = { Url: e.Document.HostFullPath, IsChanged: false, Type: FileType.Image };
+      e.Category.Image = { Url: e.Document.HostFullPath, IsChanged: false, Type: FileType.Image };
       this.forEditCategory = e;
       this.showStatusAddCategoryModal = true;
     }
@@ -70,8 +79,8 @@ export class CategoryManagementPage implements AfterViewInit {
   }
 
   onCategoryUpdated(val: any) {
-    if (val) {
-      let categoryIndex = this.categories.findIndex(i => i.Id == val.Id)
+    if (val && val instanceof CategoryInfo) {
+      let categoryIndex = this.categories.findIndex(i => i.Category.Id == val.Category.Id)
       if (categoryIndex >= 0) {
         this.categories[categoryIndex] = val;
       }

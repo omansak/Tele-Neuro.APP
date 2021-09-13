@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { VALIDATE_FILE, VALIDATE_TEXT } from 'src/app/consts/validate';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
 import { Helper } from 'src/app/helpers/helper';
+import { CategoryInfo } from 'src/app/models/category/category-info';
 import { CategoryModel } from 'src/app/models/category/category-model';
 import { CategoryService } from 'src/app/services/category/category-service';
 import { ToastService } from 'src/app/services/common/toastr-service';
@@ -19,16 +19,16 @@ import { ONgTextareaComponent } from '../../shared/o-ng-textarea/o-ng-textarea.c
 export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterViewInit {
   // Inputs
   @Input()
-  public category?: CategoryModel;
+  public categoryInfo?: CategoryInfo;
   @Input()
   public show: boolean = false;
   // Outputs
   @Output()
-  public categoryChange = new EventEmitter();
+  public categoryInfoChange = new EventEmitter();
   @Output()
   public showChange = new EventEmitter();
   // Public's
-  public editModel: CategoryModel;
+  public editModel: CategoryInfo;
   public validate = {
     text: VALIDATE_TEXT,
     file: VALIDATE_FILE
@@ -60,10 +60,11 @@ export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterVie
 
   constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
   ngOnInit(): void {
-    if (!this.category) {
-      this.category = new CategoryModel();
+    if (!this.categoryInfo) {
+      this.categoryInfo = new CategoryInfo();
+      this.categoryInfo.Category = new CategoryModel();
     }
-    this.editModel = Object.assign({}, this.category)
+    this.editModel = Object.assign({}, this.categoryInfo)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -84,7 +85,7 @@ export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterVie
   }
 
   emitChangeEvent() {
-    this.categoryChange.emit(this.category);
+    this.categoryInfoChange.emit(this.categoryInfo);
   }
 
   emitShowEvent() {
@@ -115,7 +116,7 @@ export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterVie
       this.progressOption.start();
       this.cardLoaderDirective.start();
       this._categoryService
-        .updateCategoryProgressive(this.editModel)
+        .updateCategoryProgressive(this.editModel.Category)
         .pipe(finalize(() => {
           this.progressOption.stop();
           this.cardLoaderDirective.stop();
@@ -123,8 +124,8 @@ export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterVie
         .subscribe(
           (i) => {
             if (i.IsDone) {
-              this.editModel = <CategoryModel>i.Result;
-              this.category = this.editModel;
+              this.editModel = <CategoryInfo>i.Result;
+              this.categoryInfo = this.editModel;
               this.hideModal();
               this.emitChangeEvent();
               toast.success();

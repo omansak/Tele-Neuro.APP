@@ -8,18 +8,19 @@
             <div class="modal-body">
                 <div class="form-group">
                     <o-ng-file-input #fileElement header="Banner" [allowedFileTypes]="['image']"
-                        [(ngModel)]="editModel.Image" [validate]="validate.file" [cropperActive]="true"
+                        [(ngModel)]="editModel.Category.Image" [validate]="validate.file" [cropperActive]="true"
                         [maxFileSize]="5*1024" [cropperWidth]="350" [cropperHeight]="350">
                     </o-ng-file-input>
                 </div>
                 <div class="form-group">
                     <o-ng-input #nameElement type="text" header="Kategori Adı" placeholder="Ad"
-                        suffixIcon="icofont-pencil-alt-5" [(ngModel)]="editModel.Name" [validate]="validate.text">
+                        suffixIcon="icofont-pencil-alt-5" [(ngModel)]="editModel.Category.Name"
+                        [validate]="validate.text">
                     </o-ng-input>
                 </div>
                 <div class="form-group">
                     <o-ng-textarea #descriptionElement header="Açıklama" placeholder="Açıklama" [rows]="3"
-                        [resize]="true" [(ngModel)]="editModel.Description" [validate]="validate.text">
+                        [resize]="true" [(ngModel)]="editModel.Category.Description" [validate]="validate.text">
                     </o-ng-textarea>
                 </div>
             </div>

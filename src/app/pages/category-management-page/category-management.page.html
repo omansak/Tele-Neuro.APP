@@ -11,10 +11,12 @@
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-6">
-                        <div>Amount received</div><strong class="fs-20 text-success">$35,570</strong>
+                        <div>Aktif Kategori Sayısı</div><strong
+                            class="fs-20 text-success">{{totalCategoryCount}}</strong>
                     </div>
                     <div class="col-6">
-                        <div>Amount pending</div><strong class="fs-20 text-danger">$2,540</strong>
+                        <div>Aktif Kategori Program Sayısı</div><strong
+                            class="fs-20 text-success">{{totalProgramCount}}</strong>
                     </div>
                 </div>
             </div>
@@ -43,17 +45,17 @@
                             </div>
                         </td>
                         <td>
-                            <div class="text-nowrap"><strong [innerText]="item.Name"></strong></div>
+                            <div class="text-nowrap"><strong [innerText]="item.Category.Name"></strong></div>
                         </td>
                         <td>
-                            <div class="text-muted text-wrap" [innerText]="item.Description"></div>
+                            <div class="text-muted text-wrap" [innerText]="item.Category.Description"></div>
                         </td>
                         <td>
                             <div class="text-nowrap "
-                                [ngClass]="{'text-success': item.IsActive,'text-danger': !item.IsActive}">
+                                [ngClass]="{'text-success': item.Category.IsActive,'text-danger': !item.Category.IsActive}">
                                 <i class="icofont-check-circled mr-1"
-                                    [ngClass]="{'icofont-check-circled': item.IsActive,'icofont-close-circled' : !item.IsActive}"></i>
-                                <span>{{item.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                                    [ngClass]="{'icofont-check-circled': item.Category.IsActive,'icofont-close-circled' : !item.Category.IsActive}"></i>
+                                <span>{{item.Category.IsActive ? 'Aktif' : 'Pasif'}}</span>
                             </div>
                         </td>
                         <td class="text-center">0</td>
@@ -65,7 +67,8 @@
                                     </span>
                                 </button>
                                 <button class="btn btn-info btn-sm btn-square rounded-pill"
-                                    title="Kategori aktiflik durumunu değiştir" (click)="toggleCategoryStatus(item.Id)">
+                                    title="Kategori aktiflik durumunu değiştir"
+                                    (click)="toggleCategoryStatus(item.Category.Id)">
                                     <span class="btn-icon icofont-exchange"></span>
                                 </button>
                             </div>
@@ -84,7 +87,7 @@
     </button>
 </div>
 
-<o-update-category-modal *ngIf="showStatusAddCategoryModal" [category]="forEditCategory"
-    (categoryChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
+<o-update-category-modal *ngIf="showStatusAddCategoryModal" [categoryInfo]="forEditCategory"
+    (categoryInfoChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
 
 </o-update-category-modal>
