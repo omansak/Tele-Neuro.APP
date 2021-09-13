@@ -13,27 +13,22 @@ import { ONgTextareaComponent } from '../../shared/o-ng-textarea/o-ng-textarea.c
 @Component({
   selector: "o-update-category-modal",
   templateUrl: './update-category-modal.component.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UpdateCategoryModalComponent),
-      multi: true
-    },
-    CategoryService],
+  providers: [CategoryService],
   encapsulation: ViewEncapsulation.None
 })
-export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, ControlValueAccessor {
+export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterViewInit {
   // Inputs
+  @Input()
+  public category?: CategoryModel;
   @Input()
   public show: boolean = false;
   // Outputs
-  @Output('onCategoryUpdated')
-  public changeEvent = new EventEmitter();
+  @Output()
+  public categoryChange = new EventEmitter();
   @Output()
   public showChange = new EventEmitter();
   // Public's
-  public model: CategoryModel = new CategoryModel();
-  public realModel: CategoryModel;
+  public editModel: CategoryModel;
   public validate = {
     text: VALIDATE_TEXT,
     file: VALIDATE_FILE
@@ -62,10 +57,14 @@ export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, C
   @ViewChild(CardLoaderDirective)
   public cardLoaderDirective: CardLoaderDirective;
   // Privates
-  private _onChange = (_: any) => { };
-  private _onTouched = () => { };
 
   constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
+  ngOnInit(): void {
+    if (!this.category) {
+      this.category = new CategoryModel();
+    }
+    this.editModel = Object.assign({}, this.category)
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.show) {
@@ -84,28 +83,8 @@ export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, C
     })
   }
 
-  writeValue(obj: any): void {
-    if (obj) {
-      this.realModel = obj;
-      this.model = Object.assign({}, this.realModel);
-    }
-  }
-
-  registerOnChange(fn: any): void {
-    this._onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this._onTouched = fn;
-  }
-
   emitChangeEvent() {
-    this._onChange(this.realModel)
-    this.changeEvent.emit(this.realModel);
-  }
-
-  emitFocusEvent() {
-    this._onTouched();
+    this.categoryChange.emit(this.category);
   }
 
   emitShowEvent() {
@@ -116,8 +95,6 @@ export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, C
     $(this.modal.nativeElement)
       .modal('hide');
     this.show = false;
-    this.emitChangeEvent();
-    this.emitFocusEvent();
     this.emitShowEvent();
   }
 
@@ -125,7 +102,6 @@ export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, C
     $(this.modal.nativeElement)
       .modal('show');
     this.show = true;
-    this.emitFocusEvent();
     this.emitShowEvent();
   }
 
@@ -139,7 +115,7 @@ export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, C
       this.progressOption.start();
       this.cardLoaderDirective.start();
       this._categoryService
-        .updateCategoryProgressive(this.model)
+        .updateCategoryProgressive(this.editModel)
         .pipe(finalize(() => {
           this.progressOption.stop();
           this.cardLoaderDirective.stop();
@@ -147,8 +123,8 @@ export class UpdateCategoryModalComponent implements OnChanges, AfterViewInit, C
         .subscribe(
           (i) => {
             if (i.IsDone) {
-              this.model = <CategoryModel>i.Result;
-              this.realModel = this.model;
+              this.editModel = <CategoryModel>i.Result;
+              this.category = this.editModel;
               this.hideModal();
               this.emitChangeEvent();
               toast.success();

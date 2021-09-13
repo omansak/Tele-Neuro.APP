@@ -3,9 +3,23 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { CDN_CSS_FILE_INPUT, CDN_JS_FILE_INPUT, CDN_JS_FILE_INPUT_LOCALE } from 'src/app/consts/cdns';
 import { StatusType } from 'src/app/consts/enums';
+import { Helper } from 'src/app/helpers/helper';
 import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 
-// TODO Multiple Cropper,Block Trigger Multi init
+export enum FileType {
+  Image = "image",
+  Video = "video",
+  Audio = "audio",
+  Text = "text",
+  Unknown = "unknown"
+}
+export class ONgFileInput {
+  File?: File;
+  Url?: string;
+  Type: FileType;
+  IsChanged: boolean;
+}
+// TODO Block Trigger Multi init
 @Component({
   selector: 'o-ng-file-input',
   templateUrl: './o-ng-file-input.component.html',
@@ -36,8 +50,6 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   @Input()
   public showPreview: boolean = true;
   @Input()
-  public multiple: boolean = false;
-  @Input()
   public allowedFileTypes: string[] | null = null;//['image', 'html', 'text', 'video', 'audio', 'flash', 'object'];
   @Input()
   public allowedFileExtensions: string[] | null = null; // ['jpg', 'gif', 'png', 'txt']
@@ -61,7 +73,7 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   @Output('change')
   public changeEvent = new EventEmitter();
   // Publics
-  public value: File | File[] | null;
+  public value: ONgFileInput | null;
   public showCropper: boolean = false;
   public isValid: StatusType | undefined | null = undefined;
   public validateMessage: string | undefined | null = undefined;
@@ -81,6 +93,10 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   constructor(private _lazyLoaderService: LazyLoaderService) { }
 
   ngAfterViewInit(): void {
+    if (this.cropperActive && !Helper.ObjectsEqual(this.allowedFileTypes, ['image'])) {
+      console.error("cropperActive just active when allowedFileTypes is image")
+      return;
+    }
     this.lazyLoaderObservable.subscribe(() => {
       this.initFileInput(this.value);
     });
@@ -113,24 +129,32 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
     this._onTouched();
   }
 
-  changeValue(e: File[]) {
-    if (this.multiple)
-      this.value = e;
-    else
-      this.value = e[0];
-  }
-
-  changeValueFromEvent(e: any) {
-    if (e?.target?.files) {
-      this.changeValue(e?.target?.files)
+  changeValueFromFile(file: File | null, fileType?: FileType) {
+    if (file) {
+      let type: FileType = fileType || FileType.Unknown;
+      let input: ONgFileInput = { File: file, Type: type, IsChanged: true }
+      this.value = input;
+    }
+    else {
+      this.value = null;
     }
   }
 
+  initONgFileInput(file?: File, url?: string): ONgFileInput {
+    let fileINput = new ONgFileInput();
+    fileINput.File = file;
+    fileINput.Url = url;
+    fileINput.IsChanged = true;
+    return fileINput;
+  }
+
   onImageCropped(e: File) {
-    this.value = e;
+    let input = this.initONgFileInput(e);
+    input.Type = FileType.Image
+    this.value = input;
     this.showCropper = false;
 
-    this.initFileInput(e);
+    this.initFileInput(this.value);
     this.emitChangeEvent(e);
   }
 
@@ -151,7 +175,7 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
     this.showCropper = true;
   }
 
-  private initFileInput(initialFile: File | File[] | null = null) {
+  private initFileInput(initialInput: ONgFileInput | null = null) {
     let config: any = {
       overwriteInitial: true,
       maxFileSize: this.maxFileSize,
@@ -161,7 +185,7 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
       language: 'tr',
       allowedFileTypes: this.allowedFileTypes,
       allowedFileExtensions: this.allowedFileExtensions,
-      maxFileCount: this.multiple ? null : 0,
+      maxFileCount: 1,
       fileActionSettings: {
         showDrag: false,
         zoomIcon: '<i class="icofont-ui-zoom-in"></i>',
@@ -173,21 +197,31 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
         fullscreen: '<i class="icofont-expand"></i>',
         borderless: '<i class="icofont-rounded-expand"></i>',
         close: '<i class="icofont-close-circled"></i>'
-      }
+      },
+      initialPreviewShowDelete: false
     }
 
-
-    if (initialFile && initialFile instanceof File) {
+    if (initialInput && initialInput.File) {
       const reader = new FileReader();
-      reader.readAsDataURL(initialFile);
+      reader.readAsDataURL(initialInput.File);
       reader.onload = () => {
-        config.initialPreview = [`<img src="${reader.result}" class="kv-preview-data file-preview-image">`];
-        config.initialPreviewConfig = [
-          { previewAsData: false, size: initialFile.size, caption: initialFile.name, filetype: initialFile.type },
-        ];
-        config.initialPreviewShowDelete = false;
+        if (initialInput.Type == FileType.Image) {
+          config.initialPreview = [`<img src="${reader.result}" class="kv-preview-data file-preview-image">`];
+          config.initialPreviewConfig = [
+            { previewAsData: false, size: initialInput.File!.size, caption: initialInput.File!.name, filetype: initialInput.File!.type },
+          ];
+        }
         this.initBootstrapFileInput(config);
       }
+    }
+    else if (initialInput && initialInput.Url) {
+      if (initialInput.Type == FileType.Image) {
+        config.initialPreview = [`<img src="${initialInput.Url}" class="kv-preview-data file-preview-image">`];
+        config.initialPreviewConfig = [
+          { previewAsData: false },
+        ];
+      }
+      this.initBootstrapFileInput(config);
     }
     else {
       this.initBootstrapFileInput(config);
@@ -207,23 +241,18 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
       .fileinput(config)
       .on('change', (e: any) => {
         if (!this.cropperActive) {
-          this.changeValueFromEvent(e);
+          this.changeValueFromFile(e?.target?.files[0]);
           this.emitChangeEvent(e);
         }
       })
       .on('filecleared', (e: any) => {
-        this.changeValueFromEvent(e);
+        this.changeValueFromFile(null);
         this.emitChangeEvent(e);
       })
       .on('fileimageloaded', (e: any) => {
         if (this.cropperActive) {
-          if (!this.multiple) {
-            this.changeValueFromEvent(e);
-            this.initCropper();
-          }
-          else {
-            console.error("Cropper does not active if multiple is true and allowedFileTypes is not image ");
-          }
+          this.changeValueFromFile(e?.target?.files[0], FileType.Image);
+          this.initCropper();
         }
       })
       .on('fileerror', (event: any, data: any, msg: string) => {

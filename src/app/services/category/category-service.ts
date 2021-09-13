@@ -24,9 +24,9 @@ export class CategoryService extends BaseService {
         form.append("Name", model.Name);
         form.append("Description", model.Description);
         form.append("IsActive", model.IsActive ? "true" : "false");
-        form.append("Image", model.Image);
-        console.log(model.Image);
-
+        if (model.Image.IsChanged) {
+            form.append("Image", model.Image.File!);
+        }
         return super.httpPostModelProgressive<CategoryModel>(CategoryModel, environment.request.endPoints.category.updateCategory, form);
     }
 }

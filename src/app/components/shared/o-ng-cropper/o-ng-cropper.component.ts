@@ -58,7 +58,6 @@ export class ONgCropperComponent implements OnInit {
       .modal('hide');
     this.showCropper = false;
     this.croppedImageEvent.emit(this.croppedImage);
-
   }
 
   imageLoaded(e: any) {

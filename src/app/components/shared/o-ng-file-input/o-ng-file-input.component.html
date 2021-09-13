@@ -16,6 +16,6 @@
 </div>
 <div #errorContainer></div>
 
-<o-ng-cropper [image]="value" [cropperWidth]="cropperWidth" [cropperHeight]="cropperHeight" *ngIf="showCropper"
+<o-ng-cropper [image]="value!.File!" [cropperWidth]="cropperWidth" [cropperHeight]="cropperHeight" *ngIf="showCropper"
     (croppedImage)="onImageCropped($event)" [cropperFormat]="cropperFormat" [cropperAspectRatio]="cropperAspectRatio"
     [cropperMaintainAspectRatio]="cropperMaintainAspectRatio"></o-ng-cropper>

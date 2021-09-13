@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import { FileType } from 'src/app/components/shared/o-ng-file-input/o-ng-file-input.component';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
 import { CategoryModel } from 'src/app/models/category/category-model';
 import { CategoryService } from 'src/app/services/category/category-service';
@@ -58,13 +59,9 @@ export class CategoryManagementPage implements AfterViewInit {
 
   showAddCategoryModal(e?: CategoryModel) {
     if (e?.Document) {
-      fetch(e?.Document.HostFullPath)
-        .then(response => response.blob())
-        .then(imageBlob => {
-          e.Image = new File([imageBlob], e.Document.Name, { type: imageBlob.type });
-          this.forEditCategory = e;
-          this.showStatusAddCategoryModal = true;
-        });
+      e.Image = { Url: e.Document.HostFullPath, IsChanged: false, Type: FileType.Image };
+      this.forEditCategory = e;
+      this.showStatusAddCategoryModal = true;
     }
     else {
       this.forEditCategory = e;

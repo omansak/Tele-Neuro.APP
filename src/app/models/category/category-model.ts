@@ -1,3 +1,4 @@
+import { ONgFileInput } from "src/app/components/shared/o-ng-file-input/o-ng-file-input.component";
 import { IBaseModel } from "../base-model";
 import { DocumentModel } from "../document/documen-model";
 
@@ -11,7 +12,7 @@ export class CategoryModel implements IBaseModel<CategoryModel> {
     DocumentGuid: string;
     Document: DocumentModel;
     // NotMapped
-    Image: File;
+    Image: ONgFileInput;
 
     mapModel(json: any): CategoryModel {
         this.Id = json.id
@@ -21,7 +22,7 @@ export class CategoryModel implements IBaseModel<CategoryModel> {
         this.CreatedDate = json.createdDate
         this.CreatedUser = json.createdUser
         this.DocumentGuid = json.documentGuid
-        if(json.document){
+        if (json.document) {
             this.Document = new DocumentModel().mapModel(json.document);
         }
         return this;

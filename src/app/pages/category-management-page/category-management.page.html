@@ -84,7 +84,7 @@
     </button>
 </div>
 
-<o-update-category-modal *ngIf="showStatusAddCategoryModal" [(ngModel)]="forEditCategory"
-    (onCategoryUpdated)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
+<o-update-category-modal *ngIf="showStatusAddCategoryModal" [category]="forEditCategory"
+    (categoryChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
 
 </o-update-category-modal>
