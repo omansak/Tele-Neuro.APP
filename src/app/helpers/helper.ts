@@ -17,6 +17,11 @@ export class Helper {
         return stringBuilder.join('');
     }
 
+    public static Round(value: number, precision: number) {
+        var multiplier = Math.pow(10, precision || 0);
+        return Math.round(value * multiplier) / multiplier;
+    }
+
     public static RandomString(length = 10): string {
         const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
         let randomstring = 'o';

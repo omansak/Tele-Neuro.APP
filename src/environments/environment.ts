@@ -5,7 +5,9 @@ export const environment = {
     rootEndPoint: "api/",
     endPoints: {
       category: {
-        updateCategory: "Category/UpdateCategory"
+        updateCategory: "Category/UpdateCategory",
+        listCategories: "Category/ListCategories",
+        toggleCategoryStatus: "Category/ToggleCategoryStatus",
       }
     }
   }

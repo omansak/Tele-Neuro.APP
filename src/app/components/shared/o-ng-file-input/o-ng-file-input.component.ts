@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { CDN_CSS_FILE_INPUT, CDN_JS_FILE_INPUT, CDN_JS_FILE_INPUT_LOCALE } from 'src/app/consts/cdns';
-import { Helper } from 'src/app/helpers/helper';
+import { StatusType } from 'src/app/consts/enums';
 import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 
-// TODO Multiple Cropper
+// TODO Multiple Cropper,Block Trigger Multi init
 @Component({
   selector: 'o-ng-file-input',
   templateUrl: './o-ng-file-input.component.html',
@@ -38,44 +38,61 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   @Input()
   public multiple: boolean = false;
   @Input()
-  public cropperActive: boolean = false;
-  @Input()
   public allowedFileTypes: string[] | null = null;//['image', 'html', 'text', 'video', 'audio', 'flash', 'object'];
   @Input()
   public allowedFileExtensions: string[] | null = null; // ['jpg', 'gif', 'png', 'txt']
+  @Input()
+  public validate: (value: any) => { status: StatusType | undefined | null, message?: string | undefined | null };
+  @Input()
+  public isLoading: boolean = false;
+  @Input()
+  public cropperActive: boolean = false;
+  @Input()
+  public cropperFormat: 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico' = 'png';
   @Input()
   public cropperWidth: number = 0;
   @Input()
   public cropperHeight: number = 0;
   @Input()
-  public format: 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico' = 'png';
+  public cropperMaintainAspectRatio: boolean = true;
+  @Input()
+  public cropperAspectRatio = 1 / 1;
   // Outputs
   @Output('change')
   public changeEvent = new EventEmitter();
   // Publics
-  public value: File | File[];
+  public value: File | File[] | null;
   public showCropper: boolean = false;
+  public isValid: StatusType | undefined | null = undefined;
+  public validateMessage: string | undefined | null = undefined;
   // Privates
   private bootstrapFileInput: any;
   private _onChange = (_: any) => { };
   private _onTouched = () => { };
-
-  @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
-  @ViewChild('errorContainer', { static: true }) errorContainer: ElementRef;
+  private lazyLoaderObservable = forkJoin([
+    this._lazyLoaderService.loadStyle(CDN_CSS_FILE_INPUT),
+    this._lazyLoaderService.loadScript(CDN_JS_FILE_INPUT),
+    this._lazyLoaderService.loadScript(CDN_JS_FILE_INPUT_LOCALE)
+  ]);
+  @ViewChild('fileInput', { static: true })
+  private fileInput: ElementRef;
+  @ViewChild('errorContainer', { static: true })
+  private errorContainer: ElementRef;
   constructor(private _lazyLoaderService: LazyLoaderService) { }
+
   ngAfterViewInit(): void {
-    forkJoin([
-      this._lazyLoaderService.loadStyle(CDN_CSS_FILE_INPUT),
-      this._lazyLoaderService.loadScript(CDN_JS_FILE_INPUT),
-      this._lazyLoaderService.loadScript(CDN_JS_FILE_INPUT_LOCALE)
-    ])
-      .subscribe(() => {
-        this.initFileInput();
-      });
+    this.lazyLoaderObservable.subscribe(() => {
+      this.initFileInput(this.value);
+    });
   }
 
   writeValue(obj: any): void {
     this.value = obj;
+    if (this.value) {
+      this.lazyLoaderObservable.subscribe(() => {
+        this.initFileInput(this.value);
+      });
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -87,8 +104,13 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   }
 
   emitChangeEvent(e: File) {
+    this.check();
     this._onChange(this.value)
     this.changeEvent.emit(e);
+  }
+
+  emitFocusEvent() {
+    this._onTouched();
   }
 
   changeValue(e: File[]) {
@@ -112,11 +134,24 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
     this.emitChangeEvent(e);
   }
 
+  check() {
+    if (this.validate) {
+      let val = this.validate(this.value);
+      this.isValid = val.status;
+      this.validateMessage = val.message;
+      if (val.status == StatusType.Error) {
+        this.fileInput.nativeElement.focus();
+      }
+      return val.status == StatusType.Success;
+    }
+    return undefined;
+  }
+
   private initCropper() {
     this.showCropper = true;
   }
 
-  private initFileInput(initialFile: File | null = null) {
+  private initFileInput(initialFile: File | File[] | null = null) {
     let config: any = {
       overwriteInitial: true,
       maxFileSize: this.maxFileSize,
@@ -128,14 +163,21 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
       allowedFileExtensions: this.allowedFileExtensions,
       maxFileCount: this.multiple ? null : 0,
       fileActionSettings: {
-        showDrag: false
+        showDrag: false,
+        zoomIcon: '<i class="icofont-ui-zoom-in"></i>',
       },
-      previewZoomButtonClasses: {
-        close: 'd-none'
+      previewZoomButtonIcons: {
+        prev: '<i class="icofont-caret-left"></i>',
+        next: '<i class="icofont-caret-right"></i>',
+        toggleheader: '<i class="icofont-circled-up"></i>',
+        fullscreen: '<i class="icofont-expand"></i>',
+        borderless: '<i class="icofont-rounded-expand"></i>',
+        close: '<i class="icofont-close-circled"></i>'
       }
     }
 
-    if (initialFile) {
+
+    if (initialFile && initialFile instanceof File) {
       const reader = new FileReader();
       reader.readAsDataURL(initialFile);
       reader.onload = () => {

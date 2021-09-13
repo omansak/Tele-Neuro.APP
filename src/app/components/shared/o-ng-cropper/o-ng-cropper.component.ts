@@ -17,9 +17,11 @@ export class ONgCropperComponent implements OnInit {
   @Input()
   public cropperHeight: number = 0;
   @Input()
-  public aspectRatio = 1 / 1;
+  public cropperAspectRatio = 1 / 1;
   @Input()
-  public format: 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico' = 'png';
+  public cropperMaintainAspectRatio = true;
+  @Input()
+  public cropperFormat: 'png' | 'jpeg' | 'webp' | 'bmp' | 'ico' = 'png';
 
   // Outputs
   @Output("croppedImage")
@@ -52,8 +54,11 @@ export class ONgCropperComponent implements OnInit {
   }
 
   save() {
-    this.croppedImageEvent.emit(this.croppedImage);
+    $(this.modal.nativeElement)
+      .modal('hide');
     this.showCropper = false;
+    this.croppedImageEvent.emit(this.croppedImage);
+
   }
 
   imageLoaded(e: any) {

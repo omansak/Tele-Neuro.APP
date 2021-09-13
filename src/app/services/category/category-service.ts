@@ -5,18 +5,28 @@ import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base-service';
 import { CategoryModel } from 'src/app/models/category/category-model';
 import { ExceptionHandler } from '../common/exception-handler';
+import { ResponseProgressive } from 'src/app/models/base-model';
 
 @Injectable()
 export class CategoryService extends BaseService {
     constructor(httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
         super(httpClient, exceptionHandler);
     }
-    public updateCategory(model: CategoryModel): Observable<number> {
+    public listCategories(): Observable<Array<CategoryModel> | null> {
+        return super.httpGetModelArray<CategoryModel>(CategoryModel, environment.request.endPoints.category.listCategories);
+    }
+    public toggleCategoryStatus(id: number): Observable<boolean> {
+        return super.httpPostValue<boolean>(environment.request.endPoints.category.toggleCategoryStatus, { id: id });
+    }
+    public updateCategoryProgressive(model: CategoryModel): Observable<ResponseProgressive<CategoryModel>> {
         let form = new FormData();
         form.append("Id", (model.Id || 0).toString());
         form.append("Name", model.Name);
         form.append("Description", model.Description);
+        form.append("IsActive", model.IsActive ? "true" : "false");
         form.append("Image", model.Image);
-        return super.httpPostValue<number>(environment.request.endPoints.category.updateCategory, form);
+        console.log(model.Image);
+
+        return super.httpPostModelProgressive<CategoryModel>(CategoryModel, environment.request.endPoints.category.updateCategory, form);
     }
 }

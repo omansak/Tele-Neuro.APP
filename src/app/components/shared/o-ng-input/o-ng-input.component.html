@@ -1,12 +1,21 @@
 <label [innerHtml]="header" *ngIf="header"></label>
-<div class="form-group" [ngClass]="[
+<div class="form-group needs-validation valitable-input" [ngClass]="[
     prefixIcon ? 'with-prefix-icon' : '',
     suffixIcon ? 'with-suffix-icon' : '',
-    containerClass ? containerClass : ''
+    containerClass ? containerClass : '',
+    (isValid == 'Success' || isValid == 'Error') ? 'validated' : ''
     ]">
-    <div class="prefix-icon" [ngClass]="prefixIcon" *ngIf="prefixIcon"></div>
-    <input class="form-control" [ngClass]="inputClass" [attr.type]="type" [placeholder]="placeholder"
-        [(ngModel)]="value" [disabled]="disabled" (change)="emitChangeEvent($event)" (keyup)="emitKeyUpEvent($event)">
-    <div class="suffix-icon" [ngClass]="suffixIcon" *ngIf="suffixIcon"></div>
+    <div class="prefix-icon" [ngClass]="prefixIcon" *ngIf="prefixIcon">
+    </div>
+    <input #inputElement class="form-control" [ngClass]="[
+    inputClass ? inputClass : '', 
+    isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
+    isLoading ? 'is-loading' : ''
+    ]" [attr.type]="type" [placeholder]="placeholder" [(ngModel)]="value" [disabled]="disabled"
+        (change)="emitChangeEvent($event)" (keyup)="emitKeyUpEvent($event)" (blur)="emitFocusEvent()">
+    <div class="suffix-icon" [ngClass]="suffixIcon" *ngIf="suffixIcon">
+    </div>
     <div class="form-text text-muted" [innerHtml]="description" *ngIf="description"></div>
+    <div [ngClass]="{'valid-tooltip': isValid == 'Success','invalid-tooltip':isValid == 'Error'}"
+        *ngIf="validateMessage" [innerHtml]="validateMessage"></div>
 </div>

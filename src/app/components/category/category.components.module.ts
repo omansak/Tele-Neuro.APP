@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AddCategoryModalComponent } from './add-category-modal/add-category-modal.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '../shared/shared.components.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
+import { UpdateCategoryModalComponent } from './update-category-modal/update-category-modal.component';
 @NgModule({
     imports: [
         // Angular
@@ -11,10 +12,11 @@ import { SharedComponentsModule } from '../shared/shared.components.module';
         FormsModule,
 
         //App
-        ModalModule.forChild(),
+        ProgressbarModule.forRoot(),
         SharedComponentsModule,
+        DirectivesModule
     ],
-    exports: [AddCategoryModalComponent],
-    declarations: [AddCategoryModalComponent]
+    exports: [UpdateCategoryModalComponent],
+    declarations: [UpdateCategoryModalComponent]
 })
 export class CategoryComponentsModule { }

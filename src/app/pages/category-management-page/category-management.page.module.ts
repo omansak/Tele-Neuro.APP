@@ -7,6 +7,7 @@ import { NAVIGATION_CATEGORY_MANAGEMENT } from 'src/app/consts/menu';
 import { FormsModule } from '@angular/forms';
 import { CategoryComponentsModule } from 'src/app/components/category/category.components.module';
 import { CategoryManagementPage } from './category-management.page';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 @NgModule({
   imports: [
     // Angular
@@ -22,7 +23,8 @@ import { CategoryManagementPage } from './category-management.page';
     ]),
     // App
     SharedComponentsModule,
-    CategoryComponentsModule
+    CategoryComponentsModule,
+    DirectivesModule
   ],
   exports: [],
   declarations: [CategoryManagementPage],

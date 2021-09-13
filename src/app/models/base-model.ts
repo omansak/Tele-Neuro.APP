@@ -2,6 +2,18 @@ export interface IBaseModel<TModel> {
     mapModel(json: any): TModel;
 }
 
+export class ResponseProgressive<TModel> {
+    Result: TModel | Array<TModel> | null;
+    DownloadProgress: { Loaded: number, Total: number | undefined } | null;
+    UploadProgress: { Loaded: number, Total: number | undefined } | null;
+    IsDone: boolean;
+    percentage(value: { Loaded: number, Total: number | undefined } | null): number {
+        if (value && value.Total && value.Loaded) {
+            return 100 / (value.Total! / value.Loaded);
+        }
+        return 0;
+    }
+}
 export class BaseResponse {
     Status: ResponseStatus = new ResponseStatus();
     Result: ResponseResult = new ResponseResult();

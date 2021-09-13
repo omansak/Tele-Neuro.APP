@@ -1,26 +1,86 @@
-import { Component } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { AddCategoryModalComponent } from 'src/app/components/category/add-category-modal/add-category-modal.component';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
+import { CategoryModel } from 'src/app/models/category/category-model';
+import { CategoryService } from 'src/app/services/category/category-service';
+import { ToastService } from 'src/app/services/common/toastr-service';
 
 @Component({
-  templateUrl: './category-management.page.html'
+  templateUrl: './category-management.page.html',
+  providers: [CategoryService, ToastService]
 })
-export class CategoryManagementPage {
+export class CategoryManagementPage implements AfterViewInit {
+  //Publics
+  public categories: Array<CategoryModel>
+  public showStatusAddCategoryModal: boolean = false;
+  public forEditCategory: CategoryModel | undefined;
+  @ViewChild(CardLoaderDirective)
+  public cardLoaderDirective: CardLoaderDirective;
+  constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
 
-  public items = [1, 2, 3, 4, 5]
-  public value = undefined;
+  ngAfterViewInit(): void {
+    this.getCategories();
+  }
 
-  constructor(private _modalService: BsModalService) { }
+  getCategories() {
+    this.cardLoaderDirective.start();
+    this._categoryService
+      .listCategories()
+      .pipe(finalize(() => this.cardLoaderDirective.stop()))
+      .subscribe(
+        (i) => {
+          if (i && i.length > 0) {
+            this.categories = i;
+          }
+        });
+  }
 
-  showAddCategoryModal(model: any = null) {
-    const state = {
-      model: model,
-    };
-    this._modalService.show(AddCategoryModalComponent, {
-      initialState: state,
-      class: "modal-dialog-centered",
-      ignoreBackdropClick: true,
-      keyboard: false
-    });
+  toggleCategoryStatus(id: number) {
+    let toast = this._toastService.continuing("Kategori durumu güncelleniyor.", "Kategori durumu değiştirildi.", "Kategori güncellenemedi.");
+    this.cardLoaderDirective.start();
+    this._categoryService
+      .toggleCategoryStatus(id)
+      .pipe(finalize(() => this.cardLoaderDirective.stop()))
+      .subscribe(
+        (i) => {
+          if (i) {
+            let category = this.categories.find(i => i.Id == id);
+            if (category) {
+              category.IsActive = !category.IsActive;
+              toast.success();
+            }
+            else {
+              toast.error("Kategori bulunamadı");
+            }
+          }
+        });
+  }
+
+  showAddCategoryModal(e?: CategoryModel) {
+    if (e?.Document) {
+      fetch(e?.Document.HostFullPath)
+        .then(response => response.blob())
+        .then(imageBlob => {
+          e.Image = new File([imageBlob], e.Document.Name, { type: imageBlob.type });
+          this.forEditCategory = e;
+          this.showStatusAddCategoryModal = true;
+        });
+    }
+    else {
+      this.forEditCategory = e;
+      this.showStatusAddCategoryModal = true;
+    }
+  }
+
+  onCategoryUpdated(val: any) {
+    if (val) {
+      let categoryIndex = this.categories.findIndex(i => i.Id == val.Id)
+      if (categoryIndex >= 0) {
+        this.categories[categoryIndex] = val;
+      }
+      else {
+        this.categories.unshift(val);
+      }
+    }
   }
 }

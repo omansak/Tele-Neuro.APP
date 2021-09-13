@@ -29,16 +29,20 @@ export class ToastService {
         this._toastrService.clear();
     }
 
-    clearAllContinuing() {
+    clearAllContinuing(status: boolean | undefined = undefined) {
         ToastContinuing.ToastQueue.forEach(i => {
-            this._toastrService.clear(i);
+            this._toastrService.clear(i.id);
+            if (status)
+                i.self.success();
+            else if (status == false)
+                i.self.error();
         });
         ToastContinuing.ToastQueue = [];
     }
 }
 
 export class ToastContinuing {
-    public static ToastQueue: Array<number> = [];
+    public static ToastQueue: Array<{ self: ToastContinuing, id: number }> = [];
     private _id: number;
     constructor(
         private _toastrService: ToastrService,
@@ -47,17 +51,24 @@ export class ToastContinuing {
         private _errorMessage?: string) {
         this.initToast();
     }
-    success() {
+    success(message?: string) {
+        if (message)
+            this._successMessage = message;
+        if (this._successMessage)
+            this._toastrService.success(this._successMessage);
         this.clear();
-        this._toastrService.success(this._successMessage);
     }
 
-    error() {
-        this._toastrService.error(this._errorMessage);
+    error(message?: string) {
+        if (message)
+            this._errorMessage = message;
+        if (this._errorMessage)
+            this._toastrService.error(this._errorMessage);
+        this.clear();
     }
 
     private clear() {
-        ToastContinuing.ToastQueue = ToastContinuing.ToastQueue.filter(i => i != this._id);
+        ToastContinuing.ToastQueue = ToastContinuing.ToastQueue.filter(i => i.id != this._id);
         this._toastrService.clear(this._id);
     }
 
@@ -65,7 +76,7 @@ export class ToastContinuing {
         this._id = this._toastrService
             .info(this.getInfoHtml(this._continuingMessage), undefined, { disableTimeOut: true, enableHtml: true, progressBar: true, tapToDismiss: false })
             .toastId;
-        ToastContinuing.ToastQueue.push(this._id);
+        ToastContinuing.ToastQueue.push({ self: this, id: this._id });
     }
 
     private getInfoHtml(message: string) {

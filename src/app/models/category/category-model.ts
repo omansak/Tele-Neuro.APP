@@ -1,4 +1,6 @@
 import { IBaseModel } from "../base-model";
+import { DocumentModel } from "../document/documen-model";
+
 export class CategoryModel implements IBaseModel<CategoryModel> {
     Id: number;
     Name: string;
@@ -7,6 +9,7 @@ export class CategoryModel implements IBaseModel<CategoryModel> {
     CreatedDate: Date | string;
     CreatedUser: string;
     DocumentGuid: string;
+    Document: DocumentModel;
     // NotMapped
     Image: File;
 
@@ -18,13 +21,9 @@ export class CategoryModel implements IBaseModel<CategoryModel> {
         this.CreatedDate = json.createdDate
         this.CreatedUser = json.createdUser
         this.DocumentGuid = json.documentGuid
-        return this;
-    }
-    postModel() {
-        return {
-            Id: this.Id,
-            Name: this.Name,
-            Description: this.Description
+        if(json.document){
+            this.Document = new DocumentModel().mapModel(json.document);
         }
+        return this;
     }
 }

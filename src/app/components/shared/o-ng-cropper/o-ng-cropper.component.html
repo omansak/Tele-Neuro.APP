@@ -1,13 +1,14 @@
-<div #modal class="modal fade" role="dialog" data-keyboard="false">
-    <div class="modal-dialog" role="document">
+<div #modal class="modal fade" role="dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <image-cropper [imageFile]="imageFile" [canvasRotation]="canvasRotation" [transform]="transform"
                     [style.display]="showCropper ? null : 'none'" [containWithinAspectRatio]="containWithinAspectRatio"
                     [cropperMinWidth]="cropperWidth" [cropperMinHeight]="cropperHeight" [cropperMaxWidth]="cropperWidth"
                     [cropperMaxHeight]="cropperHeight" [resizeToWidth]="cropperWidth" [resizeToHeight]="cropperHeight"
-                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" [format]="format"
-                    (loadImageFailed)="loadImageFailed()" [aspectRatio]="aspectRatio" [imageQuality]="100">
+                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" [format]="cropperFormat"
+                    (loadImageFailed)="loadImageFailed()" [aspectRatio]="cropperAspectRatio" [imageQuality]="100"
+                    [maintainAspectRatio]="cropperMaintainAspectRatio">
                 </image-cropper>
                 <div class="form-group text-center mt-2">
                     <button class="btn btn-outline-primary btn-square rounded-pill mr-1" title="Sola Dönder"

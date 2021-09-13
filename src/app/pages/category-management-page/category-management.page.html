@@ -1,18 +1,30 @@
 <div class="row">
     <div class="col-12 col-md-6">
-        <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, dolorem excepturi
-            facilis magni necessitatibus
-            perspiciatis repellendus sunt veniam? A ad architecto aspernatur cupiditate dignissimos distinctio earum,
-            eligendi eum
-            iusto laboriosam maxime minima necessitatibus nemo nesciunt odio perferendis, quaerat qui quo repellendus
-            sapiente.
+        <p class="text-muted mb-4">Ürün yönetimi söz konusu olduğunda ürün kategorileri ve ürünlerin nasıl
+            kategorilendirildiği önemli bir konudur. Ürünlerinizi doğru bir şekilde kategorilendirmeniz,
+            ziyaretçilerinizin bu ürünlere daha kolay bir şekilde ulaşmasını sağlarken, ilgi gören ürünleri keşfetmenize
+            ve bunları da öne çıkartmanıza yardımcı olur.
         </p>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div>Amount received</div><strong class="fs-20 text-success">$35,570</strong>
+                    </div>
+                    <div class="col-6">
+                        <div>Amount pending</div><strong class="fs-20 text-danger">$2,540</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="card mb-0">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover" cardLoader>
                 <thead>
                     <tr>
                         <th scope="col">Resim</th>
@@ -24,52 +36,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let item of categories">
                         <td>
-                            <div class="icon fs-48 icofont-brand-acer"></div>
-                        </td>
-                        <td>
-                            <div class="text-muted text-nowrap">Bel-Bacak</div>
-                        </td>
-                        <td><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type specimen book. </strong>
-                        </td>
-                        <td>
-                            <div class="text-nowrap text-success">
-                                <i class="icofont-check-circled"></i> Aktif
+                            <div class="icon" style="max-height: 70px;">
+                                <img src="{{item.Document.HostFullPath}}?height=60">
                             </div>
                         </td>
-                        <td class="text-center">7</td>
                         <td>
-                            <div class="actions"><button class="btn btn-info btn-sm btn-square rounded-pill">
-                                    <span class="btn-icon icofont-ui-edit"></span>
-                                </button> <button class="btn btn-error btn-sm btn-square rounded-pill">
-                                    <span class="btn-icon icofont-ui-delete"></span>
+                            <div class="text-nowrap"><strong [innerText]="item.Name"></strong></div>
+                        </td>
+                        <td>
+                            <div class="text-muted text-wrap" [innerText]="item.Description"></div>
+                        </td>
+                        <td>
+                            <div class="text-nowrap "
+                                [ngClass]="{'text-success': item.IsActive,'text-danger': !item.IsActive}">
+                                <i class="icofont-check-circled mr-1"
+                                    [ngClass]="{'icofont-check-circled': item.IsActive,'icofont-close-circled' : !item.IsActive}"></i>
+                                <span>{{item.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                            </div>
+                        </td>
+                        <td class="text-center">0</td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                    (click)="showAddCategoryModal(item)">
+                                    <span class="btn-icon icofont-ui-edit">
+                                    </span>
                                 </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="icon fs-48 icofont-brand-acer"></div>
-                        </td>
-                        <td>
-                            <div class="text-muted text-nowrap">Boyun</div>
-                        </td>
-                        <td><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry</strong>
-                        </td>
-                        <td>
-                            <div class="text-nowrap text-success">
-                                <i class="icofont-close-circled"></i> Pasif
-                            </div>
-                        </td>
-                        <td class="text-center">1</td>
-                        <td>
-                            <div class="actions"><button class="btn btn-info btn-sm btn-square rounded-pill">
-                                    <span class="btn-icon icofont-ui-edit"></span>
-                                </button> <button class="btn btn-error btn-sm btn-square rounded-pill">
-                                    <span class="btn-icon icofont-ui-delete"></span>
+                                <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                    title="Kategori aktiflik durumunu değiştir" (click)="toggleCategoryStatus(item.Id)">
+                                    <span class="btn-icon icofont-exchange"></span>
                                 </button>
                             </div>
                         </td>
@@ -77,29 +74,17 @@
                 </tbody>
             </table>
         </div>
-
-        <nav class="mt-4">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                        <span class="icofont-simple-left"></span>
-                    </a>
-                </li>
-                <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span class="icofont-simple-right"></span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </div>
 </div>
 
 <div class="add-action-box animate__animated animate__bounce">
-    <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddCategoryModal()">
+    <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddCategoryModal()"
+        title="Kategori Ekle">
         <span class="btn-icon icofont-plus"></span>
     </button>
 </div>
+
+<o-update-category-modal *ngIf="showStatusAddCategoryModal" [(ngModel)]="forEditCategory"
+    (onCategoryUpdated)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
+
+</o-update-category-modal>

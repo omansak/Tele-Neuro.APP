@@ -1,8 +1,8 @@
 
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Observable, empty } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
-import { BaseResponse, IBaseModel } from 'src/app/models/base-model';
+import { BaseResponse, IBaseModel, ResponseProgressive } from 'src/app/models/base-model';
 import { environment } from 'src/environments/environment';
 import { DEFAULT_BASE_SERVICE_CONFIGURATION } from '../consts/defaults';
 
@@ -46,17 +46,42 @@ export class BaseService {
                 catchError(err => this.handleError(err))
             );
     }
-    //#region HttpGet
-    protected httpGetValue<TModel>(operation: string, params?: HttpParams): Observable<TModel> {
-        return this.httpGet<BaseResponse>(operation, params)
-            .pipe(map(json => {
-                return <TModel>this.handleResponse(json).Result.Data;
-            }));
+    private httpGetProgressive<T>(operation: string, params?: HttpParams): Observable<HttpEvent<Object>> {
+        return this._httpClient.get<T>(this.operationUri(operation), { params: params, headers: this._header, reportProgress: true, observe: 'events' })
+            .pipe(
+                timeout(this._configuration.Timeout),
+                catchError(err => this.handleError(err))
+            );
     }
+    private httpPostProgressive<T>(operation: string, body?: any, params?: HttpParams): Observable<HttpEvent<Object>> {
+        return this._httpClient.post<T>(this.operationUri(operation), body, { params: params, headers: this._header, reportProgress: true, observe: 'events' })
+            .pipe(
+                timeout(this._configuration.Timeout),
+                catchError(err => this.handleError(err))
+            );
+    }
+    //#region HttpGet
     protected httpGetBaseResponse(operation: string, params?: HttpParams): Observable<BaseResponse> {
         return this.httpGet<BaseResponse>(operation, params)
             .pipe(map(json => {
                 return this.handleResponse(json);
+            }));
+    }
+    protected httpGetBaseResponseProgressive(operation: string, params?: HttpParams): Observable<ResponseProgressive<BaseResponse>> {
+        return this.httpGetProgressive<BaseResponse>(operation, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<BaseResponse>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = this.handleResponse(i.body);
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
             }));
     }
     protected httpGetModel<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, params?: HttpParams): Observable<TModel | null> {
@@ -65,10 +90,67 @@ export class BaseService {
                 return this.mapResponse(json, cls);
             }));
     }
+    protected httpGetModelProgressive<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, params?: HttpParams): Observable<ResponseProgressive<TModel>> {
+        return this.httpGetProgressive<TModel>(operation, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<TModel>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = this.mapResponse(i, cls);
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
+            }));
+    }
     protected httpGetModelArray<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, params?: HttpParams): Observable<Array<TModel> | null> {
         return this.httpGet<Array<TModel>>(operation, params)
             .pipe(map(json => {
                 return this.mapResponseArray(json, cls);
+            }));
+    }
+    protected httpGetModelArrayProgressive<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, params?: HttpParams): Observable<ResponseProgressive<TModel>> {
+        return this.httpGetProgressive<Array<TModel>>(operation, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<TModel>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = this.mapResponseArray(i, cls);
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
+            }));
+    }
+    protected httpGetValue<TModel>(operation: string, params?: HttpParams): Observable<TModel> {
+        return this.httpGet<BaseResponse>(operation, params)
+            .pipe(map(json => {
+                return <TModel>this.handleResponse(json).Result.Data;
+            }));
+    }
+    protected httpGetValueProgressive<TModel>(operation: string, params?: HttpParams): Observable<ResponseProgressive<TModel>> {
+        return this.httpGetProgressive(operation, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<TModel>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = <TModel>this.handleResponse(i.body).Result.Data;
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
             }));
     }
     //#endregion
@@ -79,10 +161,44 @@ export class BaseService {
                 return this.handleResponse(json);
             }));
     }
+    protected httpPostBaseResponseProgressive(operation: string, body?: any, params?: HttpParams): Observable<ResponseProgressive<BaseResponse>> {
+        return this.httpPostProgressive(operation, body, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<BaseResponse>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = this.handleResponse(i.body);
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
+            }));
+    }
     protected httpPostModel<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, body?: any, params?: HttpParams): Observable<TModel | null> {
         return this.httpPost(operation, body, params)
             .pipe(map(json => {
                 return this.mapResponse(json, cls);
+            }));
+    }
+    protected httpPostModelProgressive<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, body?: any, params?: HttpParams): Observable<ResponseProgressive<TModel>> {
+        return this.httpPostProgressive(operation, body, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<TModel>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = this.mapResponse(i.body, cls);
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
             }));
     }
     protected httpPostArrayModel<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, body?: any, params?: HttpParams): Observable<Array<TModel> | null> {
@@ -91,10 +207,44 @@ export class BaseService {
                 return this.mapResponseArray(json, cls);
             }));
     }
+    protected httpPostArrayModelProgressive<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, body?: any, params?: HttpParams): Observable<ResponseProgressive<TModel>> {
+        return this.httpPostProgressive(operation, body, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<TModel>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = this.mapResponseArray(i.body, cls);
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
+            }));
+    }
     protected httpPostValue<TModel>(operation: string, body?: any, params?: HttpParams): Observable<TModel> {
         return this.httpPost(operation, body, params)
             .pipe(map(json => {
                 return <TModel>this.handleResponse(json).Result.Data;
+            }));
+    }
+    protected httpPostValueProgressive<TModel>(operation: string, body?: any, params?: HttpParams): Observable<ResponseProgressive<TModel>> {
+        return this.httpPostProgressive(operation, body, params)
+            .pipe(map(i => {
+                let response = new ResponseProgressive<TModel>();
+                if (i.type == HttpEventType.Response) {
+                    response.Result = <TModel>this.handleResponse(i.body).Result.Data;
+                    response.IsDone = true;
+                }
+                if (i.type == HttpEventType.DownloadProgress) {
+                    response.DownloadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                if (i.type == HttpEventType.UploadProgress) {
+                    response.UploadProgress = { Loaded: i.loaded, Total: i.total }
+                }
+                return response;
             }));
     }
     //#endregion

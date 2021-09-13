@@ -1,7 +1,12 @@
-<div class="form-group" [ngClass]="containerClass">
-    <label [innerHtml]="header"></label>
-    <textarea class="form-control" [ngClass]="[resize ? 'resize' : '',textareaClass ? textareaClass : '']"
-        [placeholder]="placeholder" [attr.rows]="rows" [(ngModel)]="value"
-        (change)="emitChangeEvent($event)"></textarea>
-    <div class="form-text text-muted" [innerHtml]="description"></div>
+<div class="form-group needs-validation valitable-input" [ngClass]="containerClass">
+    <label *ngIf="header" [innerHtml]="header"></label>
+    <textarea #inputElement class="form-control" [ngClass]="[
+        resize ? 'resize' : '',
+        textareaClass ? textareaClass : '', 
+        isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
+        isLoading ? 'is-loading' : '']" [placeholder]="placeholder" [attr.rows]="rows" [(ngModel)]="value"
+        (blur)="emitFocusEvent()" (change)="emitChangeEvent($event)"></textarea>
+    <div class="form-text text-muted" *ngIf="description" [innerHtml]="description"></div>
+    <div [ngClass]="{'valid-tooltip': isValid == 'Success','invalid-tooltip':isValid == 'Error'}"
+        *ngIf="validateMessage" [innerHtml]="validateMessage"></div>
 </div>
