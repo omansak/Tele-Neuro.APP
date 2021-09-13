@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseComponent } from './components/base/base.component';
-import { ROUTE, ROUTE_MANAGEMENT_CATEGORY } from './consts/routes';
-
+import { NAVIGATION_ROUTE, ROUTE } from './consts/navigation';
 const routes: Routes = [
   {
     path: ROUTE,
     component: BaseComponent,
     children: [
       {
-        path: ROUTE_MANAGEMENT_CATEGORY,
+        path: NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT.Route,
         loadChildren: () => import('./pages/category-management-page/category-management.page.module').then(i => i.CategoryManagementPageModule),
       }
     ]

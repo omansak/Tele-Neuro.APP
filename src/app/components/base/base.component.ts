@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { CDN_JS_MAIN } from 'src/app/consts/cdns';
-import { MENU_ADMIN } from 'src/app/consts/menu';
+import { NAVIGATION_MENU } from 'src/app/consts/navigation';
 import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.se
 })
 export class BaseComponent implements AfterViewInit {
 
-  public adminNavigation = MENU_ADMIN;
-  public pageTitle!: string;
+  public navigation = NAVIGATION_MENU;
+  public pageHeader: string;
 
   constructor(router: Router, activatedRoute: ActivatedRoute, private _lazyLoaderService: LazyLoaderService) {
     router.events
@@ -29,8 +29,8 @@ export class BaseComponent implements AfterViewInit {
         mergeMap(route => route.data)
       )
       .subscribe(i => {
-        if (i.PageTitle) {
-          this.pageTitle = i.PageTitle
+        if (i.PageHeader) {
+          this.pageHeader = i.PageHeader
         }
       });
   }
