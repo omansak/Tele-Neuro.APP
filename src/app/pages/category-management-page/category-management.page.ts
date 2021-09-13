@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { FileType } from 'src/app/components/shared/o-ng-file-input/o-ng-file-input.component';
+import { FileType } from 'src/app/consts/enums';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
 import { CategoryModel } from 'src/app/models/category/category-model';
 import { CategoryService } from 'src/app/services/category/category-service';

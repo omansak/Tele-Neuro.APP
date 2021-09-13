@@ -2,17 +2,10 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { CDN_CSS_FILE_INPUT, CDN_JS_FILE_INPUT, CDN_JS_FILE_INPUT_LOCALE } from 'src/app/consts/cdns';
-import { StatusType } from 'src/app/consts/enums';
+import { FileType, StatusType } from 'src/app/consts/enums';
 import { Helper } from 'src/app/helpers/helper';
 import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 
-export enum FileType {
-  Image = "image",
-  Video = "video",
-  Audio = "audio",
-  Text = "text",
-  Unknown = "unknown"
-}
 export class ONgFileInput {
   File?: File;
   Url?: string;
