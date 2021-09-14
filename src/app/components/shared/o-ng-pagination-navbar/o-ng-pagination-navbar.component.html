@@ -1,0 +1,60 @@
+<div class="row mt-2">
+  <div class="col-sm-12 col-md-5">
+    <div class="d-flex align-items-center mr-1">
+      <span class="text-muted">Toplam
+        <b>{{pageInfo.TotalCount || 'N/A'}}</b> kayıt, <b>{{pageInfo.TotalPage || 'N/A'}}</b> sayfadan <b>{{pageInfo.Page || 'N/A'}}</b>.
+        gösteriliyor.
+      </span>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-7">
+    <nav>
+      <ul class="pagination justify-content-end">
+        <li class="page-item" [ngClass]="{'disabled': pageInfo.Page-1 <= 0}">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page-1)">
+            <span class="icofont-simple-left"></span>
+          </a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': pageInfo.Page-1 <= 0}">
+          <a class="page-link" href="javascript:;" (click)="changePage(1)">
+            <span class="icofont-caret-left"></span>
+          </a>
+        </li>
+        <li class="page-item d-none d-md-block" *ngIf="pageInfo.Page-3 > 0">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page-3)">{{pageInfo.Page-3}}</a>
+        </li>
+        <li class="page-item d-none d-md-block" *ngIf="pageInfo.Page-2 > 0">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page-2)">{{pageInfo.Page-2}}</a>
+        </li>
+        <li class="page-item d-none d-md-block" *ngIf="pageInfo.Page-1 > 0">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page-1)">{{pageInfo.Page-1}}</a>
+        </li>
+        <li class="page-item active d-none d-md-block">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page)">{{pageInfo.Page}}</a>
+        </li>
+        <li class="page-item d-none d-md-block" *ngIf="pageInfo.Page+1 <= pageInfo.TotalPage">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page+1)">{{pageInfo.Page+1}}</a>
+        </li>
+        <li class="page-item d-none d-md-block" *ngIf="pageInfo.Page+2 <= pageInfo.TotalPage">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page+2)">{{pageInfo.Page+2}}</a>
+        </li>
+        <li class="page-item d-none d-md-block" *ngIf="pageInfo.Page+3 <= pageInfo.TotalPage">
+          <a class=" page-link" href="javascript:;" (click)="changePage(pageInfo.Page+3)">{{pageInfo.Page+3}}</a>
+        </li>
+        <li class="page-item d-none d-md-block disabled" *ngIf="currentPage+3 < pageInfo.TotalPage">
+          <a class="page-link">...</a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': pageInfo.Page+1 > pageInfo.TotalPage}" title="Son">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.TotalPage)">
+            <span class="icofont-caret-right"></span>
+          </a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': pageInfo.Page+1 > pageInfo.TotalPage}" title="İleri">
+          <a class="page-link" href="javascript:;" (click)="changePage(pageInfo.Page+1)">
+            <span class="icofont-simple-right"></span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { FileType } from 'src/app/consts/enums';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
+import { BaseResponse, PageInfo } from 'src/app/models/base-model';
 import { CategoryInfo } from 'src/app/models/category/category-info';
 import { CategoryService } from 'src/app/services/category/category-service';
 import { ToastService } from 'src/app/services/common/toastr-service';
@@ -23,7 +24,7 @@ export class CategoryManagementPage implements AfterViewInit {
   public get totalCategoryCount(): number {
     return this.categories?.filter(i => i.Category.IsActive).length ?? 0;
   };
-
+  public pageInfo: PageInfo = new PageInfo(1, 10);
   constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
 
   ngAfterViewInit(): void {
@@ -33,15 +34,14 @@ export class CategoryManagementPage implements AfterViewInit {
   getCategories() {
     this.cardLoaderDirective.start();
     this._categoryService
-      .listCategories()
+      .listCategories(this.pageInfo)
       .pipe(finalize(() => this.cardLoaderDirective.stop()))
       .subscribe(
         (i) => {
-          console.log(i);
-
           if (i && i.length > 0) {
             this.categories = i;
           }
+          this.setPageInfo(this._categoryService.getResponse());
         });
   }
 
@@ -88,5 +88,17 @@ export class CategoryManagementPage implements AfterViewInit {
         this.categories.unshift(val);
       }
     }
+  }
+
+  onPageInfoChanged(pageInfo: PageInfo) {
+    this.pageInfo = pageInfo;
+    this.getCategories();
+  }
+
+  setPageInfo(response: BaseResponse) {
+    this.pageInfo.Page = response.Result.PageInfo.Page;
+    this.pageInfo.PageSize = response.Result.PageInfo.PageSize;
+    this.pageInfo.TotalPage = response.Result.PageInfo.TotalPage;
+    this.pageInfo.TotalCount = response.Result.PageInfo.TotalCount;
   }
 }

@@ -8,6 +8,8 @@ import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.se
 import { ONgCropperComponent } from './o-ng-cropper/o-ng-cropper.component';
 import { ONgFileInputComponent } from './o-ng-file-input/o-ng-file-input.component';
 import { ONgInputComponent } from './o-ng-input/o-ng-input.component';
+import { ONgPaginatedViewComponent } from './o-ng-paginated-view/o-ng-paginated-view.component';
+import { ONgPaginationNavbarComponent } from './o-ng-pagination-navbar/o-ng-pagination-navbar.component';
 import { ONgSelectComponent } from './o-ng-select/o-ng-select.component';
 import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
 
@@ -24,14 +26,17 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
         ONgInputComponent,
         ONgTextareaComponent,
         ONgFileInputComponent,
-        ONgCropperComponent
+        ONgCropperComponent,
+        ONgPaginatedViewComponent
     ],
     declarations: [
         ONgSelectComponent,
         ONgInputComponent,
         ONgTextareaComponent,
         ONgFileInputComponent,
-        ONgCropperComponent
+        ONgCropperComponent,
+        ONgPaginatedViewComponent,
+        ONgPaginationNavbarComponent,
     ],
     providers: [],
 })

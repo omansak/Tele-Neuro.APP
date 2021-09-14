@@ -17,14 +17,18 @@ import { LCL_SELECT_LOADING, LCL_SELECT_NOT_FOUND, LCL_SELECT_PLACEHOLDER } from
 export class ONgSelectComponent implements OnInit, ControlValueAccessor {
   // Inputs
   @Input()
-  bindLabel: string = "text";
+  public bindLabel: string = "text";
   @Input()
-  bindValue: string = "value";
+  public bindValue: string = "value";
   @Input()
-  editableSearchTerm: false;
+  public editableSearchTerm: false;
   @Input()
-  get items() { return this._items };
-  set items(value: any[] | null) {
+  public searchable: boolean = true;
+  @Input()
+  public clearable: boolean = true;
+  @Input()
+  public get items() { return this._items };
+  public set items(value: any[] | null) {
     if (value === null) {
       value = [];
     }
@@ -34,7 +38,7 @@ export class ONgSelectComponent implements OnInit, ControlValueAccessor {
 
   // Outputs
   @Output('change')
-  changeEvent = new EventEmitter();
+  public changeEvent = new EventEmitter();
   // Publics
   public value: any;
   // Privates

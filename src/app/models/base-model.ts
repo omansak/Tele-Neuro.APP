@@ -31,8 +31,21 @@ export class ResponseResult {
     Message: string;
     Data: any;
     Type: string;
-    Count: number;
+    PageInfo: PageInfo;
+
+    constructor() {
+        this.PageInfo = new PageInfo();
+    }
+}
+export class PageInfo {
     TotalCount: number;
+    PageSize: number;
     Page: number;
     TotalPage: number;
+    constructor(page?: number, pageSize?: number) {
+        if (page)
+            this.Page = page;
+        if (pageSize)
+            this.PageSize = pageSize;
+    }
 }

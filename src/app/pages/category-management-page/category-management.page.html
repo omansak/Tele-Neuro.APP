@@ -2,7 +2,8 @@
     <div class="col-12 col-md-6">
         <p class="text-muted mb-4">Ürün yönetimi söz konusu olduğunda ürün kategorileri ve ürünlerin nasıl
             kategorilendirildiği önemli bir konudur. Ürünlerinizi doğru bir şekilde kategorilendirmeniz,
-            ziyaretçilerinizin bu ürünlere daha kolay bir şekilde ulaşmasını sağlarken, ilgi gören ürünleri keşfetmenize
+            ziyaretçilerinizin bu ürünlere daha kolay bir şekilde ulaşmasını sağlarken, ilgi gören ürünleri
+            keşfetmenize
             ve bunları da öne çıkartmanıza yardımcı olur.
         </p>
     </div>
@@ -23,71 +24,73 @@
         </div>
     </div>
 </div>
-<div class="card mb-0">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover" cardLoader>
-                <thead>
-                    <tr>
-                        <th scope="col">Resim</th>
-                        <th scope="col">Ad</th>
-                        <th scope="col">Açıklama</th>
-                        <th scope="col">Durum</th>
-                        <th scope="col">Program Sayısı</th>
-                        <th scope="col">#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of categories">
-                        <td>
-                            <div class="icon" style="max-height: 70px;">
-                                <img src="{{item.Document.HostFullPath}}?height=60">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-nowrap"><strong [innerText]="item.Category.Name"></strong></div>
-                        </td>
-                        <td>
-                            <div class="text-muted text-wrap" [innerText]="item.Category.Description"></div>
-                        </td>
-                        <td>
-                            <div class="text-nowrap "
-                                [ngClass]="{'text-success': item.Category.IsActive,'text-danger': !item.Category.IsActive}">
-                                <i class="icofont-check-circled mr-1"
-                                    [ngClass]="{'icofont-check-circled': item.Category.IsActive,'icofont-close-circled' : !item.Category.IsActive}"></i>
-                                <span>{{item.Category.IsActive ? 'Aktif' : 'Pasif'}}</span>
-                            </div>
-                        </td>
-                        <td class="text-center">0</td>
-                        <td>
-                            <div class="actions">
-                                <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
-                                    (click)="showAddCategoryModal(item)">
-                                    <span class="btn-icon icofont-ui-edit">
-                                    </span>
-                                </button>
-                                <button class="btn btn-info btn-sm btn-square rounded-pill"
-                                    title="Kategori aktiflik durumunu değiştir"
-                                    (click)="toggleCategoryStatus(item.Category.Id)">
-                                    <span class="btn-icon icofont-exchange"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" cardLoader>
+                    <thead>
+                        <tr>
+                            <th scope="col">Resim</th>
+                            <th scope="col">Ad</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">Program Sayısı</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of categories">
+                            <td>
+                                <div class="icon" style="max-height: 70px;">
+                                    <img src="{{item.Document.HostFullPath}}?height=60">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap"><strong [innerText]="item.Category.Name"></strong></div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-wrap" [innerText]="item.Category.Description"></div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-success': item.Category.IsActive,'text-danger': !item.Category.IsActive}">
+                                    <i class="icofont-check-circled mr-1"
+                                        [ngClass]="{'icofont-check-circled': item.Category.IsActive,'icofont-close-circled' : !item.Category.IsActive}"></i>
+                                    <span>{{item.Category.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                                </div>
+                            </td>
+                            <td class="text-center">0</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        (click)="showAddCategoryModal(item)">
+                                        <span class="btn-icon icofont-ui-edit">
+                                        </span>
+                                    </button>
+                                    <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        title="Kategori aktiflik durumunu değiştir"
+                                        (click)="toggleCategoryStatus(item.Category.Id)">
+                                        <span class="btn-icon icofont-exchange"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="add-action-box animate__animated animate__bounce">
-    <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddCategoryModal()"
-        title="Kategori Ekle">
-        <span class="btn-icon icofont-plus"></span>
-    </button>
-</div>
+    <div class="add-action-box animate__animated animate__bounce">
+        <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddCategoryModal()"
+            title="Kategori Ekle">
+            <span class="btn-icon icofont-plus"></span>
+        </button>
+    </div>
 
-<o-update-category-modal *ngIf="showStatusAddCategoryModal" [categoryInfo]="forEditCategory"
-    (categoryInfoChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
+    <o-update-category-modal *ngIf="showStatusAddCategoryModal" [categoryInfo]="forEditCategory"
+        (categoryInfoChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
 
-</o-update-category-modal>
+    </o-update-category-modal>
+</o-ng-paginated-view>

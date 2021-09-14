@@ -3,7 +3,6 @@ import { HttpClient, HttpParams, HttpHeaders, HttpEvent, HttpEventType } from '@
 import { Observable, empty } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
 import { BaseResponse, IBaseModel, ResponseProgressive } from 'src/app/models/base-model';
-import { environment } from 'src/environments/environment';
 import { DEFAULT_BASE_SERVICE_CONFIGURATION } from '../consts/defaults';
 
 export interface IExceptionHandler {
@@ -107,7 +106,7 @@ export class BaseService {
                 return response;
             }));
     }
-    protected httpGetModelArray<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, params?: HttpParams): Observable<Array<TModel> | null> {
+    protected httpGetArrayModel<TModel extends IBaseModel<TModel>>(cls: { new(): TModel }, operation: string, params?: HttpParams): Observable<Array<TModel> | null> {
         return this.httpGet<Array<TModel>>(operation, params)
             .pipe(map(json => {
                 return this.mapResponseArray(json, cls);
@@ -258,8 +257,10 @@ export class BaseService {
         this._baseResponse.Status.Message = json.status.message;
         this._baseResponse.Status.Response = json.status.response;
         this._baseResponse.Result.Data = json.result.data;
-        this._baseResponse.Result.TotalCount = json.result.totalCount;
-        this._baseResponse.Result.TotalPage = json.result.totalPage;
+        this._baseResponse.Result.PageInfo.TotalCount = json.result.pageInfo.totalCount;
+        this._baseResponse.Result.PageInfo.TotalPage = json.result.pageInfo.totalPage;
+        this._baseResponse.Result.PageInfo.Page = json.result.pageInfo.page;
+        this._baseResponse.Result.PageInfo.PageSize = json.result.pageInfo.pageSize;
         return this._baseResponse;
     }
     private mapResponse<TModel extends IBaseModel<TModel>>(json: any, cls: { new(): TModel }): TModel | null {
