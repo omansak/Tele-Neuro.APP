@@ -9,7 +9,14 @@ export const NAVIGATION_ROUTE = {
         MenuName: "Kategori Yönetimi",
         IconClass: "link-icon icon sli-book-open",
         Route: "category-management"
-    }
+    },
+    ROUTE_EXERCISE_MANAGEMENT: {
+        PageTitle: "Tele-Neuro | Egzersiz Yönetimi",
+        PageHeader: "Egzersiz Yönetimi",
+        MenuName: "Egzersiz Yönetimi",
+        IconClass: "link-icon icon sli-magic-wand",
+        Route: "exercise-management"
+    },
 }
 
 
@@ -17,7 +24,8 @@ export const NAVIGATION_MENU = [
     {
         Header: "YÖNETİM",
         Children: [
-            NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT
+            NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT,
+            NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT,
         ]
     },
     {

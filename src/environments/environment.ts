@@ -8,6 +8,11 @@ export const environment = {
         updateCategory: "Category/UpdateCategory",
         listCategories: "Category/ListCategories",
         toggleCategoryStatus: "Category/ToggleCategoryStatus",
+      },
+      exercise: {
+        updateExercise: "Exercise/UpdateExercise",
+        listExercises: "Exercise/ListExercises",
+        toggleExerciseStatus: "Exercise/ToggleExerciseStatus",
       }
     }
   }

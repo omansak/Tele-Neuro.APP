@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-12 col-md-8">
+        <p class="text-muted mb-4">Sağlıklı ve mutlu bir toplumun oluşması için hareketli aktif bir yaşam ve
+            egzersizlerin günlük yaşantımızın bir parçası olması gerekmektedir. Yetişkin her birey için haftalık en az
+            150 dakika orta şiddette egzersiz önerilmektedir. Bu egzersizlerin büyük kas kütlelerini içeren, yürüyüş,
+            hafif koşu, bisiklet veya yüzme gibi dayanıklılık aktivitelerinden oluşması, her bir egzersiz seansının en
+            az 10 dakika olması ve haftanın en az 3-5 gününe yayılmış olması tercih edilmelidir.
+        </p>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div>Aktif Egzersiz Program Sayısı</div><strong
+                            class="fs-20 text-success">{{totalExerciseCount}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" cardLoader>
+                    <thead>
+                        <tr>
+                            <th scope="col">Resim</th>
+                            <th scope="col">Ad</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">Program Sayısı</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of exercises">
+                            <td style="width: 220px;">
+                                <div class="icon" *ngIf="getDocumentType(item.Document.Type) == fileType.Image">
+                                    <img src="{{item.Document.HostFullPath}}?height=150">
+                                </div>
+                                <div *ngIf="getDocumentType(item.Document.Type) == fileType.Video">
+                                    <iframe [src]="item.Document.HostFullPath | safeUrl" frameborder="0"
+                                        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                                        style="width: 220px;height:100%;"></iframe>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap"><strong [innerText]="item.Exercise.Name"></strong></div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-wrap" [innerText]="item.Exercise.Description"></div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-success': item.Exercise.IsActive,'text-danger': !item.Exercise.IsActive}">
+                                    <i class="icofont-check-circled mr-1"
+                                        [ngClass]="{'icofont-check-circled': item.Exercise.IsActive,'icofont-close-circled' : !item.Exercise.IsActive}"></i>
+                                    <span>{{item.Exercise.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                                </div>
+                            </td>
+                            <td class="text-center">0</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        (click)="showAddExerciseModal(item)">
+                                        <span class="btn-icon icofont-ui-edit">
+                                        </span>
+                                    </button>
+                                    <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        title="Kategori aktiflik durumunu değiştir"
+                                        (click)="toggleExerciseStatus(item.Exercise.Id)">
+                                        <span class="btn-icon icofont-exchange"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-action-box animate__animated animate__bounce">
+        <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddExerciseModal()"
+            title="Egzersiz Ekle">
+            <span class="btn-icon icofont-plus"></span>
+        </button>
+    </div>
+
+    <o-update-exercise-modal *ngIf="showStatusAddExerciseModal" [exerciseInfo]="forEditExercise"
+        (exerciseInfoChange)="onExerciseUpdated($event)" [(show)]="showStatusAddExerciseModal">
+    </o-update-exercise-modal>
+</o-ng-paginated-view>

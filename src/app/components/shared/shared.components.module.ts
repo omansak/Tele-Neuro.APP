@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 import { ONgCropperComponent } from './o-ng-cropper/o-ng-cropper.component';
 import { ONgFileInputComponent } from './o-ng-file-input/o-ng-file-input.component';
 import { ONgInputComponent } from './o-ng-input/o-ng-input.component';

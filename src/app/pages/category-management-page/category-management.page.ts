@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { FileType } from 'src/app/consts/enums';
+import { ConvertNumberToFileType, FileType } from 'src/app/consts/enums';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
 import { BaseResponse, PageInfo } from 'src/app/models/base-model';
 import { CategoryInfo } from 'src/app/models/category/category-info';
@@ -68,7 +68,7 @@ export class CategoryManagementPage implements AfterViewInit {
 
   showAddCategoryModal(e?: CategoryInfo) {
     if (e?.Document) {
-      e.Category.Image = { Url: e.Document.HostFullPath, IsChanged: false, Type: FileType.Image };
+      e.Category.Image = { Url: e.Document.HostFullPath, IsChanged: false, Type: ConvertNumberToFileType(e.Document.Type) };
       this.forEditCategory = e;
       this.showStatusAddCategoryModal = true;
     }

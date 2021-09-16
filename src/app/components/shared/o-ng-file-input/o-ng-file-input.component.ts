@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { CDN_CSS_FILE_INPUT, CDN_JS_FILE_INPUT, CDN_JS_FILE_INPUT_LOCALE } from 'src/app/consts/cdns';
 import { FileType, StatusType } from 'src/app/consts/enums';
-import { Helper } from 'src/app/helpers/helper';
 import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
 
 export class ONgFileInput {
@@ -37,13 +36,13 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   @Input()
   public inputClass: string;
   @Input()
-  public maxFileSize: number = 1024;
+  public maxFileSize: number = 0;
   @Input()
   public disabled: boolean = false;
   @Input()
   public showPreview: boolean = true;
   @Input()
-  public allowedFileTypes: string[] | null = null;//['image', 'html', 'text', 'video', 'audio', 'flash', 'object'];
+  public allowedFileTypes: string[] | FileType[] | null = null;//['image', 'html', 'text', 'video', 'audio', 'flash', 'object'];
   @Input()
   public allowedFileExtensions: string[] | null = null; // ['jpg', 'gif', 'png', 'txt']
   @Input()
@@ -86,10 +85,6 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
   constructor(private _lazyLoaderService: LazyLoaderService) { }
 
   ngAfterViewInit(): void {
-    if (this.cropperActive && !Helper.ObjectsEqual(this.allowedFileTypes, ['image'])) {
-      console.error("cropperActive just active when allowedFileTypes is image")
-      return;
-    }
     this.lazyLoaderObservable.subscribe(() => {
       this.initFileInput(this.value);
     });
@@ -194,27 +189,8 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
       initialPreviewShowDelete: false
     }
 
-    if (initialInput && initialInput.File) {
-      const reader = new FileReader();
-      reader.readAsDataURL(initialInput.File);
-      reader.onload = () => {
-        if (initialInput.Type == FileType.Image) {
-          config.initialPreview = [`<img src="${reader.result}" class="kv-preview-data file-preview-image">`];
-          config.initialPreviewConfig = [
-            { previewAsData: false, size: initialInput.File!.size, caption: initialInput.File!.name, filetype: initialInput.File!.type },
-          ];
-        }
-        this.initBootstrapFileInput(config);
-      }
-    }
-    else if (initialInput && initialInput.Url) {
-      if (initialInput.Type == FileType.Image) {
-        config.initialPreview = [`<img src="${initialInput.Url}" class="kv-preview-data file-preview-image">`];
-        config.initialPreviewConfig = [
-          { previewAsData: false },
-        ];
-      }
-      this.initBootstrapFileInput(config);
+    if (initialInput) {
+      this.setInitialPreview(initialInput, config);
     }
     else {
       this.initBootstrapFileInput(config);
@@ -233,8 +209,11 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
     this.bootstrapFileInput = $(this.fileInput.nativeElement)
       .fileinput(config)
       .on('change', (e: any) => {
-        if (!this.cropperActive) {
-          this.changeValueFromFile(e?.target?.files[0]);
+        let file = e?.target?.files[0];
+        if (file) {
+          if (this.cropperActive && file.type.includes('image/'))
+            return;
+          this.changeValueFromFile(file);
           this.emitChangeEvent(e);
         }
       })
@@ -251,5 +230,44 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
       .on('fileerror', (event: any, data: any, msg: string) => {
         console.error(msg);
       });
+  }
+
+  private setInitialPreview(initialInput: ONgFileInput, config: any) {
+    if (initialInput.File) {
+      const reader = new FileReader();
+      reader.readAsDataURL(initialInput.File);
+      reader.onload = () => {
+        if (initialInput.Type == FileType.Image) {
+          config.initialPreview = [`<img src="${reader.result}" class="kv-preview-data file-preview-image">`];
+          config.initialPreviewConfig = [
+            { previewAsData: false, size: initialInput.File!.size, caption: initialInput.File!.name, filetype: initialInput.File!.type },
+          ];
+        }
+        if (initialInput.Type == FileType.Video) {
+          console.warn("File preview is not available for video type,set url");
+        }
+        this.initBootstrapFileInput(config);
+      }
+    }
+    else if (initialInput.Url) {
+      if (initialInput.Type == FileType.Image) {
+        config.initialPreview = [`<img src="${initialInput.Url}" class="kv-preview-data file-preview-image">`];
+        config.initialPreviewConfig = [
+          { previewAsData: false },
+        ];
+      }
+      if (initialInput.Type == FileType.Video) {
+        config.initialPreview = [`<iframe src="${initialInput.Url}" frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+        style="width: 100%;height:100%;"></iframe>`];
+        config.initialPreviewConfig = [
+          { previewAsData: false },
+        ];
+      }
+      this.initBootstrapFileInput(config);
+    }
+    else {
+      this.initBootstrapFileInput(config);
+    }
   }
 }
