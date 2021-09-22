@@ -28,3 +28,17 @@ export const VALIDATE_FILE = (value: ONgFileInput): { status: StatusType | undef
     }
     return { status: StatusType.Error, message: "Dosya alanı boş olamaz" }
 }
+
+export const VALIDATE_SELECT = (value: any): { status: StatusType | undefined | null, message?: string | undefined | null } => {
+    if (value) {
+        return { status: StatusType.Success }
+    }
+    return { status: StatusType.Error, message: "Seçim alanı boş olamaz" }
+}
+
+export const VALIDATE_CHECKBOX_TRUE = (value: any): { status: StatusType | undefined | null, message?: string | undefined | null } => {
+    if (value) {
+        return { status: StatusType.Success }
+    }
+    return { status: StatusType.Error, message: "Bu alanı kabul etmelisiniz" }
+}

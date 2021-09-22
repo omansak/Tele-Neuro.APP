@@ -1,5 +1,5 @@
 <label [innerHtml]="header" *ngIf="header"></label>
-<div class="form-group needs-validation valitable-file" [ngClass]="[
+<div class="needs-validation valitable-file" [ngClass]="[
     containerClass ? containerClass : '',
     (isValid == 'Success' || isValid == 'Error') ? 'validated' : ''
     ]">

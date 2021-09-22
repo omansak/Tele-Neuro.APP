@@ -88,9 +88,8 @@
             <span class="btn-icon icofont-plus"></span>
         </button>
     </div>
-
-    <o-update-category-modal *ngIf="showStatusAddCategoryModal" [categoryInfo]="forEditCategory"
-        (categoryInfoChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
-
-    </o-update-category-modal>
 </o-ng-paginated-view>
+
+<o-update-category-modal *ngIf="showStatusAddCategoryModal" [categoryInfo]="forEditCategory"
+    (categoryInfoChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">
+</o-update-category-modal>

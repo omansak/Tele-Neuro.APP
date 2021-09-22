@@ -46,6 +46,7 @@ export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterVie
       this.animate = false;
     }
   }
+  // View children
   @ViewChild('descriptionElement', { static: true })
   public descriptionElement: ONgTextareaComponent;
   @ViewChild('nameElement', { static: true })

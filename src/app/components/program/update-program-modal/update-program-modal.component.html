@@ -1,0 +1,62 @@
+<!-- Add Program Modal -->
+<div #modal class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow:scroll;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" cardLoader>
+            <div class="modal-header">
+                <h5 class="modal-title">Program Ekle</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <o-ng-select #categorySelectElement header="Kategori" [items]="categoriesObservable | async"
+                        bindValue="Category.Id" bindLabel="Category.Name" [clearable]="false"
+                        [(ngModel)]="editModel.Program.CategoryId" [validate]="validate.select"
+                        [isLoading]="isLoadingCategories">
+                        <ng-template #optionTemplate let-item="item" let-index="index">
+                            <div class="card bg-dark text-white" style="max-height: 100px;">
+                                <div class="card-img overlay-img"
+                                    style='height: 200px;background-image: url("{{encodeURI(item.Document.HostFullPath)}}?width=200");background-repeat: no-repeat;background-size: inherit;background-position-y: center;'>
+                                </div>
+                                <div class="card-img-overlay" style="overflow-y: hidden;">
+                                    <h5 class="card-title"><b>{{item.Category.Name}}</b></h5>
+                                    <p class="card-text text-wrap">{{item.Category.Description}}</p>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </o-ng-select>
+                </div>
+                <div class="form-group">
+                    <o-ng-input #nameElement type="text" header="Program Adı" placeholder="Ad"
+                        [(ngModel)]="editModel.Program.Name" [validate]="validate.text"
+                        suffixIcon="icofont-pencil-alt-5">
+                    </o-ng-input>
+                </div>
+                <div class="form-group">
+                    <o-ng-textarea #descriptionElement header="Açıklama" placeholder="Açıklama"
+                        [(ngModel)]="editModel.Program.Description" [validate]="validate.text" [rows]="3"
+                        [resize]="true">
+                    </o-ng-textarea>
+                </div>
+                <div class="form-group">
+                    <div class="row col-6">
+                        <o-ng-checkbox #checkboxElement header="Herkese Açık" [(ngModel)]="editModel.Program.IsPublic">
+                        </o-ng-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <div class="actions justify-content-between">
+                    <button class="btn btn-outline-danger" (click)="hideModal()">
+                        <span class="btn-icon icofont-close-circled mr-2"></span>
+                        Kapat
+                    </button>
+                    <button class="btn btn-outline-success" (click)="save()">
+                        <span class="btn-icon icofont-save mr-2"></span>
+                        Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Program Modal -->

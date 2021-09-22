@@ -1,0 +1,13 @@
+<div class="needs-validation valitable-input">
+    <div class="custom-control custom-checkbox">
+        <input #inputElement type="checkbox" class="custom-control-input" [attr.id]="elementKey" [ngClass]="[
+                isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
+                isLoading ? 'is-loading' : '']" [(ngModel)]="value" (blur)="emitFocusEvent()"
+            (change)="emitChangeEvent($event)">
+        <label class="custom-control-label" [attr.for]="elementKey" [innerHtml]="header"></label>
+        <div [ngClass]="{'valid-tooltip': isValid == 'Success','invalid-tooltip':isValid == 'Error'}"
+            *ngIf="validateMessage" [innerHtml]="validateMessage"></div>
+    </div>
+    <div class="form-text text-muted" *ngIf="description" [innerHtml]="description"></div>
+
+</div>

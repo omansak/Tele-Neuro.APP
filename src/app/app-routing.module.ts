@@ -14,7 +14,11 @@ const routes: Routes = [
       {
         path: NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT.Route,
         loadChildren: () => import('./pages/exercise-management-page/exercise-management.page.module').then(i => i.ExerciseManagementPageModule),
-      }
+      },
+      {
+        path: NAVIGATION_ROUTE.ROUTE_EXERCISE_PROGRAM.Route,
+        loadChildren: () => import('./pages/program-management-page/program-management.page.module').then(i => i.ProgramManagementPageModule),
+      },
     ]
   },
 ];

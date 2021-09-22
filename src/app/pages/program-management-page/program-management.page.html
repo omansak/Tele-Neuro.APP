@@ -1,0 +1,10 @@
+<div class="add-action-box animate__animated animate__bounce">
+    <button class="btn btn-primary btn-lg btn-square rounded-pill" title="Program Ekle"
+        (click)="showUpdateProgramModal()">
+        <span class="btn-icon icofont-plus"></span>
+    </button>
+</div>
+
+<o-update-program-modal *ngIf="showStatusUpdateExerciseModal" [(show)]="showStatusUpdateExerciseModal">
+
+</o-update-program-modal>

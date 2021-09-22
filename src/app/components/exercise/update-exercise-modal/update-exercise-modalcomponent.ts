@@ -46,6 +46,7 @@ export class UpdateExerciseModalComponent implements OnChanges, OnInit, AfterVie
       this.animate = false;
     }
   }
+  // View children
   @ViewChild('descriptionElement', { static: true })
   public descriptionElement: ONgTextareaComponent;
   @ViewChild('nameElement', { static: true })
@@ -112,7 +113,7 @@ export class UpdateExerciseModalComponent implements OnChanges, OnInit, AfterVie
 
   save() {
     if (this.check()) {
-      let toast = this._toastService.continuing("Egzersiz ekleniyor/güncelleniyor.", "Egzersiz ekleme/güncelleme tamamlandı.", "Egzersiz eklenemedi.");
+      let toast = this._toastService.continuing("Egzersiz ekleniyor/güncelleniyor.", "Egzersiz ekleme/güncelleme tamamlandı. (İçerik eklenmesi zaman alabilir. )", "Egzersiz eklenemedi.");
       this.progressOption.start();
       this.cardLoaderDirective.start();
       this._exerciseService

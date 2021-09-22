@@ -1,3 +1,19 @@
-<ng-select [items]="items" [(ngModel)]="value" (change)="emitChangeEvent($event)" [bindLabel]="bindLabel" [searchable]="searchable" [clearable]="clearable"
-    [bindValue]="bindValue" [editableSearchTerm]="editableSearchTerm" class="form-control">
-</ng-select>
+<div class="needs-validation valitable-select">
+    <label [innerHtml]="header" *ngIf="header"></label>
+    <ng-select [items]="items" [(ngModel)]="value" (change)="emitChangeEvent($event)" [bindLabel]="bindLabel"
+        [searchable]="searchable" [clearable]="clearable" [bindValue]="bindValue" [loading]="searchLoading"
+        [disabled]="isLoading || disabled" [editableSearchTerm]="editableSearchTerm" class="form-control" [ngClass]="[
+        inputClass ? inputClass : '', 
+        isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
+        isLoading ? 'is-loading disabled' : ''
+        ]">
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
+            <ng-template [ngTemplateOutlet]="optionTemplate"
+                [ngTemplateOutletContext]="{ item: item, index:index,item$:item$,searchTerm:searchTerm }">
+            </ng-template>
+        </ng-template>
+    </ng-select>
+    <div class="form-text text-muted" [innerHtml]="description" *ngIf="description"></div>
+    <div [ngClass]="{'valid-tooltip': isValid == 'Success','invalid-tooltip':isValid == 'Error'}"
+        *ngIf="validateMessage" [innerHtml]="validateMessage"></div>
+</div>

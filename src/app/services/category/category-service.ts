@@ -14,7 +14,7 @@ export class CategoryService extends BaseService {
         super(httpClient, exceptionHandler);
     }
     public listCategories(pageInfo: PageInfo): Observable<Array<CategoryInfo> | null> {
-        return super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listCategories,pageInfo);
+        return super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listCategories, pageInfo);
     }
     public toggleCategoryStatus(id: number): Observable<boolean> {
         return super.httpPostValue<boolean>(environment.request.endPoints.category.toggleCategoryStatus, { id: id });

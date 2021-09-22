@@ -38,9 +38,9 @@ export class ResponseResult {
     }
 }
 export class PageInfo {
-    TotalCount: number;
-    PageSize: number;
     Page: number;
+    PageSize: number;
+    TotalCount: number;
     TotalPage: number;
     constructor(page?: number, pageSize?: number) {
         if (page)

@@ -16,8 +16,6 @@ export class CategoryManagementPage implements AfterViewInit {
   public categories: Array<CategoryInfo>
   public showStatusAddCategoryModal: boolean = false;
   public forEditCategory: CategoryInfo | undefined;
-  @ViewChild(CardLoaderDirective)
-  public cardLoaderDirective: CardLoaderDirective;
   public get totalProgramCount(): number {
     return this.categories?.reduce((result, current) => result + current.ProgramCount, 0) ?? 0;
   };
@@ -25,6 +23,10 @@ export class CategoryManagementPage implements AfterViewInit {
     return this.categories?.filter(i => i.Category.IsActive).length ?? 0;
   };
   public pageInfo: PageInfo = new PageInfo(1, 10);
+  // View children
+  @ViewChild(CardLoaderDirective)
+  public cardLoaderDirective: CardLoaderDirective;
+  
   constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
 
   ngAfterViewInit(): void {

@@ -16,13 +16,14 @@ export class ExerciseManagementPage implements AfterViewInit {
   public exercises: Array<ExerciseInfo>
   public showStatusAddExerciseModal: boolean = false;
   public forEditExercise: ExerciseInfo | undefined;
-  @ViewChild(CardLoaderDirective)
-  public cardLoaderDirective: CardLoaderDirective;
   public get totalExerciseCount(): number {
     return this.exercises?.filter(i => i.Exercise.IsActive).length ?? 0;
   };
   public pageInfo: PageInfo = new PageInfo(1, 10);
   public fileType = FileType;
+  // View children
+  @ViewChild(CardLoaderDirective)
+  public cardLoaderDirective: CardLoaderDirective;
   constructor(private _exerciseService: ExerciseService, private _toastService: ToastService) { }
 
   ngAfterViewInit(): void {
@@ -38,6 +39,9 @@ export class ExerciseManagementPage implements AfterViewInit {
         (i) => {
           if (i && i.length > 0) {
             this.exercises = i;
+          }
+          else {
+            this.exercises = new Array<ExerciseInfo>();
           }
           this.setPageInfo(this._exerciseService.getResponse());
         });

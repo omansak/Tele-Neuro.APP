@@ -17,6 +17,13 @@ export const NAVIGATION_ROUTE = {
         IconClass: "link-icon icon sli-magic-wand",
         Route: "exercise-management"
     },
+    ROUTE_EXERCISE_PROGRAM: {
+        PageTitle: "Tele-Neuro | Program Yönetimi",
+        PageHeader: "Program Yönetimi",
+        MenuName: "Program Yönetimi",
+        IconClass: "link-icon icon sli-magic-wand",
+        Route: "program-management"
+    },
 }
 
 
@@ -26,6 +33,7 @@ export const NAVIGATION_MENU = [
         Children: [
             NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT,
+            NAVIGATION_ROUTE.ROUTE_EXERCISE_PROGRAM,
         ]
     },
     {

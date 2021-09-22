@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ONgCheckboxComponent } from './o-ng-checkbox/o-ng-checkbox.component';
 import { ONgCropperComponent } from './o-ng-cropper/o-ng-cropper.component';
 import { ONgFileInputComponent } from './o-ng-file-input/o-ng-file-input.component';
 import { ONgInputComponent } from './o-ng-input/o-ng-input.component';
@@ -26,7 +27,8 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
         ONgTextareaComponent,
         ONgFileInputComponent,
         ONgCropperComponent,
-        ONgPaginatedViewComponent
+        ONgPaginatedViewComponent,
+        ONgCheckboxComponent
     ],
     declarations: [
         ONgSelectComponent,
@@ -36,6 +38,7 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
         ONgCropperComponent,
         ONgPaginatedViewComponent,
         ONgPaginationNavbarComponent,
+        ONgCheckboxComponent
     ],
     providers: [],
 })

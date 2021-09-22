@@ -2,7 +2,7 @@ import { environment } from "src/environments/environment"
 import { IBaseServiceConfiguration } from "../services/base-service"
 
 export const DEFAULT_TOASTR_CONFIG = {
-    timeOut: 4500,
+    timeOut: 5500,
     extendedTimeOut: 1500,
     positionClass: 'toast-top-right',
     toastClass: "ngx-toastr animate__animated animate__fadeInRight",
