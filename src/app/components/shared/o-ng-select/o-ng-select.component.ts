@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgSelectConfig } from '@ng-select/ng-select';
+import { Subject } from 'rxjs';
 import { StatusType } from 'src/app/consts/enums';
-import { LCL_SELECT_LOADING, LCL_SELECT_NOT_FOUND, LCL_SELECT_PLACEHOLDER } from 'src/app/consts/locales';
+import { LCL_SEARCH_TERM_PLACEHOLDER, LCL_SELECT_LOADING, LCL_SELECT_NOT_FOUND, LCL_SELECT_PLACEHOLDER } from 'src/app/consts/locales';
 
 @Component({
   selector: 'o-ng-select',
@@ -15,7 +16,7 @@ import { LCL_SELECT_LOADING, LCL_SELECT_NOT_FOUND, LCL_SELECT_PLACEHOLDER } from
   }],
   encapsulation: ViewEncapsulation.None
 })
-export class ONgSelectComponent implements OnInit, ControlValueAccessor, AfterViewInit {
+export class ONgSelectComponent implements OnInit, AfterViewInit, OnChanges, ControlValueAccessor {
   // Inputs
   @Input()
   public bindLabel: string = "text";
@@ -30,7 +31,21 @@ export class ONgSelectComponent implements OnInit, ControlValueAccessor, AfterVi
   @Input()
   public searchLoading: boolean = false;
   @Input()
+  public multiple = false;
+  @Input()
+  public typeahead: Subject<string>;
+  @Input()
+  public trackByFn = null;
+  @Input()
+  public hideSelected: boolean = false;
+  @Input()
+  public minTermLength: number = 2;
+  @Input()
+  public typeToSearchText: string = LCL_SEARCH_TERM_PLACEHOLDER;
+  @Input()
   public header: string;
+  @Input()
+  public tooltip: string;
   @Input()
   public inputClass: string;
   @Input()
@@ -62,8 +77,10 @@ export class ONgSelectComponent implements OnInit, ControlValueAccessor, AfterVi
   private _itemsAreUsed: boolean;
   private _onChange = (_: any) => { };
   private _onTouched = () => { };
-
-  @ContentChild("optionTemplate", { read: TemplateRef }) optionTemplate: TemplateRef<any>;
+  @ViewChild("tooltipElement")
+  public tooltipElement: ElementRef;
+  @ContentChild("optionTemplate", { read: TemplateRef })
+  public optionTemplate: TemplateRef<any>;
   constructor(private config: NgSelectConfig) {
     this.config.notFoundText = LCL_SELECT_NOT_FOUND;
     this.config.loadingText = LCL_SELECT_LOADING;
@@ -72,9 +89,16 @@ export class ONgSelectComponent implements OnInit, ControlValueAccessor, AfterVi
     this.config.bindLabel = 'text';
     //this.config.appendTo = 'body';
   }
-  ngAfterViewInit(): void {
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.tooltip && !changes.tooltip.firstChange) {
+      this.initTooltip();
+    }
   }
+
+  ngAfterViewInit(): void {
+    this.initTooltip();
+  }
+
   ngOnInit(): void {
 
   }
@@ -105,6 +129,17 @@ export class ONgSelectComponent implements OnInit, ControlValueAccessor, AfterVi
       return val.status == StatusType.Success;
     }
     return undefined;
+  }
+
+  private initTooltip() {
+    if (this.tooltip) {
+      // After ViewChild init
+      setTimeout(() => {
+        $(this.tooltipElement.nativeElement)
+          .tooltip('dispose')
+          .tooltip({ title: this.tooltip });
+      }, 64);
+    }
   }
 }
 

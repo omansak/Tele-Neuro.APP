@@ -1,1 +1,10 @@
 @import "input-validation";
+
+.tooltip {
+  z-index: 9999 !important;
+}
+
+.animate__animated {
+  -webkit-animation-fill-mode: none !important;
+  animation-fill-mode: none !important;
+}

@@ -1,0 +1,99 @@
+<!-- Update Exercise Of Program Modal -->
+<div #modal class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow:scroll;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" cardLoader>
+            <div class="modal-header">
+                <h5 class="modal-title">Egzersiz Atama</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <o-ng-select #exerciseElement header="Egzersiz" [(ngModel)]="model.ExerciseId"
+                                (change)="setDefaultDuration($event.Document)" [typeahead]="exerciseSearchTermSubject"
+                                [searchLoading]="exercisesInfoSearchLoading" [items]="exercisesInfoObservable | async"
+                                bindValue="Exercise.Id" bindLabel="Exercise.Name" [clearable]="false"
+                                [validate]="validate.select">
+                            </o-ng-select>
+                        </div>
+                        <div class="col-sm-4 mt-2 mt-sm-0 d-flex d-sm-block flex-row-reverse">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-outline-info" (click)="addProperty()">
+                                <span class="btn-icon icofont-plus-circle mr-2"></span>
+                                Özellik Ekle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row mt-3 animate__animated animate__fadeIn" *ngFor="let item of model.Properties">
+                        <ng-container *ngLet="getExerciseProperty(item.Id) as property">
+                            <div class="col-6">
+                                <o-ng-select #exercisePropertyElement header="Özellik" [tooltip]="property.Description"
+                                    [(ngModel)]="item.Id" [items]="exercisePropertyDefinitions" bindValue="Id"
+                                    bindLabel="Name" [clearable]="false" [validate]="validate.select"
+                                    [isLoading]="isLoadingExercisePropertyDefinitions">
+                                </o-ng-select>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <o-ng-input #exercisePropertyValueElement type="text"
+                                            [header]="property.UnitName" [ngModel]="item.Value"
+                                            (ngModelChange)="item.Value = $event.toString()"
+                                            [placeholder]="property.UnitName"
+                                            [validate]="property.IsNumber ? validate.number : validate.text"
+                                            [type]="property.getType()"
+                                            [suffixIcon]="property.IsNumber ? 'icofont-numbered' : 'icofont-pencil-alt-5'">
+                                        </o-ng-input>
+                                    </div>
+                                    <div class="col-3">
+                                        <label>&nbsp;</label>
+                                        <div class="row">
+                                            <button class="btn btn-danger btn-sm btn-square rounded-pill" title="Sil"
+                                                (click)="removeProperty(item)">
+                                                <span class="btn-icon icofont-bin"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </ng-container>
+                    </div>
+                    <!-- [(ngModel)]="model.Program.CategoryId" -->
+                </div>
+                <div class="form-group">
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <label>&nbsp;</label>
+                            <o-ng-checkbox #autoSkipCheckboxElement header="Otomatik Geç" [(ngModel)]="model.AutoSkip">
+                            </o-ng-checkbox>
+                        </div>
+                        <div class="col-6" *ngIf="model.AutoSkip">
+                            <o-ng-input #autoSkipTimeElement type="number" [isLoading]="isLoadingAutoSkipTime"
+                                header="Otomatik Geçiş Süresi (Saniye)" placeholder="Saniye"
+                                [(ngModel)]="model.AutoSkipTime" [validate]="validate.number"
+                                suffixIcon="icofont-pencil-alt-5">
+                            </o-ng-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <div class="actions justify-content-between">
+                    <button class="btn btn-outline-danger" (click)="hideModal()">
+                        <span class="btn-icon icofont-close-circled mr-2"></span>
+                        Kapat
+                    </button>
+                    <button class="btn btn-outline-success" (click)="save()">
+                        <span class="btn-icon icofont-save mr-2"></span>
+                        Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Update Exercise Of Program Modal -->

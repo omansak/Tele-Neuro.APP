@@ -21,7 +21,7 @@ export const NAVIGATION_ROUTE = {
         PageTitle: "Tele-Neuro | Program Yönetimi",
         PageHeader: "Program Yönetimi",
         MenuName: "Program Yönetimi",
-        IconClass: "link-icon icon sli-magic-wand",
+        IconClass: "link-icon icon sli-grid",
         Route: "program-management"
     },
 }

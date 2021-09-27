@@ -71,4 +71,8 @@ export class Helper {
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
+    public static Clone(val: any): any {
+        return JSON.parse(JSON.stringify(val));
+    }
 }

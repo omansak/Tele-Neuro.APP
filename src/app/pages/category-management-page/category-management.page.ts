@@ -26,7 +26,7 @@ export class CategoryManagementPage implements AfterViewInit {
   // View children
   @ViewChild(CardLoaderDirective)
   public cardLoaderDirective: CardLoaderDirective;
-  
+
   constructor(private _categoryService: CategoryService, private _toastService: ToastService) { }
 
   ngAfterViewInit(): void {
@@ -42,6 +42,9 @@ export class CategoryManagementPage implements AfterViewInit {
         (i) => {
           if (i && i.length > 0) {
             this.categories = i;
+          }
+          else {
+            this.categories = new Array<CategoryInfo>();
           }
           this.setPageInfo(this._categoryService.getResponse());
         });

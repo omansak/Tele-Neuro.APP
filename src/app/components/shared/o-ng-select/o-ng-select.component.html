@@ -1,17 +1,24 @@
 <div class="needs-validation valitable-select">
     <label [innerHtml]="header" *ngIf="header"></label>
+    <a #tooltipElement href="javascript:;" class="ml-2 text-secondary" *ngIf="tooltip">
+        <i class="icofont-info-circle"></i>
+    </a>
     <ng-select [items]="items" [(ngModel)]="value" (change)="emitChangeEvent($event)" [bindLabel]="bindLabel"
-        [searchable]="searchable" [clearable]="clearable" [bindValue]="bindValue" [loading]="searchLoading"
-        [disabled]="isLoading || disabled" [editableSearchTerm]="editableSearchTerm" class="form-control" [ngClass]="[
+        [searchable]="searchable" [clearable]="clearable" [bindValue]="bindValue" [loading]="searchLoading" [multiple]="multiple"
+        [minTermLength]="minTermLength" [typeToSearchText]="typeToSearchText" [typeahead]="typeahead"
+        [trackByFn]="trackByFn" [disabled]="isLoading || disabled" [editableSearchTerm]="editableSearchTerm"
+        class="form-control" [ngClass]="[
         inputClass ? inputClass : '', 
         isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
         isLoading ? 'is-loading disabled' : ''
         ]">
-        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
-            <ng-template [ngTemplateOutlet]="optionTemplate"
-                [ngTemplateOutletContext]="{ item: item, index:index,item$:item$,searchTerm:searchTerm }">
+        <ng-container *ngIf="optionTemplate">
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
+                <ng-template [ngTemplateOutlet]="optionTemplate"
+                    [ngTemplateOutletContext]="{ item: item, index:index,item$:item$,searchTerm:searchTerm }">
+                </ng-template>
             </ng-template>
-        </ng-template>
+        </ng-container>
     </ng-select>
     <div class="form-text text-muted" [innerHtml]="description" *ngIf="description"></div>
     <div [ngClass]="{'valid-tooltip': isValid == 'Success','invalid-tooltip':isValid == 'Error'}"

@@ -22,7 +22,7 @@ export class ONgInputComponent implements ControlValueAccessor {
   @Input()
   public placeholder: string;
   @Input()
-  public type: "text" | "number" | "tel" = "text";
+  public type: "text" | "number" | "tel" | "email" = "text";
   @Input()
   public containerClass: string;
   @Input()
@@ -67,7 +67,7 @@ export class ONgInputComponent implements ControlValueAccessor {
 
   emitChangeEvent(e: any) {
     this.check();
-    this._onChange(this.value)
+    this._onChange(this.type == 'number' ? +this.value : this.value);
     this.changeEvent.emit(e);
   }
 

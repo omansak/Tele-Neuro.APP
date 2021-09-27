@@ -6,6 +6,13 @@ export class CategoryInfo implements IBaseModel<CategoryInfo> {
     Category: CategoryModel;
     Document: DocumentModel;
     ProgramCount: number
+    
+    constructor(category?: CategoryModel, document?: DocumentModel) {
+        if (category)
+            this.Category = category;
+        if (document)
+            this.Document = document;
+    }
 
     mapModel(json: any): CategoryInfo {
         this.ProgramCount = json.programCount;

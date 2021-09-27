@@ -27,6 +27,13 @@
 <o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
     <div class="card mb-0">
         <div class="card-body">
+            <div style="position: absolute; top: -40px;right: 0;">
+                <button class="btn btn-secondary btn-sm btn-square rounded-pill" title="Yenile"
+                    (click)="getCategories()">
+                    <span class="btn-icon icofont-refresh">
+                    </span>
+                </button>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover" cardLoader>
                     <thead>
@@ -81,14 +88,14 @@
             </div>
         </div>
     </div>
-
-    <div class="add-action-box animate__animated animate__bounce">
-        <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddCategoryModal()"
-            title="Kategori Ekle">
-            <span class="btn-icon icofont-plus"></span>
-        </button>
-    </div>
 </o-ng-paginated-view>
+
+<div class="add-action-box animate__animated animate__bounce">
+    <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddCategoryModal()"
+        title="Kategori Ekle">
+        <span class="btn-icon icofont-plus"></span>
+    </button>
+</div>
 
 <o-update-category-modal *ngIf="showStatusAddCategoryModal" [categoryInfo]="forEditCategory"
     (categoryInfoChange)="onCategoryUpdated($event)" [(show)]="showStatusAddCategoryModal">

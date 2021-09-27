@@ -65,7 +65,7 @@ export class UpdateExerciseModalComponent implements OnChanges, OnInit, AfterVie
       this.exerciseInfo = new ExerciseInfo();
       this.exerciseInfo.Exercise = new ExerciseModel();
     }
-    this.editModel = Object.assign({}, this.exerciseInfo)
+    this.editModel = <ExerciseInfo>Helper.Clone(this.exerciseInfo);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

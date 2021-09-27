@@ -3,7 +3,8 @@
     prefixIcon ? 'with-prefix-icon' : '',
     suffixIcon ? 'with-suffix-icon' : '',
     containerClass ? containerClass : '',
-    (isValid == 'Success' || isValid == 'Error') ? 'validated' : ''
+    (isValid == 'Success' || isValid == 'Error') ? 'validated' : '',
+    isLoading ? 'is-loading' : ''
     ]">
     <div class="prefix-icon" [ngClass]="prefixIcon" *ngIf="prefixIcon">
     </div>

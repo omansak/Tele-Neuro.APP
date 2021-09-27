@@ -7,14 +7,32 @@ import { CategoryModel } from 'src/app/models/category/category-model';
 import { ExceptionHandler } from '../common/exception-handler';
 import { PageInfo, ResponseProgressive } from 'src/app/models/base-model';
 import { CategoryInfo } from 'src/app/models/category/category-info';
+import { publishReplay } from 'rxjs/internal/operators/publishReplay';
+import { refCount, take } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService extends BaseService {
+    private static Cache: { [key: string]: Observable<any>; } = {};
+
     constructor(httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
         super(httpClient, exceptionHandler);
     }
     public listCategories(pageInfo: PageInfo): Observable<Array<CategoryInfo> | null> {
         return super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listCategories, pageInfo);
+    }
+    public listAllActiveCategories(): Observable<Array<CategoryInfo> | null> {
+        if (!CategoryService.Cache[this.listAllActiveCategories.name]) {
+            CategoryService.Cache[this.listAllActiveCategories.name] = super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listActiveCategories, {})
+                .pipe(
+                    publishReplay(1),
+                    refCount(),
+                    take(1)
+                );
+        }
+        return CategoryService.Cache[this.listAllActiveCategories.name];
+    }
+    public listActiveCategories(pageInfo: PageInfo): Observable<Array<CategoryInfo> | null> {
+        return super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listActiveCategories, pageInfo);
     }
     public toggleCategoryStatus(id: number): Observable<boolean> {
         return super.httpPostValue<boolean>(environment.request.endPoints.category.toggleCategoryStatus, { id: id });

@@ -1,3 +1,100 @@
+<div class="row">
+    <div class="col-12 col-md-6">
+        <p class="text-muted mb-4">Kişiye özel tasarlanmış fiziksel aktivite programı, yukarıda saydığımız ve tümü
+            bilimsel çalışmalarla desteklenmiş faydaları nedeniyle tamamlayıcı tıp uygulamalarının vazgeçilmez bir
+            bileşenidir.
+        </p>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div>Aktif Program Sayısı</div><strong class="fs-20 text-success">{{totalProgramCount}}</strong>
+                    </div>
+                    <div class="col-6">
+                        <div>Toplam Aktif Egzersiz Sayısı</div><strong class="fs-20 text-success">N/A</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div style="position: absolute; top: -40px;right: 0;">
+                <button class="btn btn-secondary btn-sm btn-square rounded-pill" title="Yenile" (click)="getPrograms()">
+                    <span class="btn-icon icofont-refresh">
+                    </span>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover" cardLoader>
+                    <thead>
+                        <tr>
+                            <th scope="col">Program Adı</th>
+                            <th scope="col">Kategori Adı</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">Gizlilik Durumu</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of programs">
+                            <td>
+                                <div class="text-nowrap"><strong [innerText]="item.Program.Name"></strong></div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap"><strong [innerText]="item.Category.Name"></strong></div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-wrap" [innerText]="item.Program.Description"></div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-success': item.Program.IsActive,'text-danger': !item.Program.IsActive}">
+                                    <i class="icofont-check-circled mr-1"
+                                        [ngClass]="{'icofont-check-circled': item.Program.IsActive,'icofont-close-circled' : !item.Program.IsActive}"></i>
+                                    <span>{{item.Program.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-info': item.Program.IsPublic,'text-warning': !item.Program.IsPublic}">
+                                    <i class="icofont-check-circled mr-1"
+                                        [ngClass]="{'icofont-check-circled': item.Program.IsPublic,'icofont-close-circled' : !item.Program.IsPublic}"></i>
+                                    <span>{{item.Program.IsPublic ? 'Herkese Açık' : 'Gizli'}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        (click)="showUpdateProgramModal(item)">
+                                        <span class="btn-icon icofont-ui-edit">
+                                        </span>
+                                    </button>
+                                    <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        title="Program aktiflik durumunu değiştir"
+                                        (click)="toggleExerciseStatus(item.Program.Id)">
+                                        <span class="btn-icon icofont-exchange"></span>
+                                    </button>
+                                    <button class="btn btn-success btn-sm btn-square rounded-pill"
+                                        title="Programa egzersiz ekle"
+                                        (click)="showExerciseOfProgramModal(item.Program.Id)">
+                                        <span class="btn-icon icofont-plus"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</o-ng-paginated-view>
+
 <div class="add-action-box animate__animated animate__bounce">
     <button class="btn btn-primary btn-lg btn-square rounded-pill" title="Program Ekle"
         (click)="showUpdateProgramModal()">
@@ -5,6 +102,11 @@
     </button>
 </div>
 
-<o-update-program-modal *ngIf="showStatusUpdateExerciseModal" [(show)]="showStatusUpdateExerciseModal">
+<o-update-program-modal *ngIf="showStatusUpdateProgramModal" [programInfo]="forEditProgram"
+    (programInfoChange)="onProgramUpdated($event)" [(show)]="showStatusUpdateProgramModal">
 
 </o-update-program-modal>
+
+<o-update-exercise-of-program-modal *ngIf="showStatusExerciseOfProgramModal" [(show)]="showStatusExerciseOfProgramModal"
+    [programId]="forAssignProgramId">
+</o-update-exercise-of-program-modal>

@@ -91,14 +91,14 @@
             </div>
         </div>
     </div>
-
-    <div class="add-action-box animate__animated animate__bounce">
-        <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddExerciseModal()"
-            title="Egzersiz Ekle">
-            <span class="btn-icon icofont-plus"></span>
-        </button>
-    </div>
 </o-ng-paginated-view>
+
+<div class="add-action-box animate__animated animate__bounce">
+    <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddExerciseModal()"
+        title="Egzersiz Ekle">
+        <span class="btn-icon icofont-plus"></span>
+    </button>
+</div>
 
 <o-update-exercise-modal *ngIf="showStatusAddExerciseModal" [exerciseInfo]="forEditExercise"
     (exerciseInfoChange)="onExerciseUpdated($event)" [(show)]="showStatusAddExerciseModal">

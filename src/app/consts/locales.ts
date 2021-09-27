@@ -1,6 +1,7 @@
 export const LCL_SELECT_NOT_FOUND = "Bulunamadı";
 export const LCL_SELECT_PLACEHOLDER = "Bir öğe seçin ";
 export const LCL_SELECT_LOADING = "Yükleniyor...";
+export const LCL_SEARCH_TERM_PLACEHOLDER = "Arama için 2 veya daha fazla karakter giriniz";
 
 // Global Messages
 export const LCL_ERROR = "Hata";

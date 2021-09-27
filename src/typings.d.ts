@@ -10,3 +10,5 @@ declare var $: any;
 declare var validate: any;
 //Template
 declare var init: any;
+// Vimeo JS SDK
+declare var Vimeo: any;

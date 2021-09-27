@@ -12,6 +12,7 @@ color 0.2s ease-in-out;
   background-repeat: no-repeat;
   background-position-x: right calc(0.75rem) !important;
   background-position-y: center !important;
+  background-position: right calc(0.75rem) center !important;
   background-size: calc(0.75em + 0.65rem) calc(0.75em + 0.65rem);
   transition: $transition;
 }
@@ -23,6 +24,7 @@ color 0.2s ease-in-out;
   background-repeat: no-repeat;
   background-position-x: right calc(0.75rem);
   background-position-y: center !important;
+  background-position: right calc(0.75rem) center !important;
   background-size: calc(0.75em + 0.65rem) calc(0.75em + 0.65rem) !important;
   transition: $transition;
 }
@@ -34,6 +36,7 @@ color 0.2s ease-in-out;
   background-repeat: no-repeat;
   background-position-x: right calc(0.75rem) !important;
   background-position-y: center !important;
+  background-position: right calc(0.75rem) center !important;
   background-size: calc(2em + 0.65rem) calc(2em + 0.65rem) !important;
   transition: $transition;
 }
@@ -69,21 +72,18 @@ color 0.2s ease-in-out;
   .is-invalid {
     input {
       @extend .invalid;
-      background-position: right calc(0.75rem) center;
     }
   }
 
   .is-valid {
     input {
       @extend .valid;
-      background-position: right calc(0.75rem) center;
     }
   }
 
   .is-loading {
     input {
       @extend .loading;
-      background-position: right calc(0.75rem) center;
     }
   }
 }
@@ -136,7 +136,8 @@ color 0.2s ease-in-out;
   margin-top: 0.3rem !important;
 }
 
-.validated {
+.validated,
+.is-loading {
   .suffix-icon {
     display: none;
   }

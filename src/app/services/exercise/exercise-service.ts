@@ -7,14 +7,18 @@ import { ExceptionHandler } from '../common/exception-handler';
 import { PageInfo, ResponseProgressive } from 'src/app/models/base-model';
 import { ExerciseInfo } from 'src/app/models/exercise/exercise-info';
 import { ExerciseModel } from 'src/app/models/exercise/exercise-model';
+import { SearchTermModel } from 'src/app/models/utility/search-term-model';
 
 @Injectable()
 export class ExerciseService extends BaseService {
     constructor(httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
         super(httpClient, exceptionHandler);
     }
+    public searchExercises(searchTermModel: SearchTermModel): Observable<Array<ExerciseInfo> | null> {
+        return super.httpPostArrayModel<ExerciseInfo>(ExerciseInfo, environment.request.endPoints.exercise.searchExercises, searchTermModel);
+    }
     public listExercises(pageInfo: PageInfo): Observable<Array<ExerciseInfo> | null> {
-        return super.httpPostArrayModel<ExerciseInfo>(ExerciseInfo, environment.request.endPoints.exercise.listExercises,pageInfo);
+        return super.httpPostArrayModel<ExerciseInfo>(ExerciseInfo, environment.request.endPoints.exercise.listExercises, pageInfo);
     }
     public toggleExerciseStatus(id: number): Observable<boolean> {
         return super.httpPostValue<boolean>(environment.request.endPoints.exercise.toggleExerciseStatus, { id: id });
