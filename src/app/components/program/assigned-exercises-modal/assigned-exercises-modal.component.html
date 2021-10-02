@@ -1,0 +1,77 @@
+<!-- Exercises Of Program Modal -->
+<div #modal class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow:scroll;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" cardLoader>
+            <div class="modal-header">
+                <h5 class="modal-title">Egzersiz Listesi</h5>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <div class="v-timeline">
+                        <div class="line"></div>
+                        <div class="timeline-box">
+                            <div class="box-label"><span class="badge badge-danger">Egzersizler</span></div>
+                            <div class="box-items">
+                                <div class="item" *ngFor="let item of assignedExercises">
+                                    <div class="icon-block">
+                                        <div class="item-icon bg-info" [innerText]="item.Sequence"></div>
+                                        <div class="actions" style="position: absolute;right: 0;">
+                                            <button class="btn btn-info btn-sm btn-square rounded-pill mx-1"
+                                                (click)="changeDirection(item.RelationId,-1)" title="Öne Al">
+                                                <span class="btn-icon icofont-arrow-up">
+                                                </span>
+                                            </button>
+                                            <button class="btn btn-info btn-sm btn-square rounded-pill mx-1"
+                                                (click)="changeDirection(item.RelationId,1)" title="Geriye Al">
+                                                <span class="btn-icon icofont-arrow-down"></span>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm btn-square rounded-pill mx-1"
+                                                (click)="deleteExercise(item.RelationId)" title="Sil">
+                                                <span class="btn-icon icofont-ui-delete"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="content-block">
+                                        <div class="item-header">
+                                            <h3 class="h5 item-title" [innerText]="item.Exercise.Name"></h3>
+                                        </div>
+                                        <div class="item-desc" [innerText]="item.Exercise.Description"></div>
+                                        <hr class="my-2" />
+                                        <div class="text-nowrap"
+                                            [ngClass]="{'text-success': item.AutoSkip,'text-danger': !item.AutoSkip}">
+                                            <i class="icofont-check-circled mr-1"
+                                                [ngClass]="{'icofont-check-circled': item.AutoSkip,'icofont-close-circled' : !item.AutoSkip}"></i>
+                                            <span><b>Otomatik Geçiş</b> : {{item.AutoSkip ? 'Aktif (' +
+                                                item.AutoSkipTime +')' :
+                                                'Pasif'}}</span>
+                                        </div>
+                                        <div *ngIf="item.Properties">
+                                            <div class="d-flex align-items-center"
+                                                *ngFor="let property of item.Properties">
+                                                <div class="icofont-check-circled text-muted" style="padding: 0;">
+                                                </div>
+                                                <span class="ml-1"
+                                                    style="font-size: 14px;"><b>{{property.Definition.Name}}</b> :
+                                                    {{property.Value}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <div class="actions justify-content-between">
+                    <button class="btn btn-outline-danger" (click)="hideModal()">
+                        <span class="btn-icon icofont-close-circled mr-2"></span>
+                        Kapat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Exercises Of Program Modal -->

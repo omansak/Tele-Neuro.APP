@@ -15,13 +15,14 @@ export class ProgramManagementPage implements AfterViewInit {
     public programs: Array<ProgramInfo>
     public pageInfo: PageInfo = new PageInfo(1, 10);
     public forEditProgram: ProgramInfo | undefined;
-    public forAssignProgramId: number;
+    public selectedProgramId: number;
     public get totalProgramCount(): number {
         return this.programs?.filter(i => i.Program.IsActive).length ?? 0;
     };
     // Modals
     public showStatusUpdateProgramModal: boolean = false;
-    public showStatusExerciseOfProgramModal: boolean = false;
+    public showStatusAssignExerciseOfProgramModal: boolean = false;
+    public showStatusExercisesOfProgramModal: boolean = false;
     // View Children
     @ViewChild(CardLoaderDirective)
     public cardLoaderDirective: CardLoaderDirective;
@@ -36,9 +37,14 @@ export class ProgramManagementPage implements AfterViewInit {
         this.showStatusUpdateProgramModal = true;
     }
 
-    showExerciseOfProgramModal(e: any) {
-        this.forAssignProgramId = e;
-        this.showStatusExerciseOfProgramModal = true;
+    showAssignExerciseOfProgramModal(e: any) {
+        this.selectedProgramId = e;
+        this.showStatusAssignExerciseOfProgramModal = true;
+    }
+
+    showExercisesOfProgramModal(e: any) {
+        this.selectedProgramId = e;
+        this.showStatusExercisesOfProgramModal = true;
     }
 
     getPrograms() {

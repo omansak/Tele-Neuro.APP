@@ -21,6 +21,9 @@ export const environment = {
         toggleProgramStatus: "Program/ToggleProgramStatus",
         listPrograms: "Program/ListPrograms",
         assignExercise: "Program/AssignExercise",
+        assignedExercises: "Program/AssignedExercises",
+        changeSequenceAssignedExercise: "Program/ChangeSequenceAssignedExercise",
+        deleteAssignedExercise: "Program/DeleteAssignedExercise",
       },
       utility: {
         listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions"

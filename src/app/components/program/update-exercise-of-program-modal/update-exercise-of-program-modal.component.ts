@@ -34,7 +34,6 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
     @Output()
     public showChange = new EventEmitter();
     // Publics
-
     public exercisesInfoSearchLoading = false;
     public exercisesInfoObservable: Observable<Array<ExerciseInfo> | never[] | null>;
     public exerciseSearchTermSubject = new Subject<string>();
