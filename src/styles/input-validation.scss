@@ -14,7 +14,7 @@ color 0.2s ease-in-out;
   background-position-y: center !important;
   background-position: right calc(0.75rem) center !important;
   background-size: calc(0.75em + 0.65rem) calc(0.75em + 0.65rem);
-  transition: $transition;
+  transition: $transition !important;
 }
 
 .valid {
@@ -26,7 +26,7 @@ color 0.2s ease-in-out;
   background-position-y: center !important;
   background-position: right calc(0.75rem) center !important;
   background-size: calc(0.75em + 0.65rem) calc(0.75em + 0.65rem) !important;
-  transition: $transition;
+  transition: $transition !important;
 }
 
 .loading {
@@ -38,7 +38,7 @@ color 0.2s ease-in-out;
   background-position-y: center !important;
   background-position: right calc(0.75rem) center !important;
   background-size: calc(2em + 0.65rem) calc(2em + 0.65rem) !important;
-  transition: $transition;
+  transition: $transition !important;
 }
 
 .valitable-input {
