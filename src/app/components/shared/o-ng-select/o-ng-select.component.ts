@@ -62,7 +62,6 @@ export class ONgSelectComponent implements OnInit, AfterViewInit, OnChanges, Con
     if (value === null) {
       value = [];
     }
-    this._itemsAreUsed = true;
     this._items = value;
   };
   // Outputs
@@ -74,7 +73,6 @@ export class ONgSelectComponent implements OnInit, AfterViewInit, OnChanges, Con
   public validateMessage: string | undefined | null = undefined;
   // Privates
   private _items: Array<any>;
-  private _itemsAreUsed: boolean;
   private _onChange = (_: any) => { };
   private _onTouched = () => { };
   @ViewChild("tooltipElement")

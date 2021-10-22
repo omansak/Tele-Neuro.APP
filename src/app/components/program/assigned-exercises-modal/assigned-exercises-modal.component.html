@@ -10,7 +10,9 @@
                     <div class="v-timeline">
                         <div class="line"></div>
                         <div class="timeline-box">
-                            <div class="box-label"><span class="badge badge-danger">Egzersizler</span></div>
+                            <div class="box-label">
+                                <span class="badge badge-success">Başlangıç</span>
+                            </div>
                             <div class="box-items">
                                 <div class="item" *ngFor="let item of assignedExercises">
                                     <div class="icon-block">
@@ -33,7 +35,13 @@
                                     </div>
                                     <div class="content-block">
                                         <div class="item-header">
-                                            <h3 class="h5 item-title" [innerText]="item.Exercise.Name"></h3>
+                                            <h3 class="h5 item-title d-inline" [innerText]="item.Exercise.Name"></h3>
+                                            <span
+                                                class="text-nowrap text-danger animate__animated animate__flash animate__infinite animate__slower"
+                                                *ngIf="!item.Exercise.IsActive">
+                                                <i class="icofont-check-circled ml-2 icofont-info-circle"></i>
+                                                <span class="ml-1"><b>Bu içerik aktif değil</b></span>
+                                            </span>
                                         </div>
                                         <div class="item-desc" [innerText]="item.Exercise.Description"></div>
                                         <hr class="my-2" />
@@ -57,6 +65,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="box-label">
+                                <span class="badge badge-danger">Bitiş</span>
                             </div>
                         </div>
                     </div>

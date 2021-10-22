@@ -1,6 +1,6 @@
 
 import { HttpClient, HttpParams, HttpHeaders, HttpEvent, HttpEventType } from '@angular/common/http';
-import { Observable, empty } from 'rxjs';
+import { Observable, empty, NEVER } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
 import { BaseResponse, IBaseModel, ResponseProgressive } from 'src/app/models/base-model';
 import { DEFAULT_BASE_SERVICE_CONFIGURATION } from '../consts/defaults';
@@ -302,7 +302,7 @@ export class BaseService {
         if (this._catchError && this._exceptionHandler) {
             return this._exceptionHandler.handler(err);
         }
-        return empty();
+        return NEVER;//new Observable<never>(); // empty();
     }
     //#endregion
 

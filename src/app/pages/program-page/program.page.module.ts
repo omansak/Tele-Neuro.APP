@@ -4,10 +4,11 @@ import { SharedComponentsModule } from 'src/app/components/shared/shared.compone
 import { FormsModule } from '@angular/forms';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-import { ProgramManagementPage } from './program-management.page';
 import { NAVIGATION_ROUTE, ROUTE } from 'src/app/consts/navigation';
 import { RouterModule } from '@angular/router';
 import { ProgramComponentsModule } from 'src/app/components/program/program.components.module';
+import { ProgramPage } from './program.page';
+import { ExerciseComponentsModule } from 'src/app/components/exercise/exercise.components.module';
 @NgModule({
     imports: [
         // Angular
@@ -17,18 +18,17 @@ import { ProgramComponentsModule } from 'src/app/components/program/program.comp
         RouterModule.forChild([
             {
                 path: ROUTE,
-                component: ProgramManagementPage,
-                data: NAVIGATION_ROUTE.ROUTE_PROGRAM_MANAGEMENT
+                component: ProgramPage,
+                data: NAVIGATION_ROUTE.ROUTE_PROGRAM
             }
         ]),
         // App
-        SharedComponentsModule,
-        ProgramComponentsModule,
+        ExerciseComponentsModule,
         DirectivesModule,
         PipesModule
     ],
     exports: [],
-    declarations: [ProgramManagementPage],
+    declarations: [ProgramPage],
     providers: [],
 })
-export class ProgramManagementPageModule { }
+export class ProgramPageModule { }

@@ -5,12 +5,12 @@ export class Helper {
         }) + currency;
     }
 
-    public static Join(array: Array<string>, seperator: string = ''): String {
+    public static Join(array: Array<string>, separator: string = ''): String {
         let stringBuilder: string[] = [];
         array?.forEach(i => {
             if (i) {
                 stringBuilder.push(i);
-                stringBuilder.push(seperator);
+                stringBuilder.push(separator);
             }
         })
         stringBuilder.pop();
@@ -24,12 +24,12 @@ export class Helper {
 
     public static RandomString(length = 10): string {
         const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
-        let randomstring = 'o';
+        let randomString = 'o';
         for (let i = 0; i < length - 1; i++) {
-            const rnum = Math.floor(Math.random() * chars.length);
-            randomstring += chars.substring(rnum, rnum + 1);
+            const randomNumber = Math.floor(Math.random() * chars.length);
+            randomString += chars.substring(randomNumber, randomNumber + 1);
         }
-        return randomstring;
+        return randomString;
     }
 
     public static ObjectKeyLength(o: any): number {
@@ -63,13 +63,29 @@ export class Helper {
         }
     }
 
-    public static FormatBytes(bytes: any, decimals = 2): string {
+    public static FormatBytes(bytes: number, decimals = 2): string {
         if (bytes === 0) return '0 Byte';
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    public static FormatSeconds(seconds: number, decimals = 2): string {
+        if (Math.round(seconds) < 1) return '0 Sn';
+        const k = 60;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Sn', 'Dk', 'Sa'];
+        const i = Math.floor(Math.log(seconds) / Math.log(k));
+        return parseFloat((seconds / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    public static UpDivision(x: number, y: number): number {
+        if (y == 0)
+            return 0;
+        let z: number = x / y;
+        return z > Math.round(z) ? Math.round((z + 1)) : Math.round(z);
     }
 
     public static Clone(val: any): any {

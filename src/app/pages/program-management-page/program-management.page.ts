@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
+import { NAVIGATION_ROUTE } from "src/app/consts/navigation";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { BaseResponse, PageInfo } from "src/app/models/base-model";
 import { ProgramInfo } from "src/app/models/program/program-info";
@@ -26,7 +28,7 @@ export class ProgramManagementPage implements AfterViewInit {
     // View Children
     @ViewChild(CardLoaderDirective)
     public cardLoaderDirective: CardLoaderDirective;
-    constructor(private _programService: ProgramService, private _toastService: ToastService) { }
+    constructor(private _programService: ProgramService, private _toastService: ToastService, private _router: Router) { }
 
     ngAfterViewInit(): void {
         this.getPrograms();
@@ -45,6 +47,10 @@ export class ProgramManagementPage implements AfterViewInit {
     showExercisesOfProgramModal(e: any) {
         this.selectedProgramId = e;
         this.showStatusExercisesOfProgramModal = true;
+    }
+
+    navigateProgramContent(e: any) {
+        this._router.navigate([NAVIGATION_ROUTE.ROUTE_PROGRAM.Route.replace(':id', e)]);
     }
 
     getPrograms() {

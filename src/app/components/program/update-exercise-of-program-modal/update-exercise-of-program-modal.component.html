@@ -61,7 +61,6 @@
 
                         </ng-container>
                     </div>
-                    <!-- [(ngModel)]="model.Program.CategoryId" -->
                 </div>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -71,9 +70,9 @@
                             </o-ng-checkbox>
                         </div>
                         <div class="col-6" *ngIf="model.AutoSkip">
-                            <o-ng-input #autoSkipTimeElement type="number" [isLoading]="isLoadingAutoSkipTime"
-                                header="Otomatik Geçiş Süresi (Saniye)" placeholder="Saniye"
-                                [(ngModel)]="model.AutoSkipTime" [validate]="validate.number"
+                            <o-ng-input #autoSkipTimeElement type="number" [disabled]="isDisabledAutoSkipTime"
+                                [isLoading]="isLoadingAutoSkipTime" header="Otomatik Geçiş Süresi (Saniye)"
+                                placeholder="Saniye" [(ngModel)]="model.AutoSkipTime" [validate]="validate.number"
                                 suffixIcon="icofont-pencil-alt-5">
                             </o-ng-input>
                         </div>

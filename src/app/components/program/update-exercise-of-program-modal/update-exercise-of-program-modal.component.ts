@@ -40,6 +40,8 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
     public exercisePropertyDefinitions: Array<ExercisePropertyDefinition> | null;
     public isLoadingExercisePropertyDefinitions: boolean = false;
     public isLoadingAutoSkipTime: boolean = false;
+    public isDisabledAutoSkipTime: boolean = false;
+
     public validate = {
         text: VALIDATE_TEXT,
         number: VALIDATE_NUMBER,
@@ -92,32 +94,28 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
         }
     }
 
-    emitShowEvent() {
-        this.showChange.emit(this.show);
-    }
-
-    hideModal() {
+    public hideModal() {
         $(this.modal.nativeElement)
             .modal('hide');
         this.show = false;
         this.emitShowEvent();
     }
 
-    showModal() {
+    public showModal() {
         $(this.modal.nativeElement)
             .modal('show');
         this.show = true;
         this.emitShowEvent();
     }
 
-    check() {
+    public check() {
         return this.exerciseElement.check()
             && this.exercisePropertyElements?.reduce((result, current) => result && current.check() == true, true)
             && this.exercisePropertyValueElements?.reduce((result, current) => result && current.check() == true, true)
             && (this.model.AutoSkip ? this.autoSkipTimeElement.check() : true);
     }
 
-    save() {
+    public save() {
         if (this.check()) {
             let toast = this._toastService.continuing("Egzersiz atanıyor", "Egzersiz atama tamamlandı", "Atama yapılamadı.");
             this.cardLoaderDirective.start();
@@ -137,26 +135,27 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
         }
     }
 
-    addProperty() {
+    public addProperty() {
         this.model.Properties.push({ Id: this.exercisePropertyDefinitions![0].Id, Value: undefined });
     }
 
-    removeProperty(e: { Id: number, Value: any }) {
+    public removeProperty(e: { Id: number, Value: any }) {
         const index = this.model.Properties.indexOf(e);
         if (index > -1) {
             this.model.Properties.splice(index, 1);
         }
     }
 
-    getExerciseProperty(id: number) {
+    public getExerciseProperty(id: number) {
         return this.exercisePropertyDefinitions?.find(i => i.Id == id);
     }
 
-    async setDefaultDuration(e?: DocumentModel) {
+    public async setDefaultDuration(e?: DocumentModel) {
         let duration: number = 25;
         this.isLoadingAutoSkipTime = true;
         if (e) {
             if (ConvertNumberToFileType(e?.Type) == FileType.Video) {
+                this.isDisabledAutoSkipTime = true;
                 let iframe = $('<iframe>', {
                     id: 'vimeoDurationIFrame',
                     class: 'd-none',
@@ -174,10 +173,19 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
                     });
                 $(iframe).remove();
             }
+            else {
+                this.isDisabledAutoSkipTime = false;
+            }
         }
+        
         this.model.AutoSkipTime = duration;
         this.isLoadingAutoSkipTime = false;
     }
+
+    private emitShowEvent() {
+        this.showChange.emit(this.show);
+    }
+
     private loadExercisesInfoObservable() {
         this.exercisesInfoObservable = concat(
             of([]),

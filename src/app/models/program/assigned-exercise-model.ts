@@ -1,4 +1,5 @@
 import { IBaseModel } from "../base-model";
+import { DocumentModel } from "../document/document-model";
 import { ExerciseModel } from "../exercise/exercise-model";
 import { ExercisePropertyDefinition } from "../utility/exercise-property-definition";
 
@@ -9,6 +10,7 @@ export class AssignedExerciseModel implements IBaseModel<AssignedExerciseModel> 
     AutoSkip: boolean;
     AutoSkipTime: number | null;
     Exercise: ExerciseModel;
+    ExerciseDocument: DocumentModel;
     Properties: { Value: string, Definition: ExercisePropertyDefinition }[];
     mapModel(json: any): AssignedExerciseModel {
         this.RelationId = json.relationId;
@@ -19,6 +21,10 @@ export class AssignedExerciseModel implements IBaseModel<AssignedExerciseModel> 
 
         if (json.exercise) {
             this.Exercise = new ExerciseModel().mapModel(json.exercise);
+        }
+
+        if (json.exerciseDocument) {
+            this.ExerciseDocument = new DocumentModel().mapModel(json.exerciseDocument);
         }
 
         if (json.properties && Array.isArray(json.properties) && json.properties.length > 0) {

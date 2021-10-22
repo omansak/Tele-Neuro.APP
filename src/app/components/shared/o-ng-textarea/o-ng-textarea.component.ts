@@ -20,7 +20,7 @@ export class ONgTextareaComponent implements ControlValueAccessor {
   @Input()
   public description: string;
   @Input()
-  public placeholder: string;
+  public placeholder: string = "";
   @Input()
   public containerClass: string;
   @Input()

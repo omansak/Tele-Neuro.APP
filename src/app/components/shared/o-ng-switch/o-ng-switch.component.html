@@ -1,5 +1,5 @@
-<div class="needs-validation valitable-input o-checkbox-container">
-    <div class="custom-control custom-checkbox">
+<div class="needs-validation valitable-input o-switch-container">
+    <div class="custom-control custom-switch">
         <input #inputElement type="checkbox" class="custom-control-input" [attr.id]="elementKey" [ngClass]="[
                 isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
                 isLoading ? 'is-loading' : '']" [(ngModel)]="value" (blur)="emitFocusEvent()"
@@ -9,5 +9,4 @@
             *ngIf="validateMessage" [innerHtml]="validateMessage"></div>
     </div>
     <div class="form-text text-muted" *ngIf="description" [innerHtml]="description"></div>
-
 </div>

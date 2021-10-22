@@ -25,6 +25,11 @@ export const environment = {
         changeSequenceAssignedExercise: "Program/ChangeSequenceAssignedExercise",
         deleteAssignedExercise: "Program/DeleteAssignedExercise",
       },
+      content: {
+        programInfo: "Content/ProgramInfo",
+        assignedExercises: "Content/AssignedExercises",
+        getActiveExercise: "Content/GetActiveExercise",
+      },
       utility: {
         listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions"
       }

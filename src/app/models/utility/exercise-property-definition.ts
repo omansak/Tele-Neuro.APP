@@ -5,8 +5,9 @@ export class ExercisePropertyDefinition implements IBaseModel<ExercisePropertyDe
     Name: string;
     Description: string;
     UnitName: string;
+    Key: string;
     IsNumber: boolean;
-    
+
     getType(): 'number' | 'text' {
         return this.IsNumber ? 'number' : 'text';
     }
@@ -16,6 +17,7 @@ export class ExercisePropertyDefinition implements IBaseModel<ExercisePropertyDe
         this.Name = json.name;
         this.Description = json.description;
         this.UnitName = json.unitName;
+        this.Key = json.key;
         this.IsNumber = json.isNumber;
         return this;
     }

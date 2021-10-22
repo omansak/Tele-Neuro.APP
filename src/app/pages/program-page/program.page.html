@@ -1,0 +1,104 @@
+<div class="container" cardLoader>
+    <div class="light" *ngIf="programInfo">
+        <div>
+            <div></div>
+            <article class="postcard light blue">
+                <div class="postcard__img_link">
+                    <img class="postcard__img" src="{{programInfo?.CategoryDocument?.HostFullPath}}?height=175"
+                        [attr.alt]="programInfo?.Category?.Name" />
+                </div>
+                <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue">
+                        <a href="javascript:;" [innerText]="programInfo?.Program?.Name"></a>
+                    </h1>
+                    <div class="postcard__subtitle small">
+                        <span [innerText]="programInfo?.Category?.Name">
+                        </span>
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt" [innerText]="programInfo?.Program?.Description"></div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-sm-6">
+                            <div class="elements-list">
+                                <span class="badge badge-secondary badge-sm badge-pill">
+                                    <span class="icofont-clock-time mr-2" style="font-size: 14px;"></span>
+                                    <b>Ortalama Süre</b>
+                                    <span class="ml-2 my-1 badge badge-light badge-sm bg-white"
+                                        style="border-color: white;"> <b
+                                            [innerText]="formatSeconds(totalDuration)"></b></span>
+                                </span>
+                                <span class="badge badge-secondary badge-sm badge-pill">
+                                    <span class="icofont-racing-flag-alt mr-2" style="font-size: 14px;"></span>
+                                    <b>Toplam Egzersiz</b>
+                                    <span class="ml-2 my-1 badge badge-light badge-sm bg-white"
+                                        style="border-color: white;"> <b
+                                            [innerText]="assignedExercises?.length"></b></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 d-flex flex-row-reverse mt-2 mt-sm-0">
+                            <button class="btn btn-outline-primary" (click)="startExerciseShower()">
+                                Başlat
+                                <span class="btn-icon icofont-play ml-2"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div class="row" *ngIf="assignedExercises">
+        <div class="col-12">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="v-timeline">
+                        <div class="line"></div>
+                        <div class="timeline-box">
+                            <div class="box-label"><span class="badge badge-success">Başlangıç</span></div>
+                            <div class="box-items" *ngLet='["red", "green", "yellow", "blue"] as colors'>
+                                <div class="item" *ngFor="let item of assignedExercises;let idx = index">
+                                    <div class="icon-block">
+                                        <div class="item-icon bg-info">{{idx + 1}}</div>
+                                    </div>
+                                    <article class="postcard light {{colors[idx % 4]}}">
+                                        <div class="postcard__text t-dark p-4">
+                                            <h1 class="postcard__title {{colors[idx % 4]}}">
+                                                <a href="javscript:;" [innerText]="item.Exercise?.Name"></a>
+                                            </h1>
+                                            <!-- <div class="postcard__subtitle small">
+                                                <time datetime="2020-05-25 12:00:00">
+                                                    <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                                                </time>
+                                            </div> -->
+                                            <div class="postcard__bar"></div>
+                                            <div class="postcard__preview-txt" [innerText]="item.Exercise?.Description">
+                                            </div>
+                                            <div class="elements-list mt-2">
+                                                <span class="badge badge-secondary badge-sm badge-pill"
+                                                    *ngFor="let property of item.Properties">
+                                                    <span class="icofont-label mr-2" style="font-size: 14px;"></span>
+                                                    <b>{{property.Definition?.Name}}</b>
+                                                    <span class="ml-2 my-1 badge badge-light badge-sm bg-white"
+                                                        style="border-color: white;"> <b
+                                                            [innerText]="property.Value"></b></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="box-label">
+                                <span class="badge badge-danger">Bitiş</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<o-exercise-shower-modal *ngIf="showStatusExerciseShowerModal" [(show)]="showStatusExerciseShowerModal"
+    [assignedExercise]="selectedAssignedExercise" [hasPrev]="hasPrevExerciseForShower"
+    [hasNext]="hasNextExerciseForShower" (triggeredNext)="onTriggeredNext()" (triggeredPrev)="onTriggeredPrev()">
+</o-exercise-shower-modal>

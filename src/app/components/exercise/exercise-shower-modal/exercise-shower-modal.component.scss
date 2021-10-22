@@ -1,0 +1,163 @@
+@media (orientation: portrait) {
+  .modal-margin-top {
+    margin-top: 45px;
+  }
+}
+
+.modal-video-close-btn {
+  position: absolute;
+  z-index: 2;
+  top: -45px;
+  right: 0;
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border: none;
+  background: transparent
+}
+
+@media (orientation: landscape) {
+  .modal-video-close-btn {
+    top: 0;
+    right: -45px
+  }
+}
+
+.modal-video-close-btn:before {
+  transform: rotate(45deg)
+}
+
+.modal-video-close-btn:after {
+  transform: rotate(-45deg)
+}
+
+.modal-video-close-btn:before,
+.modal-video-close-btn:after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+  box-shadow: 0 0 5px 0px #dc3546ba;
+  background: #dc3546ba;
+  border-radius: 5px;
+  margin-top: 0px;
+}
+
+
+.modal-video-fullscreen-btn {
+  position: absolute;
+  z-index: 2;
+  top: -44px;
+  right: 35px;
+  display: inline-block;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+}
+
+@media (orientation: landscape) {
+  .modal-video-fullscreen-btn {
+    top: 35px;
+    right: -52px
+  }
+}
+
+.icon-fullscreen {
+  font-size: 26px;
+  color: #007bffbf;
+  text-shadow: 0 0 5px #007bffb3;
+}
+
+.modal-fullscreen {
+  width: 100vw;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  padding-right: 55px;
+}
+
+.base-timer-container {
+  position: unset;
+}
+
+.base-timer-backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #6c757d;
+  opacity: 0.5;
+  z-index: 3;
+}
+
+.base-timer-cancel-button {
+  position: absolute;
+  top: calc(50% + 15px);
+  left: calc(50% + -47px);
+  z-index: 4;
+}
+.base-timer-next-button {
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% + -57px);
+  z-index: 4;
+}
+
+.base-timer {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: calc(50% - 150px);
+  left: calc(50% - 75px);
+  z-index: 4;
+}
+
+.base-timer__svg {
+  transform: scaleX(-1);
+}
+
+.base-timer__circle {
+  fill: none;
+  stroke: none;
+}
+
+.base-timer__path-elapsed {
+  stroke-width: 7px;
+  stroke: grey;
+}
+
+.base-timer__path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 1s linear all;
+  fill-rule: nonzero;
+  stroke: currentColor;
+}
+
+.base-timer__path-remaining.green {
+  color: rgb(65, 184, 131);
+}
+
+.base-timer__path-remaining.orange {
+  color: orange;
+}
+
+.base-timer__path-remaining.red {
+  color: red;
+}
+
+.base-timer__label {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}

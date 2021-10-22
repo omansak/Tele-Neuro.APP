@@ -51,7 +51,7 @@
                                     </div>
                                     <div *ngIf="getDocumentType(item.Document.Type) == fileType.Video">
                                         <iframe [src]="item.Document.HostFullPath | safeUrl" frameborder="0"
-                                            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                                            allow="fullscreen; picture-in-picture" allowfullscreen
                                             style="width: 220px;height:100%;"></iframe>
                                     </div>
                                 </ng-container>

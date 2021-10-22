@@ -1,4 +1,6 @@
-@import "imports";
+@import '~ngx-toastr/toastr';
+@import "spinner-bounce";
+@import "template-override";
 
 .cursor-pointer{
     cursor: pointer;

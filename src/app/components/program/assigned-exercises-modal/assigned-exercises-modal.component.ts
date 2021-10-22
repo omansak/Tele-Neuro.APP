@@ -21,7 +21,7 @@ export class AssignedExercisesModal implements OnInit, OnChanges, AfterViewInit 
     @Output()
     public showChange = new EventEmitter();
     // Publics
-    public assignedExercises: Array<AssignedExerciseModel>
+    public assignedExercises: Array<AssignedExerciseModel>;
     // View children
     @ViewChild('modal', { static: true })
     public modal: ElementRef;

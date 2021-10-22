@@ -11,6 +11,7 @@ import { ONgInputComponent } from './o-ng-input/o-ng-input.component';
 import { ONgPaginatedViewComponent } from './o-ng-paginated-view/o-ng-paginated-view.component';
 import { ONgPaginationNavbarComponent } from './o-ng-pagination-navbar/o-ng-pagination-navbar.component';
 import { ONgSelectComponent } from './o-ng-select/o-ng-select.component';
+import { ONgSwitchComponent } from './o-ng-switch/o-ng-switch.component';
 import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
         ONgFileInputComponent,
         ONgCropperComponent,
         ONgPaginatedViewComponent,
-        ONgCheckboxComponent
+        ONgCheckboxComponent,
+        ONgSwitchComponent
     ],
     declarations: [
         ONgSelectComponent,
@@ -38,7 +40,8 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
         ONgCropperComponent,
         ONgPaginatedViewComponent,
         ONgPaginationNavbarComponent,
-        ONgCheckboxComponent
+        ONgCheckboxComponent,
+        ONgSwitchComponent
     ],
     providers: [],
 })

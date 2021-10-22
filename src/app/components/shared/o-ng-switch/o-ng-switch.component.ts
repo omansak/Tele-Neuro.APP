@@ -1,58 +1,48 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { StatusType } from 'src/app/consts/enums';
+import { Helper } from 'src/app/helpers/helper';
 
 @Component({
-  selector: 'o-ng-input',
-  templateUrl: './o-ng-input.component.html',
-  styleUrls: ['./o-ng-input.component.scss'],
+  selector: 'o-ng-switch',
+  templateUrl: './o-ng-switch.component.html',
+  styleUrls: ['./o-ng-switch.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => ONgInputComponent),
+    useExisting: forwardRef(() => ONgSwitchComponent),
     multi: true
   }],
   encapsulation: ViewEncapsulation.None
 })
-export class ONgInputComponent implements ControlValueAccessor {
+export class ONgSwitchComponent implements ControlValueAccessor {
   //Inputs
   @Input()
   public header: string;
   @Input()
   public description: string;
   @Input()
-  public placeholder: string = "";
-  @Input()
-  public type: "text" | "number" | "tel" | "email" = "text";
-  @Input()
   public containerClass: string;
   @Input()
-  public inputClass: string;
-  @Input()
-  public prefixIcon: string;
-  @Input()
-  public suffixIcon: string;
-  @Input()
-  public disabled: boolean = false;
-  // Outputs
-  @Output('change')
-  public changeEvent = new EventEmitter();
-  @Output('keyup')
-  public keyUpEvent = new EventEmitter();
+  public textareaClass: string;
   @Input()
   public isLoading: boolean = false;
   @Input()
   public validate: (value: any) => { status: StatusType | undefined | null, message?: string | undefined | null };
+
+  // Outputs
+  @Output('change')
+  changeEvent = new EventEmitter();
   // Publics
   public value: any;
   public isValid: StatusType | undefined | null = undefined;
   public validateMessage: string | undefined | null = undefined;
+  public elementKey = Helper.RandomString();
   // Privates
   private _onChange = (_: any) => { };
   private _onTouched = () => { };
 
   @ViewChild('inputElement', { static: true }) inputElement: ElementRef;
   constructor() { }
-
   writeValue(obj: any): void {
     this.value = obj;
   }
@@ -67,12 +57,8 @@ export class ONgInputComponent implements ControlValueAccessor {
 
   emitChangeEvent(e: any) {
     this.check();
-    this._onChange(this.type == 'number' ? +this.value : this.value);
+    this._onChange(this.value)
     this.changeEvent.emit(e);
-  }
-
-  emitKeyUpEvent(e: any) {
-    this.keyUpEvent.emit(e);
   }
 
   emitFocusEvent() {
