@@ -22,7 +22,7 @@ export class ONgInputComponent implements ControlValueAccessor {
   @Input()
   public placeholder: string = "";
   @Input()
-  public type: "text" | "number" | "tel" | "email" = "text";
+  public type: "text" | "number" | "tel" | "email" | "password" = "text";
   @Input()
   public containerClass: string;
   @Input()

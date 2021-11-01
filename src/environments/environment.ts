@@ -32,6 +32,11 @@ export const environment = {
       },
       utility: {
         listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions"
+      },
+      login: {
+        login: "Login/Login",
+        logout: "Login/Logout",
+        refreshToken: "Login/RefreshToken",
       }
     }
   }

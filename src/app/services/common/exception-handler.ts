@@ -13,9 +13,8 @@ export class ExceptionHandler implements IExceptionHandler {
 
         // 401
         if (err.status === 401) {
-            //this._router.navigate([ROUTE_ROOT]);
             this._toastService.error(LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_AUTHORIZATION_EXCEPTION);
-            return empty();
+            return throwError(err);
         }
 
         // 404

@@ -109,6 +109,7 @@ function initResize() {
     });
   }
 }
+
 function initSidebar() {
   // Open/close sidebar
   $(".navbar-toggle").click(function () {
@@ -139,10 +140,7 @@ function init() {
   initSettings();
   initSidebar();
   initResize();
-}
-
-$(window).on("load", function () {
   $.ready.then(function () {
     $("body").addClass("loaded");
   });
-});
+}

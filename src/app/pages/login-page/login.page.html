@@ -1,0 +1,42 @@
+<div class="page-box">
+    <div class="app-container page-sign-in">
+        <div class="content-box">
+            <div class="content-header">
+                <div class="app-logo">
+                    <div class="logo-wrap">
+                        <img src="/assets/img/logo.svg" alt="" width="147" height="33" class="logo-img">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="w-100">
+                    <h2 class="h4 mt-0 mb-1">Giriş Yap</h2>
+                    <p class="text-muted">Hesabınıza erişmek için giriş bilgilerinizi giriniz.</p>
+                    <div>
+                        <div class="form-group">
+                            <o-ng-input #emailElement type="text" header="Email" placeholder="Email"
+                                suffixIcon="icofont-ui-email" [validate]="validate.text" [(ngModel)]="model.Email">
+                            </o-ng-input>
+                        </div>
+
+                        <div class="form-group">
+                            <o-ng-input #passwordElement type="password" header="Şifre" placeholder="Şifre"
+                                suffixIcon="icofont-ui-password" [validate]="validate.text"
+                                [(ngModel)]="model.Password">
+                            </o-ng-input>
+                        </div>
+
+                        <div class="actions justify-content-between">
+                            <button class="btn btn-primary" (click)="login()">
+                                <span class="btn-icon icofont-login mr-2"></span>Giriş Yap
+                            </button>
+                        </div>
+                    </div>
+                    <p class="mt-5 mb-1"><a href="javascript:;">Şifremi Unuttum</a> | Şifren mi yok?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

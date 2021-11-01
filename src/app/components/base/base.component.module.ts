@@ -10,7 +10,8 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule],
+    RouterModule
+  ],
   exports: [],
   declarations: [BaseComponent, NavbarComponent, MainMenuComponent, FooterComponent, HorizontalNavbarComponent],
   providers: [],

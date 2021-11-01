@@ -40,15 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <div style="position: absolute;top: 5px;right: 5px;opacity: 0.8;"
-                    *ngIf="repeatCount|| exercisePropertyTime">
-                    <span class="badge badge-danger m-1 badge-lg" *ngIf="repeatCount">
-                        <b>Tekrar</b> <span class="ml-2" [innerText]="repeatCount"></span>
-                    </span>
-                    <span class="badge badge-danger m-1 badge-lg" *ngIf="exercisePropertyTime">
-                        <b>Süre</b> <span class="ml-2" [innerText]="exercisePropertyTime"></span>
-                    </span>
-                </div>
                 <div class="card-body">
                     <h5 class="card-title mt-0">{{assignedExercise.Exercise.Name}}</h5>
                     <p class="card-text">{{assignedExercise.Exercise.Description}}</p>

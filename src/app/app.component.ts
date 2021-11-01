@@ -4,4 +4,13 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
+  changeBodyPublicLayoutClass() {
+    $("body").removeClass("vertical-layout");
+    $("body").addClass("public-layout");
+  }
+
+  changeBodyVerticalLayoutClass() {
+    $("body").removeClass("public-layout");
+    $("body").addClass("vertical-layout");
+  }
 }

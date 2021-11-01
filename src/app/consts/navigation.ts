@@ -29,6 +29,11 @@ export const NAVIGATION_ROUTE = {
         PageHeader: "Program İçeriği",
         Route: "program/:id",
     },
+    ROUTE_LOGIN: {
+        PageTitle: "Tele-Neuro | Giriş",
+        PageHeader: "Tele-Neuro | Giriş",
+        Route: "login",
+    },
 }
 
 

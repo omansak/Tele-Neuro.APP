@@ -20,6 +20,7 @@
     "@angular/router": "^12.2.5",
     "@ng-select/ng-select": "^7.2.0",
     "animate.css": "^4.1.1",
+    "jwt-decode": "^3.1.2",
     "ngx-bootstrap": "^6.2.0",
     "ngx-image-cropper": "^4.0.1",
     "ngx-toastr": "^14.1.3",

@@ -38,9 +38,6 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
     public autoSkipCounterShow: boolean = false;
     public autoSkipTimerInterval: any = null;
     public autoSkipTimerTimeLimit: number;
-    public repeatCount: number;
-    public exercisePropertyTime: number;
-    public exercisePropertyTimeInterval: any = null;
     // View children
     @ViewChild('modal', { static: true })
     public modal: ElementRef;
@@ -136,10 +133,6 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
         clearInterval(this.autoSkipCounterInterval);
     }
 
-    public cancelExercisePropertyTime() {
-        clearInterval(this.exercisePropertyTimeInterval);
-    }
-
     private emitShowEvent() {
         this.showChange.emit(this.show);
     }
@@ -147,7 +140,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
     private initAutoSkipTimerNonVideo() {
         if (this.hasNext && this.assignedExercise?.ExerciseDocument && this.getDocumentType(this.assignedExercise.ExerciseDocument.Type) != this.fileType.Video) {
             if (this.assignedExercise.AutoSkipTime != null && this.assignedExercise?.AutoSkipTime > 0) {
-                this.autoSkipTimerTimeLimit = this.assignedExercise.AutoSkipTime! + (this.repeatCount * this.exercisePropertyTime);
+                this.autoSkipTimerTimeLimit = this.assignedExercise.AutoSkipTime!;
                 this.cancelAutoSkipTimer();
                 this.autoSkipTimerInterval = setInterval(() => {
                     this.autoSkipTimerTimeLimit -= 1;
@@ -164,12 +157,6 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
 
     private initVideoPlayer() {
         let autoSkipTimerEnded = (e: any) => {
-            if (this.repeatCount > 1) {
-                this.repeatCount -= 1;
-                this.initVideoPlayer();
-                return;
-            }
-
             if (this.assignedExercise.AutoSkip && this.autoSkipStatus) {
                 this.startAutoSkipCounter();
             }
@@ -202,41 +189,15 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
         });
     }
 
-
-    private totalPropertyRepeatCount() {
-        return this.assignedExercise.Properties?.filter(i => i.Definition.Key == "E_REPEAT").reduce((result, current) => result + +current.Value, 0) ?? 0;
-    }
-
-    private totalPropertyTime() {
-        return this.assignedExercise.Properties?.filter(i => i.Definition.Key == "E_TIME_SEC").reduce((result, current) => result + +current.Value, 0) ?? 0;
-    }
-
     private initExercise() {
         this.cancelAutoSkipTimer();
         this.cancelAutoSkipCounter();
-        this.cancelExercisePropertyTime();
 
-        this.repeatCount = this.totalPropertyRepeatCount();
-        this.exercisePropertyTime = this.totalPropertyTime();
 
         if (this.assignedExercise.ExerciseDocument && this.getDocumentType(this.assignedExercise.ExerciseDocument.Type) == this.fileType.Video) {
             this.initVideoPlayer();
         }
         else {
-            if (this.exercisePropertyTime) {
-                this.exercisePropertyTimeInterval = setInterval(() => {
-                    this.exercisePropertyTime -= 1;
-                    if (this.exercisePropertyTime <= 0) {
-                        if (this.repeatCount > 1) {
-                            this.repeatCount -= 1;
-                            this.exercisePropertyTime = this.totalPropertyTime();
-                        }
-                        else {
-                            this.cancelExercisePropertyTime();
-                        }
-                    }
-                }, 1000);
-            }
             if (this.assignedExercise.AutoSkip) {
                 this.initAutoSkipTimerNonVideo();
             }

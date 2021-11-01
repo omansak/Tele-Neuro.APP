@@ -1,3 +1,4 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToastNoAnimationModule } from 'ngx-toastr';
@@ -6,6 +7,9 @@ import { AppComponent } from './app.component';
 import { BaseComponentModule } from './components/base/base.component.module';
 import { CDN_JS_JQUERY, CDN_JS_POPPER, CDN_JS_BOOTSTRAP, CDN_CSS_ANIMATE, CDN_CSS_ICOFONT, CDN_CSS_SIMPLE_LINE_ICON, CDN_JS_VALIDATE, CDN_JS_HAMMER } from './consts/cdns';
 import { DEFAULT_TOASTR_CONFIG } from './consts/defaults';
+import { JwtInterceptor } from './interceptors/jwt-interceptor';
+import { UnauthorizedInterceptor } from './interceptors/unauthorized-interceptor';
+import { AuthenticationService } from './services/authentication/authentication-service';
 import { ExceptionHandler } from './services/common/exception-handler';
 import { LazyLoaderService } from './services/common/lazy-script-loader.service';
 import { ToastService } from './services/common/toastr-service';
@@ -17,16 +21,33 @@ import { ToastService } from './services/common/toastr-service';
     // Angular
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     // App
     BaseComponentModule,
     ToastNoAnimationModule.forRoot(DEFAULT_TOASTR_CONFIG)
   ],
-  providers: [LazyLoaderService, ExceptionHandler, ToastService],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true,
+    },
+    LazyLoaderService,
+    ExceptionHandler,
+    ToastService,
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private _lazyLoaderService: LazyLoaderService) {
+  constructor(private _lazyLoaderService: LazyLoaderService, private _authenticationService: AuthenticationService) {
     this.loadAssets();
+    this._authenticationService.refreshToken().toPromise();
   }
 
   loadAssets() {

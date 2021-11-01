@@ -18,7 +18,6 @@ import { ONgTextareaComponent } from './o-ng-textarea/o-ng-textarea.component';
     imports: [
         CommonModule,
         FormsModule,
-        HttpClientModule,
         NgSelectModule, // --> https://github.com/ng-select/ng-select
         ImageCropperModule // --> https://github.com/Mawi137/ngx-image-cropper
     ],
