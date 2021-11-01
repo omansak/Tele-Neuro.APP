@@ -56,9 +56,9 @@ $_types: (
   .title {
     font-size: 1.25em;
     font-weight: 500;
-    margin-bottom: $_module-rem * 0.5;
+    margin-bottom: math.div($-module-rem, 2);
   }
-  .close {
+  .btn-close {
     align-self: flex-start;
     color: inherit;
     cursor: pointer;
@@ -68,7 +68,9 @@ $_types: (
     padding: 0;
     opacity: 0;
     text-shadow: none;
-    transition: opacity .2s $_animation;
+    transition:
+      color .2s $_animation,
+      opacity .2s $_animation;
   }
   .alert-icon {
     align-items: center;
@@ -108,7 +110,7 @@ $_types: (
     padding-right: 0;
   }
   &:hover {
-    .close {
+    .btn-close {
       opacity: 1;
     }
   }

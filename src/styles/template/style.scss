@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import 'fonts';
 @import 'variables';
 @import 'mixins';
@@ -29,11 +31,8 @@
 @import 'components/table';
 @import 'components/v-timeline';
 @import 'components/icon';
-@import 'helpers';
-//@import "bootstrap/bootstrap";
-
-//pages
 @import 'pages/sign-in';
 // @import 'pages/sign-up';
 // @import 'pages/404';
 // @import 'pages/500';
+@import 'helpers';

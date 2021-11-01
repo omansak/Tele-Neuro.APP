@@ -61,7 +61,8 @@ ol,
 pre,
 table,
 blockquote,
-.blockquote {
+.blockquote,
+figure {
   margin-top: 0;
   margin-bottom: $module-rem * 2;
 
@@ -74,8 +75,8 @@ ul ul, ol ol, ul ol, ol ul {
   margin-bottom: 0;
 }
 hr, .hr {
-  border-top: 1px solid rgba(main-palette(500),.1);
   margin: ($module-rem * 2) 0;
+  opacity: .1;
 }
 sub, sup {
   vertical-align: baseline;

@@ -1,5 +1,3 @@
-@use "sass:math";
-
 $_bg: (
   default: #EBEBEB,
   hover: #EBEBEB,
@@ -21,7 +19,7 @@ $_color: (
 
 $_module-rem: $module-rem;
 $_fs: 1rem;
-$_lh: math.div($_module-rem * 2, $_fs);
+$_lh: math.div($-module-rem * 2, $-fs);
 $_padding-h: $_module-rem * 2;
 $_padding-v: $_module-rem;
 $_error-color: $error-color;

@@ -38,13 +38,13 @@ $_sl-color-hover: accent-palette(500);
     .social {
       display: flex;
       justify-content: center;
-      margin: 0 (-$_module-rem * 0.5) ($_module-rem * 2);
+      margin: 0 (- math.div($-module-rem, 2)) ($_module-rem * 2);
 
       .link {
         color: $_sl-color;
         display: block;
         font-size: #{$main-lh}rem;
-        margin: 0 ($_module-rem * 0.5);
+        margin: 0 (math.div($-module-rem, 2));
 
         &:hover {
           color: $_sl-color-hover;

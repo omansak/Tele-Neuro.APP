@@ -2,7 +2,7 @@ $_module-rem: $module-rem;
 $_border-width: 1px;
 $_border-style: solid;
 $_fs: #{$main-lh}rem;
-$_padding: $_module-rem * 0.5;
+$_padding: math.div($-module-rem, 2);
 $_shape: $shape;
 $_transition: $animation;
 

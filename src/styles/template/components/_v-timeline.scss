@@ -18,8 +18,8 @@ $_label-color: main-contrast(500);
   .line {
     background: $_line-color;
     bottom: $_module-rem * 2;
-    left: $_icon-size * 0.5;
-    margin: 0 (-$_line-size * 0.5);
+    left: math.div($-icon-size, 2);
+    margin: 0 math.div(-$-line-size, 2);
     position: absolute;
     top: $_module-rem * 2;
     width: $_line-size;
@@ -86,7 +86,7 @@ $_label-color: main-contrast(500);
   }
   &.dots {
     .line {
-      left: $_dot-size * 0.5;
+      left: math.div($-dot-size, 2);
     }
     .timeline-box {
       .box-items {
@@ -109,7 +109,7 @@ $_label-color: main-contrast(500);
   &.align-right {
     .line {
       left: auto;
-      right: $_icon-size * 0.5;
+      right: math.div($-icon-size, 2);
     }
     .timeline-box {
       .box-label {
@@ -134,7 +134,7 @@ $_label-color: main-contrast(500);
     &.dots {
       .line {
         left: auto;
-        right: $_dot-size * 0.5;
+        right: math.div($-dot-size, 2);
       }
     }
   }
@@ -149,7 +149,7 @@ $_label-color: main-contrast(500);
       .box-items {
         .item {
           flex-direction: column;
-          margin: $_module-rem (-$_module-rem * 0.5);
+          margin: $_module-rem (- math.div($-module-rem, 2));
 
           .icon-block {
             margin-bottom: $_module-rem;
@@ -165,7 +165,7 @@ $_label-color: main-contrast(500);
               content: '';
               height: $_module-rem * 3;
               left: 50%;
-              margin-left: -$_line-size * 0.5;
+              margin-left: math.div(-$-line-size, 2);
               position: absolute;
               width: $_line-size;
             }
@@ -212,7 +212,7 @@ $_label-color: main-contrast(500);
               text-align: right;
 
               .icon-block {
-                margin-right: -$_icon-size * 0.5;
+                margin-right: - math.div($-icon-size, 2);
               }
               .content-block {
                 margin-left: 0;
@@ -222,7 +222,7 @@ $_label-color: main-contrast(500);
               align-self: flex-end;
 
               .icon-block {
-                margin-left: -$_icon-size * 0.5;
+                margin-left: - math.div($-icon-size, 2);
               }
               .content-block {
                 margin-right: 0;
@@ -237,12 +237,12 @@ $_label-color: main-contrast(500);
             .item {
               &:nth-child(odd) {
                 .icon-block {
-                  margin-right: -$_dot-size * 0.5;
+                  margin-right: - math.div($-dot-size, 2);
                 }
               }
               &:nth-child(even) {
                 .icon-block {
-                  margin-left: -$_dot-size * 0.5;
+                  margin-left: - math.div($-dot-size, 2);
                 }
               }
             }

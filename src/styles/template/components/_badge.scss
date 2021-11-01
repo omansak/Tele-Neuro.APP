@@ -1,5 +1,3 @@
-@use "sass:math";
-
 $_module-rem: $module-rem;
 $_border-width: 1px;
 $_shape: 500px;
@@ -8,15 +6,15 @@ $_lh: $main-lh;
 $_padding: calc(#{$_module-rem} / 2) calc(#{$_module-rem} * 2 - #{$_border-width});
 
 $_fz-xs: $_fz * .7;
-$_lh-xs: math.div($_module-rem * 1.5, $_fz-xs);
+$_lh-xs: math.div($-module-rem * 1.5, $-fz-xs);
 $_padding-xs: 0 calc(#{$_module-rem} / 2 - #{$_border-width});
 
 $_fz-sm: $_fz * .7;
-$_lh-sm: math.div($_module-rem * 1.5, $_fz-sm);
+$_lh-sm: math.div($-module-rem * 1.5, $-fz-sm);
 $_padding-sm: calc(#{$_module-rem} / 4 - #{$_border-width}) calc(#{$_module-rem} - #{$_border-width});
 
 $_fz-lg: $_fz * 1.2;
-$_lh-lg: math.div($_module-rem * 2, $_fz-lg);
+$_lh-lg: math.div($-module-rem * 2, $-fz-lg);
 $_padding-lg: calc(#{$_module-rem} - #{$_border-width}) calc(#{$_module-rem} * 3 - #{$_border-width});
 
 $_types: (
@@ -41,6 +39,10 @@ $_types: (
     color: $warning-contrast
   ),
   error: (
+    bg: $error-color,
+    color: $error-contrast
+  ),
+  danger: (
     bg: $error-color,
     color: $error-contrast
   ),

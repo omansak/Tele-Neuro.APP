@@ -24,12 +24,12 @@
                         </div>
                         <button class="btn btn-outline-danger base-timer-cancel-button"
                             (click)="cancelAutoSkipCounter()">
-                            İptal <span class="btn-icon icofont-close-circled ml-2"></span>
+                            İptal <span class="btn-icon icofont-close-circled ms-2"></span>
                         </button>
                         <button class="btn btn-outline-success base-timer-next-button"
                             (click)="onAutoSkipTriggeredNext()">
                             Sonraki
-                            <span class="btn-icon icofont-arrow-right ml-2"></span>
+                            <span class="btn-icon icofont-arrow-right ms-2"></span>
                         </button>
                     </div>
                     <div *ngIf="getDocumentType(assignedExercise.ExerciseDocument.Type) == fileType.Image">
@@ -45,16 +45,16 @@
                     <p class="card-text">{{assignedExercise.Exercise.Description}}</p>
                     <div class="elements-list mt-2">
                         <span class="badge badge-white badge-sm badge-pill" *ngIf="assignedExercise.AutoSkip">
-                            <span class="icofont-clock-time mr-2" style="font-size: 14px;"></span>
+                            <span class="icofont-clock-time me-2" style="font-size: 14px;"></span>
                             <b>Ortalama Süre</b>
-                            <span class="ml-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
+                            <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
                                     [innerText]="formatSeconds(assignedExercise.AutoSkipTime)"></b></span>
                         </span>
                         <span class="badge badge-white badge-sm badge-pill"
                             *ngFor="let property of assignedExercise.Properties">
-                            <span class="icofont-label mr-2" style="font-size: 14px;"></span>
+                            <span class="icofont-label me-2" style="font-size: 14px;"></span>
                             <b>{{property.Definition?.Name}}</b>
-                            <span class="ml-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
+                            <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
                                     [innerText]="property.Value"></b></span>
                         </span>
                     </div>
@@ -63,20 +63,20 @@
             <div class="modal-footer d-block">
                 <div class="actions justify-content-between">
                     <button class="btn btn-outline-danger" *ngIf="hasPrev" (click)="emitTriggeredPrevEvent()">
-                        <span class="btn-icon icofont-arrow-left mr-2"></span>
+                        <span class="btn-icon icofont-arrow-left me-2"></span>
                         Önceki
                     </button>
                     <div class="d-flex align-items-center" *ngIf="hasNext">
                         <o-ng-switch header="Otomatik Geçiş" [(ngModel)]="autoSkipStatus"
                             *ngIf="assignedExercise.AutoSkip">
                         </o-ng-switch>
-                        <h6 class="ml-2"
+                        <h6 class="ms-2"
                             *ngIf="autoSkipStatus && getDocumentType(assignedExercise.ExerciseDocument.Type) != fileType.Video">
                             ({{formatSeconds(autoSkipTimerTimeLimit)}})</h6>
                     </div>
                     <button class="btn btn-outline-success" *ngIf="hasNext" (click)="emitTriggeredNextEvent()">
                         Sonraki
-                        <span class="btn-icon icofont-arrow-right ml-2"></span>
+                        <span class="btn-icon icofont-arrow-right ms-2"></span>
                     </button>
                 </div>
             </div>

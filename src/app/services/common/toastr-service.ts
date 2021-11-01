@@ -80,6 +80,6 @@ export class ToastContinuing {
     }
 
     private getInfoHtml(message: string) {
-        return '<div class="spinner text-center" >' + '<span class="mr-3">' + message + '</span><br/>' + '<div class="bounce1" > </div><div class="bounce2"></div > <div class="bounce3" > </div></div >';
+        return '<div class="spinner text-center" >' + '<span class="me-3">' + message + '</span><br/>' + '<div class="bounce1" > </div><div class="bounce2"></div > <div class="bounce3" > </div></div >';
     }
 }

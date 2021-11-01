@@ -5,7 +5,7 @@ import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } fro
 })
 export class CardLoaderDirective {
     private isLoading: boolean = false;
-    private buttonSpinner: string = '<span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>';
+    private buttonSpinner: string = '<span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>';
     constructor(
         private _renderer: Renderer2,
         private _elementRef: ElementRef

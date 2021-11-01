@@ -43,7 +43,7 @@
       width: 35px;
 
       span {
-        background: main-palette(500);
+        background: currentColor;
         display: block;
         height: 3px;
         margin: 4px 0;
@@ -74,7 +74,7 @@
         display: block;
         font-weight: 700;
         opacity: .3;
-        padding: ($module-rem * 0.5) 0;
+        padding: math.div($module-rem, 2) 0;
         transition: opacity .2s $animation;
 
         .tc-icon {
@@ -129,9 +129,14 @@
       min-height: $module-rem * 4;
     }
   }
+  &.horizontal-vertical {
+    --navbar-bg: #fbfbfb;
+    --navbar-color: #000;
+  }
   &.vertical {
-    background: var(--navbar-2-bg);
-    color: var(--navbar-2-color);
+    --navbar-bg: #fbfbfb;
+    --navbar-color: #000;
+
     display: flex;
     justify-content: flex-end;
     height: 100%;
@@ -166,8 +171,8 @@
     }
   }
   &.dark {
-    background: var(--navbar-dark-bg);
-    color: var(--navbar-dark-color);
+    --navbar-color: #{main-contrast(500)};
+    --navbar-bg: #{main-palette(500)};
   }
   .navbar-skeleton {
     align-items: center;

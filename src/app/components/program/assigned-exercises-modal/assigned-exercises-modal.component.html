@@ -39,15 +39,15 @@
                                             <span
                                                 class="text-nowrap text-danger animate__animated animate__flash animate__infinite animate__slower"
                                                 *ngIf="!item.Exercise.IsActive">
-                                                <i class="icofont-check-circled ml-2 icofont-info-circle"></i>
-                                                <span class="ml-1"><b>Bu içerik aktif değil</b></span>
+                                                <i class="icofont-check-circled ms-2 icofont-info-circle"></i>
+                                                <span class="ms-1"><b>Bu içerik aktif değil</b></span>
                                             </span>
                                         </div>
                                         <div class="item-desc" [innerText]="item.Exercise.Description"></div>
                                         <hr class="my-2" />
                                         <div class="text-nowrap"
                                             [ngClass]="{'text-success': item.AutoSkip,'text-danger': !item.AutoSkip}">
-                                            <i class="icofont-check-circled mr-1"
+                                            <i class="icofont-check-circled me-1"
                                                 [ngClass]="{'icofont-check-circled': item.AutoSkip,'icofont-close-circled' : !item.AutoSkip}"></i>
                                             <span><b>Otomatik Geçiş</b> : {{item.AutoSkip ? 'Aktif (' +
                                                 item.AutoSkipTime +')' :
@@ -58,7 +58,7 @@
                                                 *ngFor="let property of item.Properties">
                                                 <div class="icofont-check-circled text-muted" style="padding: 0;">
                                                 </div>
-                                                <span class="ml-1"
+                                                <span class="ms-1"
                                                     style="font-size: 14px;"><b>{{property.Definition.Name}}</b> :
                                                     {{property.Value}}</span>
                                             </div>
@@ -77,7 +77,7 @@
             <div class="modal-footer d-block">
                 <div class="actions justify-content-between">
                     <button class="btn btn-outline-danger" (click)="hideModal()">
-                        <span class="btn-icon icofont-close-circled mr-2"></span>
+                        <span class="btn-icon icofont-close-circled me-2"></span>
                         Kapat
                     </button>
                 </div>

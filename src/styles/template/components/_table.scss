@@ -21,7 +21,7 @@ $_striped-bg: rgba(main-palette(500),.08);
 // bordered
 $_bordered-border-color: #ebebeb;
 // sm
-$_padding-sm: $_module-rem * 0.5;
+$_padding-sm: math.div($-module-rem, 2);
 // types
 $_types: (
   active: (
@@ -108,6 +108,9 @@ $_types: (
       }
     }
   }
+  > :not(:last-child) > :last-child > * {
+    border-bottom-color: $_border-color;
+  }
   .thead-dark {
     th {
       background: $_header-bg-dark;
@@ -145,6 +148,7 @@ $_types: (
         color: inherit;
 
         &:hover {
+          --bs-table-accent-bg: none;
           box-shadow: $_shadow;
           transform: scale(1);
           z-index: 1;
@@ -164,16 +168,13 @@ $_types: (
     }
   }
   &.table-striped {
-    tbody {
-      tr {
+    > tbody {
+      > tr {
         &:nth-of-type(odd) {
-          background: none;
+          --bs-table-accent-bg: none;
         }
         &:nth-of-type(even) {
-          th,
-          td {
-            background: $_striped-bg;
-          }
+          --bs-table-accent-bg: #{$_striped-bg};
         }
       }
     }
@@ -218,10 +219,10 @@ $_types: (
 
   .actions {
     display: flex;
-    margin: -$module-rem * 0.25;
+    margin: - math.div(-$module-rem, 4);
 
     .btn {
-      margin: $module-rem * 0.25;
+      margin: math.div($module-rem, 4);
     }
   }
 }

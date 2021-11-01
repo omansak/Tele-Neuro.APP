@@ -1,4 +1,3 @@
-@use 'sass:math';
 .accent-palette {
   color: accent-palette(500);
 }
@@ -33,7 +32,7 @@
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  margin: -1*math.div($module-rem, 2);
+  margin: - math.div($module-rem, 2);
 
   > * {
     margin: math.div($module-rem, 2);
@@ -109,13 +108,16 @@
 .rounded-500 {
   border-radius: 500px!important;
 }
-.close {
+.btn-close {
+  background: none;
+  box-shadow: none !important;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
   opacity: 1;
+  outline: none !important;
   text-shadow: none;
-  transition: .2s color $animation;
+  transition: color .2s $animation;
 
   &:hover {
     color: $error-color;

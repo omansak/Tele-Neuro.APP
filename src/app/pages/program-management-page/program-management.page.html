@@ -55,7 +55,7 @@
                             <td>
                                 <div class="text-nowrap "
                                     [ngClass]="{'text-success': item.Program.IsActive,'text-danger': !item.Program.IsActive}">
-                                    <i class="icofont-check-circled mr-1"
+                                    <i class="icofont-check-circled me-1"
                                         [ngClass]="{'icofont-check-circled': item.Program.IsActive,'icofont-close-circled' : !item.Program.IsActive}"></i>
                                     <span>{{item.Program.IsActive ? 'Aktif' : 'Pasif'}}</span>
                                 </div>
@@ -63,7 +63,7 @@
                             <td>
                                 <div class="text-nowrap "
                                     [ngClass]="{'text-info': item.Program.IsPublic,'text-warning': !item.Program.IsPublic}">
-                                    <i class="icofont-check-circled mr-1"
+                                    <i class="icofont-check-circled me-1"
                                         [ngClass]="{'icofont-check-circled': item.Program.IsPublic,'icofont-close-circled' : !item.Program.IsPublic}"></i>
                                     <span>{{item.Program.IsPublic ? 'Herkese Açık' : 'Gizli'}}</span>
                                 </div>

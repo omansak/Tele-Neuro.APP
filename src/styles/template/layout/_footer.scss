@@ -47,7 +47,7 @@
           }
         }
         .separator {
-          margin: 0 ($module-rem * 0.5) -2px;
+          margin: 0 math.div($module-rem, 2) -2px;
         }
         &:last-child {
           .link {
@@ -115,26 +115,26 @@
         width: 100%;
       }
       .page-breadcrumbs {
-        margin: 0 -($module-rem * 0.5);
+        margin: 0 - math.div($module-rem, 2);
 
         .item {
           border-radius: 3px;
           display: block;
           height: $module-rem;
-          margin: 0 ($module-rem * 0.5);
+          margin: 0 math.div($module-rem, 2);
           width: 80px;
         }
       }
       .info {
         align-items: center;
         display: flex;
-        margin: 0 -($module-rem * 0.5);
+        margin: 0 - math.div($module-rem, 2);
 
         .version {
           border-radius: 3px;
           display: block;
           height: $module-rem;
-          margin: 0 ($module-rem * 0.5);
+          margin: 0 math.div($module-rem, 2);
           width: 80px;
         }
         .settings {
@@ -142,7 +142,7 @@
           border-radius: 500px;
           display: block;
           height: $module-rem * 2;
-          margin: 0 ($module-rem * 0.5);
+          margin: 0 math.div($module-rem, 2);
           width: $module-rem * 2;
         }
       }

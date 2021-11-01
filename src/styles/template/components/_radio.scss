@@ -37,6 +37,8 @@ $_animation: $animation;
     color: map-get($_label-color, default);
     cursor: pointer;
     font-weight: 500;
+    margin-bottom: 0;
+    vertical-align: top;
 
     &:before,
     &:after {
@@ -44,12 +46,14 @@ $_animation: $animation;
       border-radius: $_shape;
       box-shadow: none !important;
       display: flex;
+      content: '';
       height: $_height;
       justify-content: center;
-      left: -($_width + $_module-rem);
+      left: 0;
       margin: 0;
       outline: none !important;
       padding: 0;
+      position: absolute;
       top: 0;
       transition:
         background .2s $_animation,
@@ -60,7 +64,6 @@ $_animation: $animation;
     &:before {
       background: map-get($_bg, default);
       border: $_border-width $_border-style map-get($_border, default);
-      content: '';
       pointer-events: initial;
     }
     &:after {

@@ -23,7 +23,7 @@ $_color: (
   .br-widget {
     display: flex;
     font-size: $_icon-fz;
-    margin: 0 (-$_module-rem * 0.25);
+    margin: 0 math.div(-$-module-rem, 4);
     white-space: nowrap;
 
     a {
@@ -32,7 +32,7 @@ $_color: (
       display: block;
       font-size: inherit;
       font-style: normal;
-      margin: 0 ($_module-rem * 0.25);
+      margin: 0 math.div($-module-rem, 4);
       transition:
         border .2s $_animation,
         color .2s $_animation;

@@ -32,18 +32,31 @@ $_width: $_module-rem * 2;
 $_shape: 3px;
 $_animation: $animation;
 
+.form-check {
+  min-height: $_height;
+  margin-bottom: $_module-rem;
+}
 .custom-control {
   padding-left: $_width + $_module-rem;
+  position: relative;
   transition: color .2s $_animation;
 }
 .form-check-label {
   font-weight: 500;
+  margin-bottom: 0;
+}
+.custom-control-input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 }
 .custom-checkbox {
   .custom-control-label {
     color: map-get($_label-color, default);
     cursor: pointer;
     font-weight: 500;
+    margin-bottom: 0;
+    vertical-align: top;
 
     &:before,
     &:after {
@@ -53,10 +66,11 @@ $_animation: $animation;
       display: flex;
       height: $_height;
       justify-content: center;
-      left: -($_width + $_module-rem);
+      left: 0;
       margin: 0;
       outline: none !important;
       padding: 0;
+      position: absolute;
       top: 0;
       transition:
         background .2s $_animation,

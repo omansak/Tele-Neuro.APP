@@ -21,7 +21,7 @@ $_error-color: $error-color;
   border-radius: $_shape;
   box-shadow: $_shadow;
 
-  .close {
+  .btn-close {
     position: absolute;
     right: 3px;
     top: 3px;
@@ -33,10 +33,10 @@ $_error-color: $error-color;
     border-top-right-radius: inherit;
     display: flex;
     margin: 0;
-    padding: $_v-padding ($_h-paddig - ($_module-rem * 0.5));
+    padding: $_v-padding ($_h-paddig - (math.div($-module-rem, 2)));
 
     > * {
-      margin: 0 ($_module-rem * 0.5);
+      margin: 0 (math.div($-module-rem, 2));
     }
     .modal-title {
       font-size: $_title-fs;
@@ -57,10 +57,10 @@ $_error-color: $error-color;
     .actions {
       display: flex;
       flex-wrap: wrap;
-      margin: -$_module-rem * 0.5;
+      margin: - math.div($-module-rem, 2);
 
       > * {
-        margin: $_module-rem * 0.5;
+        margin: math.div($-module-rem, 2);
       }
     }
   }

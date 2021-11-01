@@ -1,12 +1,10 @@
-@use "sass:math";
-
 $_module-rem: $module-rem;
 $_border-width: 1px;
 $_border-style: solid;
 $_fs: 1rem;
 $_ff: $main-ff;
 $_fw: 700;
-$_lh: math.div($_module-rem * 2, $_fs);
+$_lh: math.div($-module-rem * 2, $-fs);
 $_tt: none;
 $_padding: calc(#{$_module-rem} - .5px) ($_module-rem * 2);
 $_shape: $shape;
@@ -16,11 +14,11 @@ $_shadow-hover: $shadow-hover;
 
 $_lg-padding: calc(#{$_module-rem * 1.5} - .5px) ($_module-rem * 3);
 $_lg-fs: ($_fs * 1.2);
-$_lg-lh: math.div($_module-rem * 2, $_lg-fs);
+$_lg-lh: math.div($-module-rem * 2, $-lg-fs);
 
 $_sm-padding: calc(#{$_module-rem} - .5px) $_module-rem;
 $_sm-fs: ($_fs * .8);
-$_sm-lh: math.div($_module-rem, $_sm-fs);
+$_sm-lh: math.div($-module-rem, $-sm-fs);
 
 //btn colors
 $_types: (
@@ -59,6 +57,24 @@ $_types: (
     color: $error-contrast,
     hover-bg: darken($error-color, 10%),
     hover-color: darken($error-contrast, 10%)
+  ),
+  danger: (
+    bg: $error-color,
+    color: $error-contrast,
+    hover-bg: darken($error-color, 10%),
+    hover-color: darken($error-contrast, 10%)
+  ),
+  light: (
+    bg: main-palette(50),
+    color: main-contrast(50),
+    hover-bg: darken(main-palette(50), 10%),
+    hover-color: darken(main-contrast(50), 10%)
+  ),
+  dark: (
+    bg: main-palette(900),
+    color: main-contrast(900),
+    hover-bg: darken(main-palette(900), 10%),
+    hover-color: darken(main-contrast(900), 10%)
   )
 );
 
@@ -88,6 +104,7 @@ $_types: (
   padding: $_padding;
   position: relative;
   text-align: center;
+  text-decoration: none;
   text-transform: $_tt;
   touch-action: manipulation;
   transition:
@@ -130,13 +147,13 @@ $_types: (
   }
   &.btn-square {
     min-width: $_module-rem * 4;
-    padding-left: $_module-rem * 0.5;
-    padding-right: $_module-rem * 0.5;
+    padding-left: math.div($-module-rem, 2);
+    padding-right: math.div($-module-rem, 2);
 
     &.btn-sm {
       min-width: $_module-rem * 3.5;
-      padding-left: $_module-rem * 0.5;
-      padding-right: $_module-rem * 0.5;
+      padding-left: math.div($-module-rem, 2);
+      padding-right: math.div($-module-rem, 2);
     }
     &.btn-lg {
       min-width: $_module-rem * 5;
@@ -155,7 +172,7 @@ $_types: (
     padding: $_sm-padding;
   }
 
-  // colors - (primary, secondary, success, info, warning, error)
+  // colors - (primary, secondary, success, info, warning, error, danger, light, dark)
   @each $_type, $_color in $_types {
     &.btn-#{$_type} {
       background: map-get($_color, bg);
@@ -166,15 +183,15 @@ $_types: (
         background: map-get($_color, hover-bg);
         color: map-get($_color, hover-color);
       }
-      &.btn-outline {
-        border-color: map-get($_color, bg);
-        color: map-get($_color, bg);
+    }
+    &.btn-outline-#{$_type} {
+      border-color: map-get($_color, bg);
+      color: map-get($_color, bg);
 
-        &:hover,
-        .active & {
-          background: map-get($_color, bg);
-          color: map-get($_color, color);
-        }
+      &:hover,
+      .active & {
+        background: map-get($_color, bg);
+        color: map-get($_color, color);
       }
     }
   }
