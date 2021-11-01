@@ -35,7 +35,7 @@ import { ToastService } from './services/common/toastr-service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UnauthorizedInterceptor,
-      multi: true,
+      multi: true
     },
     LazyLoaderService,
     ExceptionHandler,

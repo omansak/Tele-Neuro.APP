@@ -1,7 +1,7 @@
 import { Directive, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
-    selector: '[data-toggle="tooltip"]'
+    selector: '[data-bs-toggle="tooltip"]'
 })
 export class TooltipDirective implements OnInit {
 

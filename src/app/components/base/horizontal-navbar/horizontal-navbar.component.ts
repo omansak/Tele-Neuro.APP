@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication-service';
 
 @Component({
   selector: 'app-horizontal-navbar',
@@ -6,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HorizontalNavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
 
+  logout() {
+    this._authenticationService.logout().subscribe()
+  }
 }

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { IExceptionHandler } from '../base-service';
 import { ToastService } from './toastr-service';
 import { LCL_AUTHORIZATION_EXCEPTION, LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_CLIENT_EXCEPTION, LCL_CLIENT_EXCEPTION_MESSAGE, LCL_ERROR, LCL_TIMEOUT, LCL_TIMEOUT_MESSAGE, LCL_UNHANDLED_EXCEPTION, LCL_UNHANDLED_EXCEPTION_MESSAGE, LCL_UNKNOWN_EXCEPTION, LCL_UNKNOWN_EXCEPTION_MESSAGE } from 'src/app/consts/locales';
+import { NAVIGATION_ROUTE } from 'src/app/consts/navigation';
 
 @Injectable()
 export class ExceptionHandler implements IExceptionHandler {
@@ -13,7 +14,10 @@ export class ExceptionHandler implements IExceptionHandler {
 
         // 401
         if (err.status === 401) {
-            this._toastService.error(LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_AUTHORIZATION_EXCEPTION);
+            this._router.navigate([NAVIGATION_ROUTE.ROUTE_LOGIN.Route], {
+                queryParams: { returnUrl: this._router.routerState.snapshot.url },
+            });
+            //this._toastService.error(LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_AUTHORIZATION_EXCEPTION);
             return throwError(err);
         }
 

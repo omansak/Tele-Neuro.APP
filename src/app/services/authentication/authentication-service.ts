@@ -21,8 +21,8 @@ export class AuthenticationService extends BaseService {
     private localStorageHelper = new LocalStorageHelper();
     private timer: Subscription;
     private userSubject: BehaviorSubject<UserModel | null>;
-    constructor(private router: Router, httpClient: HttpClient) {
-        super(httpClient);
+    constructor(private router: Router, httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
+        super(httpClient, exceptionHandler);
         this.userSubject = new BehaviorSubject<UserModel | null>(this.parseToken(this.getToken()));
     }
 
@@ -47,7 +47,7 @@ export class AuthenticationService extends BaseService {
         return super.httpPostValue<boolean>(`${environment.request.endPoints.login.logout}`).pipe(
             tap(i => {
                 if (i) {
-                    this.stopTokenTimer();
+                    this.clear();
                     this.router.navigate([NAVIGATION_ROUTE.ROUTE_LOGIN.Route]);
                 }
             })
@@ -64,6 +64,8 @@ export class AuthenticationService extends BaseService {
         return super.httpPostModel<LoginResultModel>(LoginResultModel, `${environment.request.endPoints.login.refreshToken}`, { refreshToken })
             .pipe(
                 map((i) => {
+                    console.log(111, i);
+
                     if (i != null) {
                         let user = this.parseToken(i.AccessToken);
                         if (user && this.startTokenTimer(user.TokenExpirationTimeStamp)) {

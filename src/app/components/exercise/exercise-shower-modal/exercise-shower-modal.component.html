@@ -1,5 +1,6 @@
 <!-- Add Department Modal -->
-<div #modal class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow:scroll;">
+<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    style="overflow:scroll;">
     <div class="modal-dialog" [ngClass]="{'modal-fullscreen': isFullscreen,'modal-xl modal-margin-top':!isFullscreen}">
         <div class="modal-content" cardLoader>
             <button class="modal-video-close-btn" (click)="hideModal()"></button>
@@ -26,7 +27,7 @@
                             (click)="cancelAutoSkipCounter()">
                             İptal <span class="btn-icon icofont-close-circled ms-2"></span>
                         </button>
-                        <button class="btn btn-outline-success base-timer-next-button"
+                        <button class="btn btn-outline-primary base-timer-next-button"
                             (click)="onAutoSkipTriggeredNext()">
                             Sonraki
                             <span class="btn-icon icofont-arrow-right ms-2"></span>
@@ -36,7 +37,7 @@
                         <img src="{{assignedExercise.ExerciseDocument.HostFullPath}}" class="card-img-top">
                     </div>
                     <div *ngIf="getDocumentType(assignedExercise.ExerciseDocument.Type) == fileType.Video">
-                        <div #videoContainer class="embed-responsive embed-responsive-16by9">
+                        <div #videoContainer class="ratio ratio-16x9">
                         </div>
                     </div>
                 </div>
@@ -67,7 +68,7 @@
                         Önceki
                     </button>
                     <div class="d-flex align-items-center" *ngIf="hasNext">
-                        <o-ng-switch header="Otomatik Geçiş" [(ngModel)]="autoSkipStatus"
+                        <o-ng-switch header="Otomatik Geçiş" [(ngModel)]="autoSkipStatus" style="margin-top: 7px;"
                             *ngIf="assignedExercise.AutoSkip">
                         </o-ng-switch>
                         <h6 class="ms-2"
