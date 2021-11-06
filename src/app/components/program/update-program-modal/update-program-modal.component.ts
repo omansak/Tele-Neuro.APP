@@ -73,7 +73,7 @@ export class UpdateProgramModalComponent implements OnInit, AfterViewInit, OnCha
             this.programInfo.Program = new ProgramModel();
             this.programInfo.Program.IsPublic = false;
         }
-        this.editModel = <ProgramInfo>Helper.Clone(this.programInfo);
+        this.editModel = Helper.Clone(this.programInfo);
         this.loadCategories();
     }
 

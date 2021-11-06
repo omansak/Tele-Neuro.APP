@@ -24,6 +24,13 @@ export const NAVIGATION_ROUTE = {
         IconClass: "link-icon icon sli-grid",
         Route: "program-management"
     },
+    ROUTE_USER_MANAGEMENT: {
+        PageTitle: "Tele-Neuro | Kullanıcı Yönetimi",
+        PageHeader: "Kullanıcı Yönetimi",
+        MenuName: "Kullanıcı Yönetimi",
+        IconClass: "link-icon icon sli-user",
+        Route: "user-management"
+    },
     ROUTE_PROGRAM: {
         PageTitle: "Tele-Neuro | %s",
         PageHeader: "Program İçeriği",
@@ -44,6 +51,7 @@ export const NAVIGATION_MENU = [
             NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_PROGRAM_MANAGEMENT,
+            NAVIGATION_ROUTE.ROUTE_USER_MANAGEMENT,
         ]
     },
     {

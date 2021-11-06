@@ -1,6 +1,21 @@
-export class UserModel {
+import { IBaseModel } from "../base-model";
+
+export class UserModel implements IBaseModel<UserModel> {
     Id: number;
-    Token: string;
-    TokenExpirationTimeStamp: number;
-    Roles: Array<string>;
+    Email: string;
+    Password: string;
+    CreatedDate: Date;
+    CreatedUser: number | null;
+    LastLogin: Date;
+
+    mapModel(json: any): UserModel {
+        this.Id = json.id
+        this.Email = json.email
+        this.Password = json.password
+        this.CreatedDate = new Date(json.createdDate);
+        this.CreatedUser = json.createdUser
+        this.LastLogin = new Date(json.lastLogin);
+
+        return this;
+    }
 }

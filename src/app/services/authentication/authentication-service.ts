@@ -1,12 +1,12 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable, Injector } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription, BehaviorSubject, Observable, of } from "rxjs";
 import { map, delay, tap } from "rxjs/operators";
 import { LocalStorageHelper } from "src/app/helpers/local-storage-helper";
 import { LoginResultModel } from "src/app/models/user/login-result-model";
 import { UserLoginModel } from "src/app/models/user/user-login.model";
-import { UserModel } from "src/app/models/user/user-model";
+import { AuthUserModel } from "src/app/models/user/auth-user-model";
 import { environment } from "src/environments/environment";
 import { BaseService } from "../base-service";
 import jwt_decode from "jwt-decode";
@@ -20,13 +20,13 @@ export class AuthenticationService extends BaseService {
     private refreshTokenStorageName = "uuid-rt";
     private localStorageHelper = new LocalStorageHelper();
     private timer: Subscription;
-    private userSubject: BehaviorSubject<UserModel | null>;
+    private userSubject: BehaviorSubject<AuthUserModel | null>;
     constructor(private router: Router, httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
         super(httpClient, exceptionHandler);
-        this.userSubject = new BehaviorSubject<UserModel | null>(this.parseToken(this.getToken()));
+        this.userSubject = new BehaviorSubject<AuthUserModel | null>(this.parseToken(this.getToken()));
     }
 
-    login(model: UserLoginModel): Observable<UserModel | null> {
+    login(model: UserLoginModel): Observable<AuthUserModel | null> {
         return super.httpPostModel<LoginResultModel>(LoginResultModel, `${environment.request.endPoints.login.login}`, model)
             .pipe(
                 map((i) => {
@@ -79,11 +79,11 @@ export class AuthenticationService extends BaseService {
             );
     }
 
-    getUserObservable(): Observable<UserModel | null> {
+    getUserObservable(): Observable<AuthUserModel | null> {
         return this.userSubject.asObservable();
     }
 
-    getUser(): UserModel | null {
+    getUser(): AuthUserModel | null {
         return this.userSubject.value;
     }
 
@@ -133,11 +133,11 @@ export class AuthenticationService extends BaseService {
         return this.localStorageHelper.getItem(this.refreshTokenStorageName);
     }
 
-    private parseToken(token: string | null): UserModel | null {
+    private parseToken(token: string | null): AuthUserModel | null {
         if (token) {
             const decoded: any = jwt_decode(token);
             if (decoded && decoded.exp > (Date.now() / 1000)) {
-                let user = new UserModel();
+                let user = new AuthUserModel();
                 user.Token = token;
                 user.Id = decoded[NetCoreClaimTypes.NameIdentifier];
                 user.TokenExpirationTimeStamp = decoded.exp;

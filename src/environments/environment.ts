@@ -31,12 +31,17 @@ export const environment = {
         getActiveExercise: "Content/GetActiveExercise",
       },
       utility: {
-        listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions"
+        listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions",
+        listRoleDefinitions: "Utility/ListRoleDefinitions"
       },
       login: {
         login: "Login/Login",
         logout: "Login/Logout",
         refreshToken: "Login/RefreshToken",
+      },
+      user: {
+        listFilterUsers: "User/ListFilterUsers",
+        addUser: "User/AddUser",
       }
     }
   }

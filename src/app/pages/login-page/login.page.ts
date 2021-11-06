@@ -57,7 +57,6 @@ export class LoginPage implements AfterViewInit, OnInit {
                 .login(this.model)
                 .pipe(finalize(() => {
                     this.cardLoaderDirective.stop();
-                    toast.success();
                 }))
                 .subscribe(
                     (i) => {
@@ -65,6 +64,7 @@ export class LoginPage implements AfterViewInit, OnInit {
                             this._router.navigate([this._activatedRoute.snapshot.queryParams['returnUrl'] || ROUTE]).finally(() => {
                                 this._appComponent.changeBodyVerticalLayoutClass();
                             });
+                            toast.success();
                         }
                     });
         }

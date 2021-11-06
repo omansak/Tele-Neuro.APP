@@ -65,7 +65,7 @@ export class UpdateCategoryModalComponent implements OnChanges, OnInit, AfterVie
       this.categoryInfo = new CategoryInfo();
       this.categoryInfo.Category = new CategoryModel();
     }
-    this.editModel = <CategoryInfo>Helper.Clone(this.categoryInfo);
+    this.editModel = Helper.Clone(this.categoryInfo);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

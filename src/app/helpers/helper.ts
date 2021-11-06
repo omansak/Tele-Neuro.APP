@@ -88,7 +88,17 @@ export class Helper {
         return z > Math.round(z) ? Math.round((z + 1)) : Math.round(z);
     }
 
-    public static Clone(val: any): any {
-        return JSON.parse(JSON.stringify(val));
+    public static Clone<T>(source: T): T {
+        return Array.isArray(source)
+            ? source.map(item => Helper.Clone(item))
+            : source instanceof Date
+                ? new Date(source.getTime())
+                : source && typeof source === 'object'
+                    ? Object.getOwnPropertyNames(source).reduce((o, prop) => {
+                        Object.defineProperty(o, prop, Object.getOwnPropertyDescriptor(source, prop)!);
+                        o[prop] = Helper.Clone((source as { [key: string]: any })[prop]);
+                        return o;
+                    }, Object.create(Object.getPrototypeOf(source)))
+                    : source as T;
     }
 }

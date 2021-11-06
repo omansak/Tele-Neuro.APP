@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/program-management-page/program-management.page.module').then(i => i.ProgramManagementPageModule),
       },
       {
+        path: NAVIGATION_ROUTE.ROUTE_USER_MANAGEMENT.Route,
+        loadChildren: () => import('./pages/user-management-page/user-management.page.module').then(i => i.UserManagementPageModule),
+      },
+      {
         path: NAVIGATION_ROUTE.ROUTE_PROGRAM.Route,
         loadChildren: () => import('./pages/program-page/program.page.module').then(i => i.ProgramPageModule),
       },

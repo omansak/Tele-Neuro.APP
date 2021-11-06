@@ -44,7 +44,10 @@ export const VALIDATE_FILE = (value: ONgFileInput): { status: StatusType | undef
 }
 
 export const VALIDATE_SELECT = (value: any): { status: StatusType | undefined | null, message?: string | undefined | null } => {
-    if (value) {
+    if (Array.isArray(value)) {
+        if (value.length > 0)
+            return { status: StatusType.Success }
+    } else if (value) {
         return { status: StatusType.Success }
     }
     return { status: StatusType.Error, message: "Seçim alanı boş olamaz" }
