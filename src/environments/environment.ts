@@ -42,6 +42,7 @@ export const environment = {
       user: {
         listFilterUsers: "User/ListFilterUsers",
         addUser: "User/AddUser",
+        toggleUserStatus: "User/ToggleUserStatus",
       }
     }
   }

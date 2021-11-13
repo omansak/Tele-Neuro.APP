@@ -5,6 +5,11 @@ import { Subject } from 'rxjs';
 import { StatusType } from 'src/app/consts/enums';
 import { LCL_SEARCH_TERM_PLACEHOLDER, LCL_SELECT_LOADING, LCL_SELECT_NOT_FOUND, LCL_SELECT_PLACEHOLDER } from 'src/app/consts/locales';
 
+/*
+  Templates
+  ng-label-tmp --> #labelTemplate
+  ng-option-tmp --> #optionTemplate
+*/
 @Component({
   selector: 'o-ng-select',
   templateUrl: './o-ng-select.component.html',
@@ -36,6 +41,8 @@ export class ONgSelectComponent implements OnInit, AfterViewInit, OnChanges, Con
   public typeahead: Subject<string>;
   @Input()
   public trackByFn = null;
+  @Input()
+  public closeOnSelect: boolean = true;
   @Input()
   public hideSelected: boolean = false;
   @Input()
@@ -79,6 +86,8 @@ export class ONgSelectComponent implements OnInit, AfterViewInit, OnChanges, Con
   public tooltipElement: ElementRef;
   @ContentChild("optionTemplate", { read: TemplateRef })
   public optionTemplate: TemplateRef<any>;
+  @ContentChild("labelTemplate", { read: TemplateRef })
+  public labelTemplate: TemplateRef<any>;
   constructor(private config: NgSelectConfig) {
     this.config.notFoundText = LCL_SELECT_NOT_FOUND;
     this.config.loadingText = LCL_SELECT_LOADING;

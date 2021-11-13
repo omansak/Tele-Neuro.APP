@@ -1,4 +1,4 @@
-<div class="needs-validation valitable-select">
+<div class="needs-validation valitable-select o-select-container">
     <label [innerHtml]="header" *ngIf="header"></label>
     <a #tooltipElement href="javascript:;" style="margin-left: 7px;" *ngIf="tooltip">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height="15" weight="15">
@@ -8,10 +8,10 @@
         </svg>
     </a>
     <ng-select [items]="items" [(ngModel)]="value" (change)="emitChangeEvent($event)" [bindLabel]="bindLabel"
-        [searchable]="searchable" [clearable]="clearable" [bindValue]="bindValue" [loading]="searchLoading"
-        [multiple]="multiple" [minTermLength]="minTermLength" [typeToSearchText]="typeToSearchText"
-        [typeahead]="typeahead" [trackByFn]="trackByFn" [disabled]="isLoading || disabled"
-        [editableSearchTerm]="editableSearchTerm" class="form-control" [ngClass]="[
+        [closeOnSelect]="closeOnSelect" [searchable]="searchable" [clearable]="clearable" [bindValue]="bindValue"
+        [loading]="searchLoading" [multiple]="multiple" [minTermLength]="minTermLength"
+        [typeToSearchText]="typeToSearchText" [typeahead]="typeahead" [trackByFn]="trackByFn"
+        [disabled]="isLoading || disabled" [editableSearchTerm]="editableSearchTerm" class="form-control" [ngClass]="[
         inputClass ? inputClass : '', 
         isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
         isLoading ? 'is-loading disabled' : ''
@@ -20,6 +20,13 @@
             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
                 <ng-template [ngTemplateOutlet]="optionTemplate"
                     [ngTemplateOutletContext]="{ item: item, index:index,item$:item$,searchTerm:searchTerm }">
+                </ng-template>
+            </ng-template>
+        </ng-container>
+        <ng-container *ngIf="labelTemplate">
+            <ng-template ng-label-tmp let-item="item" let-clear="clear" let-label="label">
+                <ng-template [ngTemplateOutlet]="labelTemplate"
+                    [ngTemplateOutletContext]="{ item: item, clear: clear, label: label }">
                 </ng-template>
             </ng-template>
         </ng-container>

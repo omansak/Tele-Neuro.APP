@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BaseFilterModel } from "src/app/models/base-filter-model";
@@ -18,5 +18,8 @@ export class UserService extends BaseService {
     }
     public addUser(model: UserRegisterModel): Observable<number | null> {
         return super.httpPostValue<number>(environment.request.endPoints.user.addUser, model);
+    }
+    public toggleUserStatus(id: number): Observable<boolean | null> {
+        return super.httpGetValue<boolean>(environment.request.endPoints.user.toggleUserStatus, new HttpParams().append("id", id));
     }
 }

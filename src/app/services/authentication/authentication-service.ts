@@ -64,8 +64,6 @@ export class AuthenticationService extends BaseService {
         return super.httpPostModel<LoginResultModel>(LoginResultModel, `${environment.request.endPoints.login.refreshToken}`, { refreshToken })
             .pipe(
                 map((i) => {
-                    console.log(111, i);
-
                     if (i != null) {
                         let user = this.parseToken(i.AccessToken);
                         if (user && this.startTokenTimer(user.TokenExpirationTimeStamp)) {

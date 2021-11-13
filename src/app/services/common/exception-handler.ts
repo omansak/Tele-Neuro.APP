@@ -1,4 +1,4 @@
-import { Observable, throwError, TimeoutError, empty } from 'rxjs';
+import { Observable, throwError, TimeoutError, empty, NEVER } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { IExceptionHandler } from '../base-service';
@@ -18,7 +18,7 @@ export class ExceptionHandler implements IExceptionHandler {
                 queryParams: { returnUrl: this._router.routerState.snapshot.url },
             });
             //this._toastService.error(LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_AUTHORIZATION_EXCEPTION);
-            return throwError(err);
+            return NEVER;
         }
 
         // 404

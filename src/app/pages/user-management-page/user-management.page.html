@@ -1,10 +1,9 @@
 <div class="row">
     <div class="col-12 col-md-6">
-        <p class="text-muted mb-4">Ürün yönetimi söz konusu olduğunda ürün kategorileri ve ürünlerin nasıl
-            kategorilendirildiği önemli bir konudur. Ürünlerinizi doğru bir şekilde kategorilendirmeniz,
-            ziyaretçilerinizin bu ürünlere daha kolay bir şekilde ulaşmasını sağlarken, ilgi gören ürünleri
-            keşfetmenize
-            ve bunları da öne çıkartmanıza yardımcı olur.
+        <p class="text-muted mb-4">Kullanıcı deneyimi ilk taslaktan nihai ürüne kadar tasarım sürecinin ayrılmaz bir
+            parçasıdır.
+            Kullanıcı deneyimi, kendi başına bir sanattır. Uygulamamızın nasıl algılanacağını kesinlikle
+            tahmin edemezsiniz
         </p>
     </div>
     <div class="col-12 col-md-6">
@@ -15,7 +14,8 @@
                         <div>Toplam Kullanıcı Sayısı</div><strong class="fs-20 text-success">{{0}}</strong>
                     </div>
                     <div class="col-6">
-                        <div>Toplam Aktif Kullanıcı Program Sayısı</div><strong class="fs-20 text-success">{{0}}</strong>
+                        <div>Toplam Aktif Kullanıcı Program Sayısı</div><strong
+                            class="fs-20 text-success">{{0}}</strong>
                     </div>
                 </div>
             </div>
@@ -39,6 +39,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Son Giriş</th>
                             <th scope="col">Role</th>
+                            <th scope="col">Durum</th>
                             <th scope="col">#</th>
                         </tr>
                     </thead>
@@ -59,6 +60,14 @@
                                 <div class="text-nowrap"><strong>{{join(item.Roles)}}</strong></div>
                             </td>
                             <td>
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-success': item.User.IsActive,'text-danger': !item.User.IsActive}">
+                                    <i class="icofont-check-circled me-1"
+                                        [ngClass]="{'icofont-check-circled': item.User.IsActive,'icofont-close-circled' : !item.User.IsActive}"></i>
+                                    <span>{{item.User.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                                </div>
+                            </td>
+                            <td>
                                 <div class="actions">
                                     <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
                                         (click)="showUpdateUserInfoModal(item)">
@@ -66,6 +75,7 @@
                                         </span>
                                     </button>
                                     <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        (click)="toggleUserStatus(item.User.Id)"
                                         title="Kategori aktiflik durumunu değiştir">
                                         <span class="btn-icon icofont-exchange"></span>
                                     </button>

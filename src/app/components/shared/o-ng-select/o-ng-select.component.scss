@@ -1,5 +1,19 @@
+.o-select-container {
+  position: relative;
+}
+
 .ng-select.form-control {
-  padding: .375rem .75rem;
+  padding: .15rem .75rem;
+
+  .ng-clear-wrapper {
+    margin-top: 5px;
+  }
+
+  &.ng-select-multiple {
+    .ng-select-container .ng-value-container .ng-placeholder {
+      top: auto;
+    }
+  }
 
   &.ng-select-focused {
     &:not(.ng-select-opened)>.ng-select-container {

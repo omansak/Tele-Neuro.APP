@@ -60,6 +60,25 @@ export class UserManagementPage implements AfterViewInit {
     }
   }
 
+  toggleUserStatus(e: number) {
+    if (e > 0) {
+      let toast = this._toastService.continuing("Kullanıcı durumu güncelleniyor.", "Kullanıcı durumu değiştirildi.", "Kullanıcı güncellenemedi.");
+      this.cardLoaderDirective.start();
+      this._userService.toggleUserStatus(e)
+        .pipe(finalize(() => this.cardLoaderDirective.stop()))
+        .subscribe(i => {
+          if (i) {
+            let user = this.users.find(i => i.User.Id == e);
+            if (user) {
+              user.User.IsActive = !user.User.IsActive
+              toast.success();
+              return;
+            }
+          }
+          toast.error();
+        });
+    }
+  }
   showUpdateUserInfoModal(e?: any) {
     this.forEditUserInfo = e;
     this.showStatusUpdateUserInfoModal = true;
