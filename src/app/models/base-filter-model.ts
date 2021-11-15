@@ -55,6 +55,9 @@ export class GenericBaseFilterModel<T> {
         if (match?.length == 3) {
             this.getSortBy().push({ columnName: match[2], type: type })
         }
+        else {
+            console.warn("Predicate format is invalid.")
+        }
         return this;
     }
 
@@ -69,6 +72,9 @@ export class GenericBaseFilterModel<T> {
                 startsParentheses: startsParentheses,
                 endParentheses: endParentheses
             });
+        }
+        else {
+            console.warn("Predicate format is invalid.")
         }
         return this;
     }

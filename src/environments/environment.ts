@@ -24,6 +24,8 @@ export const environment = {
         assignedExercises: "Program/AssignedExercises",
         changeSequenceAssignedExercise: "Program/ChangeSequenceAssignedExercise",
         deleteAssignedExercise: "Program/DeleteAssignedExercise",
+        assignUser: "Program/AssignUser",
+        deleteAssignedUser: "Program/DeleteAssignedUser",
       },
       content: {
         programInfo: "Content/ProgramInfo",

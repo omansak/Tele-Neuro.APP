@@ -6,6 +6,7 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
 import { UpdateProgramModalComponent } from './update-program-modal/update-program-modal.component';
 import { UpdateExerciseOfProgramModalComponent } from './update-exercise-of-program-modal/update-exercise-of-program-modal.component';
 import { AssignedExercisesModal } from './assigned-exercises-modal/assigned-exercises-modal.component';
+import { AssignUserModal } from './assign-user-modal/assign-user-modal.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import { AssignedExercisesModal } from './assigned-exercises-modal/assigned-exer
         SharedComponentsModule,
         DirectivesModule
     ],
-    exports: [UpdateProgramModalComponent, UpdateExerciseOfProgramModalComponent, AssignedExercisesModal],
-    declarations: [UpdateProgramModalComponent, UpdateExerciseOfProgramModalComponent, AssignedExercisesModal]
+    exports: [UpdateProgramModalComponent, UpdateExerciseOfProgramModalComponent, AssignedExercisesModal, AssignUserModal],
+    declarations: [UpdateProgramModalComponent, UpdateExerciseOfProgramModalComponent, AssignedExercisesModal, AssignUserModal]
 })
 export class ProgramComponentsModule { }

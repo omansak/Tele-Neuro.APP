@@ -1,0 +1,44 @@
+<!-- Add Program Modal -->
+<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    style="overflow:scroll;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" cardLoader>
+            <div class="modal-header">
+                <h5 class="modal-title">Kullanıcı Atama</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <o-ng-select #userSelectElement header="Atanacak Kullanıcı" [(ngModel)]="selectedUserId"
+                        [typeahead]="userSearchTermSubject" [searchLoading]="userInfoSearchLoading"
+                        [items]="userInfoObservable | async" bindValue="User.Id"
+                        description="Ad, Soyad, Email ile sorgulanabilir." [validate]="validate.select">
+                        <ng-template #labelTemplate let-item="item">
+                            <span class="ng-option-label">{{item.UserProfile.Name}} {{item.UserProfile.Surname}}</span>
+                        </ng-template>
+                        <ng-template #optionTemplate let-item="item" let-index="index">
+                            <span class="ng-option-label" ng-reflect-escape="true">
+                                <b>{{item.UserProfile.Name}} {{item.UserProfile.Surname}}</b>
+                            </span>
+                            <br />
+                            <span class="ng-option-label text-muted" ng-reflect-escape="true">{{item.User.Email}}</span>
+                        </ng-template>
+                    </o-ng-select>
+                </div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <div class="actions justify-content-between">
+                    <button class="btn btn-outline-danger" (click)="hideModal()">
+                        <span class="btn-icon icofont-close-circled me-2"></span>
+                        Kapat
+                    </button>
+                    <button class="btn btn-outline-success" (click)="save()">
+                        <span class="btn-icon icofont-save me-2"></span>
+                        Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Program Modal -->

@@ -9,6 +9,7 @@ import { ProgramInfo } from 'src/app/models/program/program-info';
 import { PageInfo } from 'src/app/models/base-model';
 import { AssignExerciseModel } from 'src/app/models/program/assign-exercise-model';
 import { AssignedExerciseModel } from 'src/app/models/program/assigned-exercise-model';
+import { AssignUserModel } from 'src/app/models/program/assign-user-model';
 
 @Injectable()
 export class ProgramService extends BaseService {
@@ -35,5 +36,11 @@ export class ProgramService extends BaseService {
     }
     public deleteAssignedExercise(relationId: number): Observable<boolean> {
         return super.httpPostValue<boolean>(environment.request.endPoints.program.deleteAssignedExercise, relationId);
-    } 
+    }
+    public assignUser(model: AssignUserModel): Observable<number> {
+        return super.httpPostValue<number>(environment.request.endPoints.program.assignUser, model);
+    }
+    public deleteAssignedUser(model: AssignUserModel): Observable<boolean> {
+        return super.httpPostValue<boolean>(environment.request.endPoints.program.deleteAssignedUser, model);
+    }
 }
