@@ -1,0 +1,70 @@
+<div class="row" *ngIf="programInfo">
+    <div class="col-12 col-md-6">
+        <p class="text-muted mb-4">{{programInfo.Program.Description}}
+        </p>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <strong class="fs-20 text-white">{{programInfo.Program.Name}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div style="position: absolute; top: -40px;right: 0;">
+                <button class="btn btn-secondary btn-sm btn-square rounded-pill" title="Yenile"
+                    (click)="getRelatedUsers()">
+                    <span class="btn-icon icofont-refresh">
+                    </span>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover" cardLoader>
+                    <thead>
+                        <tr>
+                            <th scope="col">Ad Soyad</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of relatedUsers">
+                            <td>
+                                <div class="text-nowrap"><strong>{{item.Name}} {{item.Surname}}</strong></div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap"><strong>{{item.Email}}</strong></div>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-danger btn-sm btn-square rounded-pill" (click)="delete(item)"
+                                        title="Kullanıcı Kaldır">
+                                        <span class="btn-icon icofont-trash"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</o-ng-paginated-view>
+
+<div class="add-action-box animate__animated animate__bounce">
+    <button class="btn btn-primary btn-lg btn-square rounded-pill" title="Kullanıcı Ata"
+        (click)="showAssignUserOfProgramModal(programId)">
+        <span class="btn-icon icofont-plus"></span>
+    </button>
+</div>
+
+<o-assign-user-modal [programId]="programId" (assignedUserChange)="onAssignedUserChanged($event)"
+    *ngIf="showStatusAssignUserOfProgramModal" [(show)]="showStatusAssignUserOfProgramModal">
+</o-assign-user-modal>

@@ -24,7 +24,6 @@ export class ProgramManagementPage implements AfterViewInit {
     // Modals
     public showStatusUpdateProgramModal: boolean = false;
     public showStatusAssignExerciseOfProgramModal: boolean = false;
-    public showStatusAssignUserOfProgramModal: boolean = false;
     public showStatusExercisesOfProgramModal: boolean = false;
     // View Children
     @ViewChild(CardLoaderDirective)
@@ -45,19 +44,18 @@ export class ProgramManagementPage implements AfterViewInit {
         this.showStatusAssignExerciseOfProgramModal = true;
     }
 
-    showAssignUserOfProgramModal(e: any) {
-        this.selectedProgramId = e;
-        this.showStatusAssignUserOfProgramModal = true;
-    }
-
     showExercisesOfProgramModal(e: any) {
         this.selectedProgramId = e;
         this.showStatusExercisesOfProgramModal = true;
     }
-    
+
 
     navigateProgramContent(e: any) {
         this._router.navigate([NAVIGATION_ROUTE.ROUTE_PROGRAM.Route.replace(':id', e)]);
+    }
+
+    navigateProgramAssignedUsers(e: any) {
+        this._router.navigate([NAVIGATION_ROUTE.ROUTE_PROGRAM_USER_MANAGEMENT.Route.replace(':id', e)]);
     }
 
     getPrograms() {

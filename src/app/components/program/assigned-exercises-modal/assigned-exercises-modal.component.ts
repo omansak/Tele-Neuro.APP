@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from "@angular/core";
 import { finalize } from "rxjs/operators";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
-import { AssignedExerciseModel } from "src/app/models/program/assigned-exercise-model";
+import { ProgramAssignedExerciseInfo } from "src/app/models/program/program-assigned-exercise-info";
 import { ToastService } from "src/app/services/common/toastr-service";
 import { ProgramService } from "src/app/services/program/program-service";
 
@@ -21,7 +21,7 @@ export class AssignedExercisesModal implements OnInit, OnChanges, AfterViewInit 
     @Output()
     public showChange = new EventEmitter();
     // Publics
-    public assignedExercises: Array<AssignedExerciseModel>;
+    public assignedExercises: Array<ProgramAssignedExerciseInfo>;
     // View children
     @ViewChild('modal', { static: true })
     public modal: ElementRef;

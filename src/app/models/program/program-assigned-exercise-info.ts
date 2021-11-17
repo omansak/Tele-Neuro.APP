@@ -3,7 +3,7 @@ import { DocumentModel } from "../document/document-model";
 import { ExerciseModel } from "../exercise/exercise-model";
 import { ExercisePropertyDefinition } from "../utility/exercise-property-definition";
 
-export class AssignedExerciseModel implements IBaseModel<AssignedExerciseModel>  {
+export class ProgramAssignedExerciseInfo implements IBaseModel<ProgramAssignedExerciseInfo>  {
     RelationId: number;
     ProgramId: number;
     Sequence: number;
@@ -12,7 +12,7 @@ export class AssignedExerciseModel implements IBaseModel<AssignedExerciseModel> 
     Exercise: ExerciseModel;
     ExerciseDocument: DocumentModel;
     Properties: { Value: string, Definition: ExercisePropertyDefinition }[];
-    mapModel(json: any): AssignedExerciseModel {
+    mapModel(json: any): ProgramAssignedExerciseInfo {
         this.RelationId = json.relationId;
         this.ProgramId = json.programId;
         this.Sequence = json.sequence;

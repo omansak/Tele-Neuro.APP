@@ -91,7 +91,7 @@
                                         <span class="btn-icon icofont-eye"></span>
                                     </button>
                                     <button class="btn btn-success btn-sm btn-square rounded-pill"
-                                        title="Kullanıcı Atama" (click)="showAssignUserOfProgramModal(item.Program.Id)">
+                                        title="Kullanıcı Atama" (click)="navigateProgramAssignedUsers(item.Program.Id)">
                                         <span class="btn-icon icofont-user"></span>
                                     </button>
                                     <button class="btn btn-warning btn-sm btn-square rounded-pill"
@@ -127,7 +127,3 @@
 <o-assigned-exercises-modal [programId]="selectedProgramId" *ngIf="showStatusExercisesOfProgramModal"
     [(show)]="showStatusExercisesOfProgramModal">
 </o-assigned-exercises-modal>
-
-<o-assign-user-modal [programId]="selectedProgramId" *ngIf="showStatusAssignUserOfProgramModal"
-    [(show)]="showStatusAssignUserOfProgramModal">
-</o-assign-user-modal>

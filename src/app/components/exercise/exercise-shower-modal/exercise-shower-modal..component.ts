@@ -3,7 +3,7 @@ import { ConvertNumberToFileType, FileType } from "src/app/consts/enums";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { Helper } from "src/app/helpers/helper";
 import { ExerciseInfo } from "src/app/models/exercise/exercise-info";
-import { AssignedExerciseModel } from "src/app/models/program/assigned-exercise-model";
+import { ProgramAssignedExerciseInfo } from "src/app/models/program/program-assigned-exercise-info";
 
 @Component({
     selector: "o-exercise-shower-modal",
@@ -19,7 +19,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
     @Input()
     public hasPrev: boolean;
     @Input()
-    public assignedExercise: AssignedExerciseModel;
+    public assignedExercise: ProgramAssignedExerciseInfo;
     @Input()
     public show: boolean = false;
     // Output's
@@ -71,7 +71,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
             this.hasPrev = changes.hasPrev.currentValue as boolean;
         }
         if (changes.assignedExercise) {
-            this.assignedExercise = changes.assignedExercise.currentValue as AssignedExerciseModel;
+            this.assignedExercise = changes.assignedExercise.currentValue as ProgramAssignedExerciseInfo;
             if (this.assignedExercise) {
                 setTimeout(() => {
                     this.initExercise();

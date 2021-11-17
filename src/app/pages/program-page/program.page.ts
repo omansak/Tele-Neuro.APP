@@ -5,7 +5,7 @@ import { finalize } from "rxjs/operators";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { Helper } from "src/app/helpers/helper";
 import { CategoryInfo } from "src/app/models/category/category-info";
-import { AssignedExerciseModel } from "src/app/models/program/assigned-exercise-model";
+import { ProgramAssignedExerciseInfo } from "src/app/models/program/program-assigned-exercise-info";
 import { ProgramInfo } from "src/app/models/program/program-info";
 import { CategoryService } from "src/app/services/category/category-service";
 import { ContentService } from "src/app/services/content/content-service";
@@ -21,10 +21,10 @@ export class ProgramPage implements AfterViewInit {
 
     //Publics
     public programInfo: ProgramInfo | null;
-    public assignedExercises: Array<AssignedExerciseModel>;
+    public assignedExercises: Array<ProgramAssignedExerciseInfo>;
     public categoryInfo: CategoryInfo | null;
 
-    public selectedAssignedExercise: AssignedExerciseModel;
+    public selectedAssignedExercise: ProgramAssignedExerciseInfo;
     public showStatusExerciseShowerModal: boolean | undefined = undefined;
 
     public get programId() {
@@ -101,7 +101,7 @@ export class ProgramPage implements AfterViewInit {
 
     private loadProgramInfo() {
         return this._contentService
-            .searchExercises(this.programId);
+            .programInfo(this.programId);
     }
 
     private loadExercises() {

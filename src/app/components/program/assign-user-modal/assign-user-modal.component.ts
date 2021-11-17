@@ -5,6 +5,7 @@ import { VALIDATE_SELECT } from "src/app/consts/validate";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { FilterType, GenericBaseFilterModel } from "src/app/models/base-filter-model";
 import { CategoryInfo } from "src/app/models/category/category-info";
+import { AssignedProgramUserInfo } from "src/app/models/program/assigned-program-users-info";
 import { UserInfo } from "src/app/models/user/user-info";
 import { SearchTermModel } from "src/app/models/utility/search-term-model";
 import { ToastService } from "src/app/services/common/toastr-service";
@@ -37,6 +38,8 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
     public validate = {
         select: VALIDATE_SELECT
     }
+    // Privates
+    private listedUsers: Array<UserInfo> | never[] | null;
     // View children
     @ViewChild('modal', { static: true })
     public modal: ElementRef;
@@ -67,7 +70,7 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
         });
     }
 
-    emitChangeEvent(e: number) {
+    emitChangeEvent(e: AssignedProgramUserInfo) {
         this.assignedUserChange.emit(e);
     }
 
@@ -96,6 +99,8 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
     save() {
         if (this.check()) {
             let toast = this._toastService.continuing("Kullanıcı atanıyor", "Kullanıcı atama tamamlandı.", "Kullanıcı atanamadı.");
+            let selectedUserInfo = this.listedUsers?.find(j => j.User.Id == this.selectedUserId);
+
             this.cardLoaderDirective.start();
             this._programService
                 .assignUser({ ProgramId: this.programId, UserId: this.selectedUserId })
@@ -106,7 +111,15 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
                     (i) => {
                         if (i) {
                             this.hideModal();
-                            this.emitChangeEvent(i);
+                            if (selectedUserInfo) {
+                                let e = new AssignedProgramUserInfo();
+                                e.Email = selectedUserInfo!.User.Email;
+                                e.Name = selectedUserInfo!.UserProfile.Name;
+                                e.Surname = selectedUserInfo!.UserProfile.Surname;
+                                e.RelationId = i;
+                                e.UserId = selectedUserInfo!.User.Id;
+                                this.emitChangeEvent(e);
+                            }
                             toast.success();
                         }
                     });
@@ -127,15 +140,12 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
                     return this._userService.listFilterUsers(model)
                         .pipe(
                             finalize(() => this.userInfoSearchLoading = false),
-                            map((i) => {
-                                console.log(i);
-                                return i;
-                            })
+                            tap((i) => this.listedUsers = i)
                         );
                 }
                 return of([])
                     .pipe(finalize(() => this.userInfoSearchLoading = false));
             })
-        )
+        );
     }
 }
