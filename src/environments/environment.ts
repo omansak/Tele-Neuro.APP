@@ -33,6 +33,7 @@ export const environment = {
         programInfo: "Content/ProgramInfo",
         assignedExercises: "Content/AssignedExercises",
         getActiveExercise: "Content/GetActiveExercise",
+        selfAssignedPrograms: "Content/SelfAssignedPrograms",
       },
       utility: {
         listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions",

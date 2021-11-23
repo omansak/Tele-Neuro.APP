@@ -14,7 +14,7 @@
       <div class="main-content-wrap">
         <div class="page-content">
           <!--Page Header-->
-          <header class="page-header">
+          <header class="page-header" *ngIf="pageHeader != null">
             <h1 class="page-title" [innerText]="pageHeader || '' "></h1>
           </header>
           <!--Page Header-->

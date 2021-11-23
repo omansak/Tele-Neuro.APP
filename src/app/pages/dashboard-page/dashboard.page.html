@@ -1,0 +1,154 @@
+<div class="card">
+    <div class="card-header">
+        Statlarım
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col col-12 col-md-6 col-xl-3">
+                <div class="card animated fadeInUp delay-01s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-first-aid-alt"></div>
+                            </div>
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1">Programlarım</h6>
+                                <div class="count text-primary fs-20">213</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6 col-xl-3">
+                <div class="card animated fadeInUp delay-02s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-wheelchair"></div>
+                            </div>
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1">Tamamladıklarım</h6>
+                                <div class="count text-primary fs-20">104</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6 col-xl-3">
+                <div class="card animated fadeInUp delay-03s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-blood"></div>
+                            </div>
+
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1">Toplam Sürem</h6>
+                                <div class="count text-primary fs-20">24</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6 col-xl-3">
+                <div class="card animated fadeInUp delay-04s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-dollar-true"></div>
+                            </div>
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1 text-nowrap">Liderlik Puanım</h6>
+                                <div class="count text-primary fs-20">$5238</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Bana Atanan Programlarım
+    </div>
+    <div class="card-body">
+        <o-ng-paginated-view [pageInfo]="selfAssignedProgramsPageInfo"
+            (pageInfoChanged)="onSelfAssignedProgramsPageInfoChanged($event)">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Program Adı</th>
+                            <th scope="col">Kategori</th>
+                            <th scope="col">Atama Tarihi</th>
+                            <th scope="col">Aktivitem</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of selfAssignedPrograms">
+                            <td>
+                                <strong>{{item.ProgramName}}</strong>
+                            </td>
+                            <td>
+                                <div class="text-muted text-nowrap">{{item.CategoryName}}</div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-nowrap">N/A</div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-nowrap">{{item.AssignDate | date: 'dd/MM/yyyy'}}</div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-nowrap">N/A</div>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-warning btn-sm btn-square rounded-pill"
+                                        title="Programa gözat" (click)="navigateProgramContent(item.ProgramId)">
+                                        <span class="btn-icon icofont-exit"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </o-ng-paginated-view>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Kategoriler
+    </div>
+    <div class="card-body">
+        <div id="categoryCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#categoryCarousel" [attr.data-bs-slide-to]="idx"
+                    [ngClass]="{'active': idx == 0}" *ngFor="let item of categories;index as idx"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item" [ngClass]="{'active': idx==0}" data-bs-interval="10000000"
+                    *ngFor="let item of categories;index as idx">
+                    <div class="row">
+                        <div class="col-12 col-md-4" *ngFor="let subItem of item">
+                            <o-category-card [categoryInfo]="subItem"></o-category-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #dc3545;"></span>
+                <span class="visually-hidden">Geri</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #dc3545;"></span>
+                <span class="visually-hidden">İleri</span>
+            </button>
+        </div>
+    </div>
+</div>

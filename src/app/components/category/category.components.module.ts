@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '../shared/shared.components.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { UpdateCategoryModalComponent } from './update-category-modal/update-category-modal.component';
+import { CategoryCardComponent } from './category-card/category-card.component';
 @NgModule({
     imports: [
         // Angular
@@ -16,7 +17,7 @@ import { UpdateCategoryModalComponent } from './update-category-modal/update-cat
         SharedComponentsModule,
         DirectivesModule
     ],
-    exports: [UpdateCategoryModalComponent],
-    declarations: [UpdateCategoryModalComponent]
+    exports: [UpdateCategoryModalComponent, CategoryCardComponent],
+    declarations: [UpdateCategoryModalComponent, CategoryCardComponent]
 })
 export class CategoryComponentsModule { }

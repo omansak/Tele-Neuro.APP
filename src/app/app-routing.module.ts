@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: ROUTE,
-        loadChildren: () => import('./pages/category-management-page/category-management.page.module').then(i => i.CategoryManagementPageModule), // TODO DASHBOARD
+        loadChildren: () => import('./pages/dashboard-page/dashboard.page.module').then(i => i.DashboardPageModule),
       },
       {
         path: NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT.Route,

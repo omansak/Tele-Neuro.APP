@@ -111,4 +111,7 @@ export class Helper {
         }, {} as Record<K, T[]>);
     }
 
+    public static ChunkArray(array: Array<any>, chunkSize: number): Array<Array<any>> {
+        return Array.from(Array(Math.ceil(array.length / chunkSize)), (_, i) => array.slice(i * chunkSize, i * chunkSize + chunkSize));
+    }
 }

@@ -1,10 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CategoryInfo } from 'src/app/models/category/category-info';
 
 @Component({
-  selector: 'shared-category-card',
+  selector: 'o-category-card',
   templateUrl: './category-card.component.html'
 })
 export class CategoryCardComponent {
   @Input()
-  public isAdmin !: boolean;
+  public categoryInfo: CategoryInfo;
+  constructor() {
+    if (!this.categoryInfo) {
+      console.error("category is null");
+    }
+  }
 }

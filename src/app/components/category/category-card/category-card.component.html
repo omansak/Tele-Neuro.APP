@@ -1,14 +1,20 @@
 <div class="card department bg-light bg-gradient">
-    <img src="/assets/content/department-1.jpg" class="card-img-top" width="400" height="250" alt="">
-    <div class="card-body">
-        <h3 class="h4 mt-0">Cardiology</h3>
+    <img src="{{categoryInfo.Document.HostFullPath}}?width=250" class="card-img-top" width="250" alt="">
+    <div class="card-body" style="width: 300px;">
+        <h3 class="h4 mt-0">{{categoryInfo.Category.Name}}</h3>
         <div class="team d-flex align-items-center float-right">
             <span class="badge badge-info me-3">
-                <strong class="text-white">3 Program</strong>
+                <strong class="text-white">{{categoryInfo.ProgramCount}} Program</strong>
             </span>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolore enim, nemo nihil non
-            omnis temporibus? Blanditiis culpa labore velit.</p>
+        <p style="   
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3; 
+        -webkit-box-orient: vertical;
+        ">{{categoryInfo.Category.Description}}</p>
         <div class="button-box pb-2">
             <button class="btn btn-outline-primary" type="button">
                 Görüntüle

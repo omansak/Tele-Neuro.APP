@@ -48,10 +48,22 @@ export const NAVIGATION_ROUTE = {
         PageHeader: "Tele-Neuro | Giriş",
         Route: "login",
     },
+    ROUTE_DASHBOARD: {
+        PageTitle: "Tele-Neuro | Dashboard",
+        MenuName: "Dashboard",
+        IconClass: "link-icon icon sli-home",
+        Route: ""
+    },
 }
 
 
 export const NAVIGATION_MENU = [
+    {
+        Header: "Dashboard",
+        Children: [
+            NAVIGATION_ROUTE.ROUTE_DASHBOARD,
+        ],
+    },
     {
         Header: "YÖNETİM",
         Children: [
@@ -59,7 +71,7 @@ export const NAVIGATION_MENU = [
             NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_PROGRAM_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_USER_MANAGEMENT,
-        ]
+        ],
     },
     {
         Header: "MEDINE",

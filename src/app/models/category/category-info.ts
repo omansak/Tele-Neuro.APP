@@ -1,4 +1,4 @@
-import { IBaseModel } from "../base-model";
+import { IBaseModel, PageInfo } from "../base-model";
 import { DocumentModel } from "../document/document-model";
 import { CategoryModel } from "./category-model";
 
@@ -6,14 +6,14 @@ export class CategoryInfo implements IBaseModel<CategoryInfo> {
     Category: CategoryModel;
     Document: DocumentModel;
     ProgramCount: number
-    
+
+    PageInfo: PageInfo;
     constructor(category?: CategoryModel, document?: DocumentModel) {
         if (category)
             this.Category = category;
         if (document)
             this.Document = document;
     }
-
     mapModel(json: any): CategoryInfo {
         this.ProgramCount = json.programCount;
         if (json.category) {
@@ -22,6 +22,8 @@ export class CategoryInfo implements IBaseModel<CategoryInfo> {
         if (json.document) {
             this.Document = new DocumentModel().mapModel(json.document);
         }
+
         return this;
     }
+
 }
