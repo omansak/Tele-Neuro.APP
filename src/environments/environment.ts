@@ -39,6 +39,11 @@ export const environment = {
         listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions",
         listRoleDefinitions: "Utility/ListRoleDefinitions"
       },
+      stat: {
+        insertRelationStatLog: "Stat/InsertRelationStatLog",
+        completedExercisesOfProgram: "Stat/CompletedExercisesOfProgram",
+        userStats: "Stat/UserStats",
+      },
       login: {
         login: "Login/Login",
         logout: "Login/Logout",

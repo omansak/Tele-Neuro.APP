@@ -67,7 +67,7 @@
                                     <span>{{item.Category.IsActive ? 'Aktif' : 'Pasif'}}</span>
                                 </div>
                             </td>
-                            <td class="text-center">0</td>
+                            <td class="text-center" [innerText]="item.ProgramCount"></td>
                             <td>
                                 <div class="actions">
                                     <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"

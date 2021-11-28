@@ -156,20 +156,21 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
         if (e) {
             if (ConvertNumberToFileType(e?.Type) == FileType.Video) {
                 this.isDisabledAutoSkipTime = true;
-                let iframe = $('<iframe>', {
-                    id: 'vimeoDurationIFrame',
-                    class: 'd-none',
-                    src: `https://player.vimeo.com/video/${e.Guid}`
-                }).appendTo('body');
+                // TODO move to VimeoService
+                let iframe =
+                    $('<iframe>', {
+                        id: 'vimeoDurationIFrame',
+                        class: 'd-none',
+                        src: `https://player.vimeo.com/video/${e.Guid}`
+                    })
+                        .appendTo('body');
                 let player = new Vimeo.Player(iframe);
                 await player
                     .ready()
                     .then(async () => {
                         await player
                             .getDuration()
-                            .then((i: any) => {
-                                duration = i
-                            });
+                            .then((i: any) => duration = i);
                     });
                 $(iframe).remove();
             }
@@ -177,7 +178,7 @@ export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewI
                 this.isDisabledAutoSkipTime = false;
             }
         }
-        
+
         this.model.AutoSkipTime = duration;
         this.isLoadingAutoSkipTime = false;
     }

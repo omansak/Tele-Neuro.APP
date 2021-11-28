@@ -1,15 +1,16 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from "@angular/core";
-import { ConvertNumberToFileType, FileType } from "src/app/consts/enums";
+import { ConvertNumberToFileType, FileType, LogLevel } from "src/app/consts/enums";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { Helper } from "src/app/helpers/helper";
 import { ExerciseInfo } from "src/app/models/exercise/exercise-info";
 import { ProgramAssignedExerciseInfo } from "src/app/models/program/program-assigned-exercise-info";
+import { RelationStatLogService } from "src/app/services/utility/relation-stat-log-service";
 
 @Component({
     selector: "o-exercise-shower-modal",
     templateUrl: './exercise-shower-modal.component.html',
     styleUrls: ['./exercise-shower-modal.component.scss'],
-    providers: [],
+    providers: [RelationStatLogService],
     encapsulation: ViewEncapsulation.None
 })
 export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestroy {
@@ -48,7 +49,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
 
     // Private's
     private videoPlayer: any;
-    constructor() { }
+    constructor(private _relationStatLogService: RelationStatLogService) { }
 
     ngOnDestroy(): void {
         this.cancelAutoSkipCounter();
@@ -78,22 +79,48 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
                 }, 64);
             }
         }
+        else {
+            console.error("assignedExercise is null");
+            // TODO : Error Page assignedExercise is null
+        }
     }
 
     ngOnInit(): void { }
 
     public emitTriggeredNextEvent() {
-        if (this.hasNext)
+        if (this.hasNext) {
             this.triggeredNext.emit(true);
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_TRIGGERED_NEXT",
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            });
+        }
     }
 
     public emitTriggeredPrevEvent() {
-        if (this.hasPrev)
+        if (this.hasPrev) {
             this.triggeredPrev.emit(true);
+            // Log
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_TRIGGERED_PREV",
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            });
+        }
     }
 
     public toggleFullscreen() {
         this.isFullscreen = !this.isFullscreen;
+        // Log
+        this._relationStatLogService.insertRelationStatLog({
+            ActionKey: "EXERCISE_TRIGGERED_FULLSCREEN",
+            ProgramId: this.assignedExercise.ProgramId,
+            ExerciseProgramRelationId: this.assignedExercise.RelationId,
+            ExerciseId: this.assignedExercise.Exercise?.Id
+        });
     }
 
     public hideModal() {
@@ -101,6 +128,13 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
             .modal('hide');
         this.show = false;
         this.emitShowEvent();
+        // Log
+        this._relationStatLogService.insertRelationStatLog({
+            ActionKey: "EXERCISE_TRIGGERED_HIDE",
+            ProgramId: this.assignedExercise.ProgramId,
+            ExerciseProgramRelationId: this.assignedExercise.RelationId,
+            ExerciseId: this.assignedExercise.Exercise?.Id
+        });
     }
 
     public showModal() {
@@ -140,6 +174,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
     private initAutoSkipTimerNonVideo() {
         if (this.hasNext && this.assignedExercise?.ExerciseDocument && this.getDocumentType(this.assignedExercise.ExerciseDocument.Type) != this.fileType.Video) {
             if (this.assignedExercise.AutoSkipTime != null && this.assignedExercise?.AutoSkipTime > 0) {
+                let timeUpdateList: number[] = [];
                 this.autoSkipTimerTimeLimit = this.assignedExercise.AutoSkipTime!;
                 this.cancelAutoSkipTimer();
                 this.autoSkipTimerInterval = setInterval(() => {
@@ -149,6 +184,25 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
                             this.startAutoSkipCounter();
                         }
                         this.cancelAutoSkipTimer();
+                        //Log
+                        this._relationStatLogService.insertRelationStatLog({
+                            ActionKey: "EXERCISE_ENDED",
+                            ProgramId: this.assignedExercise.ProgramId,
+                            ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                            ExerciseId: this.assignedExercise.Exercise?.Id
+                        }, LogLevel.Important);
+                    }
+                    // Log
+                    let timeAs5 = Math.round((this.assignedExercise.AutoSkipTime! - this.autoSkipTimerTimeLimit) / 5);
+                    if (!timeUpdateList.includes(timeAs5)) {
+                        timeUpdateList.push(timeAs5);
+                        this._relationStatLogService.insertRelationStatLog({
+                            ActionKey: "EXERCISE_NON_VIDEO_TIME_5",
+                            ActionArgument: timeAs5.toString(),
+                            ProgramId: this.assignedExercise.ProgramId,
+                            ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                            ExerciseId: this.assignedExercise.Exercise?.Id
+                        });
                     }
                 }, 1000);
             }
@@ -156,6 +210,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
     }
 
     private initVideoPlayer() {
+        let videoTimeUpdateList: number[] = [];
         let autoSkipTimerEnded = (e: any) => {
             if (this.assignedExercise.AutoSkip && this.autoSkipStatus) {
                 this.startAutoSkipCounter();
@@ -173,19 +228,58 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
         });
 
         this.videoPlayer.on('play', (e: any) => {
-            console.log('play');
+            // Log
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_VIDEO_PLAYED",
+                ActionArgument: Math.round(e.seconds).toString(),
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            });
         });
 
-        this.videoPlayer.on('pause', () => {
-            console.log('pause');
+        this.videoPlayer.on('pause', (e: any) => {
+            // Log
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_VIDEO_PAUSED",
+                ActionArgument: Math.round(e.seconds).toString(),
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            });
         });
 
         this.videoPlayer.on('ended', (e: any) => {
             autoSkipTimerEnded(e);
-            console.log('ended');
+            // Log
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_VIDEO_ENDED",
+                ActionArgument: Math.round(e.seconds).toString(),
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            });
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_ENDED",
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            }, LogLevel.Important);
         });
 
         this.videoPlayer.on('timeupdate', (e: any) => {
+            let timeAs5 = Math.round(e.seconds / 5);
+            if (!videoTimeUpdateList.includes(timeAs5)) {
+                videoTimeUpdateList.push(timeAs5);
+                // Log
+                this._relationStatLogService.insertRelationStatLog({
+                    ActionKey: "EXERCISE_VIDEO_TIME_5",
+                    ActionArgument: timeAs5.toString(),
+                    ProgramId: this.assignedExercise.ProgramId,
+                    ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                    ExerciseId: this.assignedExercise.Exercise?.Id
+                });
+            }
         });
     }
 
@@ -193,15 +287,25 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
         this.cancelAutoSkipTimer();
         this.cancelAutoSkipCounter();
 
+        if (this.assignedExercise.ExerciseDocument) {
+            // Log
+            this._relationStatLogService.insertRelationStatLog({
+                ActionKey: "EXERCISE_OPENED",
+                ProgramId: this.assignedExercise.ProgramId,
+                ExerciseProgramRelationId: this.assignedExercise.RelationId,
+                ExerciseId: this.assignedExercise.Exercise?.Id
+            }, LogLevel.Important);
 
-        if (this.assignedExercise.ExerciseDocument && this.getDocumentType(this.assignedExercise.ExerciseDocument.Type) == this.fileType.Video) {
-            this.initVideoPlayer();
-        }
-        else {
+            if (this.getDocumentType(this.assignedExercise.ExerciseDocument.Type) == this.fileType.Video) {
+                this.initVideoPlayer();
+                return;
+            }
             if (this.assignedExercise.AutoSkip) {
                 this.initAutoSkipTimerNonVideo();
+                return;
             }
         }
+        // TODO : Error Page Document is null
     }
 
     private startAutoSkipCounter() {

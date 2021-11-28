@@ -8,9 +8,5 @@ import { CategoryInfo } from 'src/app/models/category/category-info';
 export class CategoryCardComponent {
   @Input()
   public categoryInfo: CategoryInfo;
-  constructor() {
-    if (!this.categoryInfo) {
-      console.error("category is null");
-    }
-  }
+  constructor() { }
 }

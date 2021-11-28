@@ -1,5 +1,6 @@
 import { environment } from "src/environments/environment"
 import { IBaseServiceConfiguration } from "../services/base-service"
+import { LogLevel } from "./enums"
 
 export const DEFAULT_TOASTR_CONFIG = {
     timeOut: 5500,
@@ -20,3 +21,5 @@ export const DEFAULT_BASE_SERVICE_CONFIGURATION: IBaseServiceConfiguration = {
         }
     ]
 }
+
+export const MIN_LOG_LEVEL: LogLevel = LogLevel.Access

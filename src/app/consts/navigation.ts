@@ -74,18 +74,6 @@ export const NAVIGATION_MENU = [
         ],
     },
     {
-        Header: "MEDINE",
-        Children: [
-            {
-                PageTitle: "Tele-Neuro | Appointments",
-                PageHeader: "Appointments",
-                MenuName: "Appointments",
-                IconClass: "link-icon icofont-stethoscope-alt",
-                Route: "#"
-            }
-        ]
-    },
-    {
         Header: "UI Kit",
         Children: [
             {

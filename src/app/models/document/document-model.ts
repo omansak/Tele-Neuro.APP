@@ -16,6 +16,8 @@ export class DocumentModel implements IBaseModel<DocumentModel> {
     CreatedDate: Date | string | null;
     IsActive: boolean;
 
+    //NotMapped
+    Thumbnail: any;
     mapModel(json: any): DocumentModel {
         this.Id = json.id
         this.Guid = json.guid

@@ -6,7 +6,8 @@ export class CategoryInfo implements IBaseModel<CategoryInfo> {
     Category: CategoryModel;
     Document: DocumentModel;
     ProgramCount: number
-
+    
+    //NotMapped
     PageInfo: PageInfo;
     constructor(category?: CategoryModel, document?: DocumentModel) {
         if (category)

@@ -13,7 +13,7 @@
                             </div>
                             <div class="col col-7">
                                 <h6 class="mt-0 mb-1">Programlarım</h6>
-                                <div class="count text-primary fs-20">213</div>
+                                <div class="count text-primary fs-20">{{userStats?.TotalPrograms ?? 'N/A'}}</div>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,8 @@
                             </div>
                             <div class="col col-7">
                                 <h6 class="mt-0 mb-1">Tamamladıklarım</h6>
-                                <div class="count text-primary fs-20">104</div>
+                                <div class="count text-primary fs-20">{{userStats?.TotalCompletedExercises ?? 'N/A'}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +45,9 @@
 
                             <div class="col col-7">
                                 <h6 class="mt-0 mb-1">Toplam Sürem</h6>
-                                <div class="count text-primary fs-20">24</div>
+                                <div class="count text-primary fs-20">{{userStats?.TotalTimeAs5 ?
+                                    toFormatSeconds(userStats.TotalTimeAs5 * 5)
+                                    : 'N/A'}}</div>
                             </div>
                         </div>
                     </div>
@@ -59,7 +62,7 @@
                             </div>
                             <div class="col col-7">
                                 <h6 class="mt-0 mb-1 text-nowrap">Liderlik Puanım</h6>
-                                <div class="count text-primary fs-20">$5238</div>
+                                <div class="count text-primary fs-20">N/A</div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +86,6 @@
                             <th scope="col">Program Adı</th>
                             <th scope="col">Kategori</th>
                             <th scope="col">Atama Tarihi</th>
-                            <th scope="col">Aktivitem</th>
                             <th scope="col">Durum</th>
                             <th scope="col">#</th>
                         </tr>
@@ -97,13 +99,10 @@
                                 <div class="text-muted text-nowrap">{{item.CategoryName}}</div>
                             </td>
                             <td>
-                                <div class="text-muted text-nowrap">N/A</div>
-                            </td>
-                            <td>
                                 <div class="text-muted text-nowrap">{{item.AssignDate | date: 'dd/MM/yyyy'}}</div>
                             </td>
                             <td>
-                                <div class="text-muted text-nowrap">N/A</div>
+                                <strong>{{item.CompletedExercisesCount}} / {{item.ExerciseCount}}</strong>
                             </td>
                             <td>
                                 <div class="actions">

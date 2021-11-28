@@ -5,30 +5,51 @@ import { Helper } from "src/app/helpers/helper";
 import { PageInfo } from "src/app/models/base-model";
 import { CategoryInfo } from "src/app/models/category/category-info";
 import { AssignedProgramOfUserInfo } from "src/app/models/program/assigned-program-of-user-info";
+import { UserWorkProcessStats } from "src/app/models/utility/user-work-process-stats";
 import { CategoryService } from "src/app/services/category/category-service";
 import { ToastService } from "src/app/services/common/toastr-service";
 import { ContentService } from "src/app/services/content/content-service";
+import { StatService } from "src/app/services/utility/stat-service";
 
 @Component({
     templateUrl: './dashboard.page.html',
     styleUrls: ['./dashboard.page.scss'],
-    providers: [ToastService, CategoryService, ContentService],
+    providers: [ToastService, CategoryService, ContentService, StatService],
     encapsulation: ViewEncapsulation.None
 })
 export class DashboardPage implements OnInit {
     //Publics
     public categories: Array<Array<CategoryInfo>>;
     public selfAssignedPrograms: Array<AssignedProgramOfUserInfo>;
+    public userStats: UserWorkProcessStats;
     public selfAssignedProgramsPageInfo: PageInfo = new PageInfo(1, 10);
 
-    constructor(public _categoryService: CategoryService, private _contentService: ContentService, private _router: Router) { }
+    constructor(
+        private _categoryService: CategoryService,
+        private _contentService: ContentService,
+        private _statService: StatService,
+        private _router: Router) { }
 
     ngOnInit(): void {
         this.getSelfAssignedPrograms();
         this.getCategories();
+        this.getUserStats();
     }
 
-    getCategories() {
+    public onSelfAssignedProgramsPageInfoChanged(pageInfo: PageInfo) {
+        this.selfAssignedProgramsPageInfo = pageInfo;
+        this.getSelfAssignedPrograms();
+    }
+
+    public navigateProgramContent(e: any) {
+        this._router.navigate([NAVIGATION_ROUTE.ROUTE_PROGRAM.Route.replace(':id', e)]);
+    }
+
+    public toFormatSeconds(e: number) {
+        return Helper.FormatSeconds(e);
+    }
+
+    private getCategories() {
         this._categoryService
             .listAllActiveCategories()
             .subscribe(
@@ -39,7 +60,18 @@ export class DashboardPage implements OnInit {
                 });
     }
 
-    getSelfAssignedPrograms() {
+    private getUserStats() {
+        this._statService
+            .userStats()
+            .subscribe(
+                (i) => {
+                    if (i) {
+                        this.userStats = i
+                    }
+                });
+    }
+
+    private getSelfAssignedPrograms() {
         this._contentService
             .selfAssignedPrograms(this.selfAssignedProgramsPageInfo)
             .subscribe(
@@ -53,14 +85,5 @@ export class DashboardPage implements OnInit {
                         this.selfAssignedProgramsPageInfo.TotalCount = response.Result.PageInfo.TotalCount;
                     }
                 });
-    }
-
-    onSelfAssignedProgramsPageInfoChanged(pageInfo: PageInfo) {
-        this.selfAssignedProgramsPageInfo = pageInfo;
-        this.getSelfAssignedPrograms();
-    }
-
-    navigateProgramContent(e: any) {
-        this._router.navigate([NAVIGATION_ROUTE.ROUTE_PROGRAM.Route.replace(':id', e)]);
     }
 }

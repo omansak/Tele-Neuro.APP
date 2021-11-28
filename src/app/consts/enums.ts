@@ -13,6 +13,15 @@ export enum FileType {
     Unknown = "unknown"
 }
 
+export enum LogLevel {
+    Important = 5,
+    Error = 4,
+    Warning = 3,
+    Info = 2,
+    Trace = 1,
+    Access = 0,
+}
+
 export const ConvertNumberToFileType = (value: number): FileType => {
     switch (value) {
         case 1:

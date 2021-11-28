@@ -12,6 +12,8 @@ export class ProgramAssignedExerciseInfo implements IBaseModel<ProgramAssignedEx
     Exercise: ExerciseModel;
     ExerciseDocument: DocumentModel;
     Properties: { Value: string, Definition: ExercisePropertyDefinition }[];
+    // NotMapped
+    IsCompleted?: boolean;
     mapModel(json: any): ProgramAssignedExerciseInfo {
         this.RelationId = json.relationId;
         this.ProgramId = json.programId;
