@@ -2,7 +2,6 @@ import { AfterViewInit, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { AppComponent } from 'src/app/app.component';
 import { CDN_JS_MAIN } from 'src/app/consts/cdns';
 import { NAVIGATION_MENU } from 'src/app/consts/navigation';
 import { LazyLoaderService } from 'src/app/services/common/lazy-script-loader.service';
