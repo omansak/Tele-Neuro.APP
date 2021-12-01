@@ -16,9 +16,11 @@ export class CategoryService extends BaseService {
     constructor(httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
         super(httpClient, exceptionHandler);
     }
+
     public listCategories(pageInfo: PageInfo): Observable<Array<CategoryInfo> | null> {
         return super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listCategories, pageInfo);
     }
+
     public listAllActiveCategories(): Observable<Array<CategoryInfo> | null> {
         if (!CategoryService.Cache[this.listAllActiveCategories.name]) {
             CategoryService.Cache[this.listAllActiveCategories.name] = super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listActiveCategories, {})
@@ -26,12 +28,19 @@ export class CategoryService extends BaseService {
         }
         return CategoryService.Cache[this.listAllActiveCategories.name];
     }
+
     public listActiveCategories(pageInfo: PageInfo): Observable<Array<CategoryInfo> | null> {
         return super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listActiveCategories, pageInfo);
     }
+
+    public getCategory(categoryId: number): Observable<CategoryInfo | null> {
+        return super.httpGetModel<CategoryInfo>(CategoryInfo, `${environment.request.endPoints.category.getCategory}/${categoryId}`);
+    }
+
     public toggleCategoryStatus(id: number): Observable<boolean> {
         return super.httpPostValue<boolean>(environment.request.endPoints.category.toggleCategoryStatus, { id: id });
     }
+
     public updateCategoryProgressive(model: CategoryModel): Observable<ResponseProgressive<CategoryInfo>> {
         let form = new FormData();
         form.append("Id", (model.Id || 0).toString());

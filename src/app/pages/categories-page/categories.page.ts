@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CategoryInfo } from "src/app/models/category/category-info";
 import { CategoryService } from "src/app/services/category/category-service";
 
@@ -10,6 +10,7 @@ export class CategoriesPage implements OnInit {
     // Publics
     public categories: Array<CategoryInfo>;
     constructor(private _categoryService: CategoryService) { }
+
     ngOnInit(): void {
         this.getCategories();
     }

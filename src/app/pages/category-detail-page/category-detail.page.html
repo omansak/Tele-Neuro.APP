@@ -1,0 +1,68 @@
+<div class="row" *ngIf="category">
+    <div class="col-12 col-md-6">
+        <p class="text-muted mb-4">{{category.Category.Description}}
+        </p>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div>Aktif Program Sayısı</div><strong
+                            class="fs-20 text-success">{{category.ProgramCount}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div style="position: absolute; top: -40px;right: 0;">
+                <button class="btn btn-secondary btn-sm btn-square rounded-pill" title="Yenile" (click)="getPrograms()">
+                    <span class="btn-icon icofont-refresh">
+                    </span>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover" cardLoader>
+                    <thead>
+                        <tr>
+                            <th scope="col">Program Adı</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Gizlilik Durumu</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of programs">
+                            <td>
+                                <div class="text-nowrap"><strong [innerText]="item.Program.Name"></strong></div>
+                            </td>
+                            <td>
+                                <div class="text-muted text-wrap" [innerText]="item.Program.Description"></div>
+                            </td>
+                            <td>
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-info': item.Program.IsPublic,'text-warning': !item.Program.IsPublic}">
+                                    <i class="icofont-check-circled me-1"
+                                        [ngClass]="{'icofont-check-circled': item.Program.IsPublic,'icofont-close-circled' : !item.Program.IsPublic}"></i>
+                                    <span>{{item.Program.IsPublic ? 'Herkese Açık' : 'Gizli'}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-warning btn-sm btn-square rounded-pill"
+                                        (click)="navigateProgramContent(item.Program.Id)" title="Programa gözat">
+                                        <span class="btn-icon icofont-exit"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</o-ng-paginated-view>

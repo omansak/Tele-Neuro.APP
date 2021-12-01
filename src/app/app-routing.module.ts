@@ -39,6 +39,10 @@ const routes: Routes = [
         path: NAVIGATION_ROUTE.ROUTE_CATEGORIES.Route,
         loadChildren: () => import('./pages/categories-page/categories.page.module').then(i => i.CategoriesPageModule),
       },
+      {
+        path: NAVIGATION_ROUTE.ROUTE_CATEGORY.Route,
+        loadChildren: () => import('./pages/category-detail-page/category-detail.module').then(i => i.CategoryDetailPageModule),
+      },
     ]
   },
   {

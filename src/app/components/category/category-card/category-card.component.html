@@ -16,7 +16,7 @@
         -webkit-box-orient: vertical;
         ">{{categoryInfo.Category.Description}}</p>
         <div class="button-box pb-2">
-            <button class="btn btn-outline-primary" type="button">
+            <button class="btn btn-outline-primary" type="button" (click)="navigateCategory(categoryInfo.Category.Id)">
                 Görüntüle
                 <span class="btn-icon icofont-prescription ms-2"></span>
             </button>

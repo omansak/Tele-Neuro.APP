@@ -50,6 +50,11 @@ export const NAVIGATION_ROUTE = {
         IconClass: "link-icon icon sli-chemistry",
         Route: "categories",
     },
+    ROUTE_CATEGORY: {
+        PageTitle: "Tele-Neuro | %s",
+        PageHeader: "%s",
+        Route: "category-detail/:id",
+    },
     ROUTE_LOGIN: {
         PageTitle: "Tele-Neuro | Giriş",
         PageHeader: "Tele-Neuro | Giriş",

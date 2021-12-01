@@ -8,6 +8,7 @@ export const environment = {
         updateCategory: "Category/UpdateCategory",
         listCategories: "Category/ListCategories",
         listActiveCategories: "Category/ListActiveCategories",
+        getCategory: "Category/GetCategory",
         toggleCategoryStatus: "Category/ToggleCategoryStatus",
       },
       exercise: {
@@ -20,6 +21,7 @@ export const environment = {
         updateProgram: "Program/UpdateProgram",
         toggleProgramStatus: "Program/ToggleProgramStatus",
         listPrograms: "Program/ListPrograms",
+        listProgramsByCategory: "Program/listProgramsByCategory",
         assignExercise: "Program/AssignExercise",
         assignedExercises: "Program/AssignedExercises",
         changeSequenceAssignedExercise: "Program/ChangeSequenceAssignedExercise",

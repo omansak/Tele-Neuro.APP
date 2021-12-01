@@ -1,4 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
@@ -15,7 +16,7 @@ export class BaseComponent implements AfterViewInit {
   public navigation = NAVIGATION_MENU;
   public pageHeader: string;
 
-  constructor(router: Router, activatedRoute: ActivatedRoute, private _lazyLoaderService: LazyLoaderService) {
+  constructor(router: Router, activatedRoute: ActivatedRoute, private _lazyLoaderService: LazyLoaderService, private _titleService: Title) {
     router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
@@ -30,14 +31,22 @@ export class BaseComponent implements AfterViewInit {
         mergeMap(route => route.data)
       )
       .subscribe(i => {
-        if (i.PageHeader) {
-          this.pageHeader = i.PageHeader
-        }
+        this.setPageHeader(i?.PageHeader ?? '');
+        this.setPageTitle(i?.PageTitle ?? '');
       });
   }
+
   ngAfterViewInit(): void {
     this._lazyLoaderService.loadScript(CDN_JS_MAIN).subscribe(() => {
       init();
     });
+  }
+
+  setPageHeader(v: string) {
+    this.pageHeader = v;
+  }
+
+  setPageTitle(v: string) {
+    this._titleService.setTitle(v);
   }
 }
