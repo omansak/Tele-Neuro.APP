@@ -43,6 +43,13 @@ export const NAVIGATION_ROUTE = {
         PageHeader: "Program İçeriği",
         Route: "program/:id",
     },
+    ROUTE_CATEGORIES: {
+        PageTitle: "Tele-Neuro | Kategoriler",
+        PageHeader: "Kategoriler",
+        MenuName: "Kategoriler",
+        IconClass: "link-icon icon sli-chemistry",
+        Route: "categories",
+    },
     ROUTE_LOGIN: {
         PageTitle: "Tele-Neuro | Giriş",
         PageHeader: "Tele-Neuro | Giriş",
@@ -59,9 +66,10 @@ export const NAVIGATION_ROUTE = {
 
 export const NAVIGATION_MENU = [
     {
-        Header: "Dashboard",
+        Header: "Tele-Neuro",
         Children: [
             NAVIGATION_ROUTE.ROUTE_DASHBOARD,
+            NAVIGATION_ROUTE.ROUTE_CATEGORIES,
         ],
     },
     {
@@ -73,29 +81,29 @@ export const NAVIGATION_MENU = [
             NAVIGATION_ROUTE.ROUTE_USER_MANAGEMENT,
         ],
     },
-    {
-        Header: "UI Kit",
-        Children: [
-            {
-                MenuName: "Components",
-                IconClass: "link-icon icofont-stethoscope-alt",
-                Children: [
-                    {
-                        PageTitle: "Tele-Neuro | Appointments",
-                        PageHeader: "Appointments",
-                        MenuName: "Appointments",
-                        IconClass: "link-icon icofont-stethoscope-alt",
-                        Route: "#"
-                    },
-                    {
-                        PageTitle: "Tele-Neuro | Appointments",
-                        PageHeader: "Appointments",
-                        MenuName: "Appointments",
-                        IconClass: "link-icon icofont-stethoscope-alt",
-                        Route: "#"
-                    }
-                ]
-            }
-        ]
-    }
+    // {
+    //     Header: "UI Kit",
+    //     Children: [
+    //         {
+    //             MenuName: "Components",
+    //             IconClass: "link-icon icofont-stethoscope-alt",
+    //             Children: [
+    //                 {
+    //                     PageTitle: "Tele-Neuro | Appointments",
+    //                     PageHeader: "Appointments",
+    //                     MenuName: "Appointments",
+    //                     IconClass: "link-icon icofont-stethoscope-alt",
+    //                     Route: "#"
+    //                 },
+    //                 {
+    //                     PageTitle: "Tele-Neuro | Appointments",
+    //                     PageHeader: "Appointments",
+    //                     MenuName: "Appointments",
+    //                     IconClass: "link-icon icofont-stethoscope-alt",
+    //                     Route: "#"
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
 ]

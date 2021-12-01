@@ -35,6 +35,10 @@ const routes: Routes = [
         path: NAVIGATION_ROUTE.ROUTE_PROGRAM_USER_MANAGEMENT.Route,
         loadChildren: () => import('./pages/program-user-management-page/program-user-management.page.module').then(i => i.ProgramUserManagementPageModule),
       },
+      {
+        path: NAVIGATION_ROUTE.ROUTE_CATEGORIES.Route,
+        loadChildren: () => import('./pages/categories-page/categories.page.module').then(i => i.CategoriesPageModule),
+      },
     ]
   },
   {

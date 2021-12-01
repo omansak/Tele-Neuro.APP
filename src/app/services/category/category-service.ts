@@ -7,8 +7,7 @@ import { CategoryModel } from 'src/app/models/category/category-model';
 import { ExceptionHandler } from '../common/exception-handler';
 import { PageInfo, ResponseProgressive } from 'src/app/models/base-model';
 import { CategoryInfo } from 'src/app/models/category/category-info';
-import { publishReplay } from 'rxjs/internal/operators/publishReplay';
-import { refCount, take } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService extends BaseService {
@@ -23,11 +22,7 @@ export class CategoryService extends BaseService {
     public listAllActiveCategories(): Observable<Array<CategoryInfo> | null> {
         if (!CategoryService.Cache[this.listAllActiveCategories.name]) {
             CategoryService.Cache[this.listAllActiveCategories.name] = super.httpPostArrayModel<CategoryInfo>(CategoryInfo, environment.request.endPoints.category.listActiveCategories, {})
-                .pipe(
-                    publishReplay(1),
-                    refCount(),
-                    take(1)
-                );
+                .pipe(shareReplay(1));
         }
         return CategoryService.Cache[this.listAllActiveCategories.name];
     }
