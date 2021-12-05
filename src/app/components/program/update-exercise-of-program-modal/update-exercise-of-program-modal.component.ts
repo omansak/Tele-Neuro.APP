@@ -20,7 +20,7 @@ import { ONgSelectComponent } from "../../shared/o-ng-select/o-ng-select.compone
 @Component({
     selector: "o-update-exercise-of-program-modal",
     templateUrl: './update-exercise-of-program-modal.component.html',
-    providers: [ToastService, UtilityService, ExerciseService, ProgramService],
+    providers: [UtilityService, ExerciseService, ProgramService],
     encapsulation: ViewEncapsulation.None
 })
 export class UpdateExerciseOfProgramModalComponent implements OnInit, AfterViewInit, OnChanges {

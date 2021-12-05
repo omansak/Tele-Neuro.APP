@@ -18,7 +18,7 @@ import { ONgTextareaComponent } from "../../shared/o-ng-textarea/o-ng-textarea.c
 @Component({
     selector: "o-update-program-modal",
     templateUrl: './update-program-modal.component.html',
-    providers: [CategoryService, ProgramService, ToastService],
+    providers: [CategoryService, ProgramService],
     encapsulation: ViewEncapsulation.None
 })
 export class UpdateProgramModalComponent implements OnInit, AfterViewInit, OnChanges {

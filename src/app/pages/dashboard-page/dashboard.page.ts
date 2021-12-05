@@ -7,14 +7,13 @@ import { CategoryInfo } from "src/app/models/category/category-info";
 import { AssignedProgramOfUserInfo } from "src/app/models/program/assigned-program-of-user-info";
 import { UserWorkProcessStats } from "src/app/models/utility/user-work-process-stats";
 import { CategoryService } from "src/app/services/category/category-service";
-import { ToastService } from "src/app/services/common/toastr-service";
 import { ContentService } from "src/app/services/content/content-service";
 import { StatService } from "src/app/services/utility/stat-service";
 
 @Component({
     templateUrl: './dashboard.page.html',
     styleUrls: ['./dashboard.page.scss'],
-    providers: [ToastService, CategoryService, ContentService, StatService],
+    providers: [CategoryService, ContentService, StatService],
     encapsulation: ViewEncapsulation.None
 })
 export class DashboardPage implements OnInit {

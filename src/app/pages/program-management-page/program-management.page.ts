@@ -10,7 +10,7 @@ import { ProgramService } from "src/app/services/program/program-service";
 
 @Component({
     templateUrl: './program-management.page.html',
-    providers: [ProgramService, ToastService]
+    providers: [ProgramService]
 })
 export class ProgramManagementPage implements AfterViewInit {
     // Publics

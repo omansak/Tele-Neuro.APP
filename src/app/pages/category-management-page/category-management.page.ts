@@ -9,7 +9,7 @@ import { ToastService } from 'src/app/services/common/toastr-service';
 
 @Component({
   templateUrl: './category-management.page.html',
-  providers: [CategoryService, ToastService]
+  providers: [CategoryService]
 })
 export class CategoryManagementPage implements AfterViewInit {
   //Publics

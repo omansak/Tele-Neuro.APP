@@ -8,7 +8,7 @@ import { ProgramService } from "src/app/services/program/program-service";
 @Component({
     selector: "o-assigned-exercises-modal",
     templateUrl: './assigned-exercises-modal.component.html',
-    providers: [ProgramService, ToastService],
+    providers: [ProgramService],
     encapsulation: ViewEncapsulation.None
 })
 export class AssignedExercisesModal implements OnInit, OnChanges, AfterViewInit {

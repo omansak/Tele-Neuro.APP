@@ -1,13 +1,11 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from "@angular/core";
-import { concat, empty, Observable, of, Subject } from "rxjs";
+import { Observable, of, Subject } from "rxjs";
 import { distinctUntilChanged, finalize, map, switchMap, tap } from "rxjs/operators";
 import { VALIDATE_SELECT } from "src/app/consts/validate";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { FilterType, GenericBaseFilterModel } from "src/app/models/base-filter-model";
-import { CategoryInfo } from "src/app/models/category/category-info";
 import { AssignedProgramUserInfo } from "src/app/models/program/assigned-program-users-info";
 import { UserInfo } from "src/app/models/user/user-info";
-import { SearchTermModel } from "src/app/models/utility/search-term-model";
 import { ToastService } from "src/app/services/common/toastr-service";
 import { ProgramService } from "src/app/services/program/program-service";
 import { UserService } from "src/app/services/user/user-service";
@@ -16,7 +14,7 @@ import { ONgSelectComponent } from "../../shared/o-ng-select/o-ng-select.compone
 @Component({
     selector: "o-assign-user-modal",
     templateUrl: './assign-user-modal.component.html',
-    providers: [ProgramService, UserService, ToastService],
+    providers: [ProgramService, UserService],
     encapsulation: ViewEncapsulation.None
 })
 export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {

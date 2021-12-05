@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user/user-service';
 
 @Component({
   templateUrl: './user-management.page.html',
-  providers: [ToastService, UserService]
+  providers: [UserService]
 })
 export class UserManagementPage implements AfterViewInit {
   //Publics
