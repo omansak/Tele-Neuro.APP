@@ -30,10 +30,12 @@ export class UserManagementPage implements AfterViewInit {
 
   getUsers() {
     this.cardLoaderDirective.start();
+
     let model = new GenericBaseFilterModel<UserInfo>()
       .setPaging(this.pageInfo.PageSize, (this.pageInfo.Page - 1) * this.pageInfo.PageSize)
       .addSort(i => i.User.CreatedDate, OrderType.Descending)
       .toBaseFilterModel();
+      
     this._userService.listFilterUsers(model)
       .pipe(finalize(() => this.cardLoaderDirective.stop()))
       .subscribe(i => {

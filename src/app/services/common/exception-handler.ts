@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { IExceptionHandler } from '../base-service';
 import { ToastService } from './toastr-service';
-import { LCL_AUTHORIZATION_EXCEPTION, LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_CLIENT_EXCEPTION, LCL_CLIENT_EXCEPTION_MESSAGE, LCL_ERROR, LCL_TIMEOUT, LCL_TIMEOUT_MESSAGE, LCL_UNHANDLED_EXCEPTION, LCL_UNHANDLED_EXCEPTION_MESSAGE, LCL_UNKNOWN_EXCEPTION, LCL_UNKNOWN_EXCEPTION_MESSAGE } from 'src/app/consts/locales';
-import { NAVIGATION_ROUTE } from 'src/app/consts/navigation';
+import { LCL_CLIENT_EXCEPTION, LCL_CLIENT_EXCEPTION_MESSAGE, LCL_ERROR, LCL_TIMEOUT, LCL_TIMEOUT_MESSAGE, LCL_UNHANDLED_EXCEPTION, LCL_UNHANDLED_EXCEPTION_MESSAGE, LCL_UNKNOWN_EXCEPTION, LCL_UNKNOWN_EXCEPTION_MESSAGE } from 'src/app/consts/locales';
+import { NAVIGATION_ROUTE, ROUTE } from 'src/app/consts/navigation';
 
 @Injectable()
 export class ExceptionHandler implements IExceptionHandler {
@@ -18,6 +18,14 @@ export class ExceptionHandler implements IExceptionHandler {
                 queryParams: { returnUrl: this._router.routerState.snapshot.url },
             });
             //this._toastService.error(LCL_AUTHORIZATION_EXCEPTION_MESSAGE, LCL_AUTHORIZATION_EXCEPTION);
+            return NEVER;
+        }
+
+        if (err.status === 403) {
+            this._router.navigate([ROUTE]);
+            if (err.error && err.error.Status) {
+                this._toastService.error(`${err.error.Status.Message}`, LCL_ERROR);
+            }
             return NEVER;
         }
 

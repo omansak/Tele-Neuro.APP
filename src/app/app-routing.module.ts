@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseComponent } from './components/base/base.component';
-import { NAVIGATION_ROUTE, ROUTE, ROUTE_FAULT } from './consts/navigation';
+import { NAVIGATION_ROUTE, ROUTE } from './consts/navigation';
+import { AuthenticationGuard } from './guards/authentication-guard';
 const routes: Routes = [
   {
     path: ROUTE,
     component: BaseComponent,
+    canActivate: [AuthenticationGuard],
+    canActivateChild: [AuthenticationGuard],
     children: [
       {
         path: ROUTE,
@@ -54,5 +57,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthenticationGuard]
 })
 export class AppRoutingModule { }

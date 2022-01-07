@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode";
 import { NetCoreClaimTypes } from "src/app/consts/net-core-claim-types";
 import { NAVIGATION_ROUTE } from "src/app/consts/navigation";
 import { ExceptionHandler } from "../common/exception-handler";
+import { ConvertRoleKeyToRoleObject, UserRoleDefinition } from "src/app/consts/defaults";
 
 @Injectable()
 export class AuthenticationService extends BaseService {
@@ -97,6 +98,21 @@ export class AuthenticationService extends BaseService {
         this.localStorageHelper.removeItem(this.refreshTokenStorageName);
         this.userSubject.next(null);
         this.stopTokenTimer();
+    }
+
+    userHasRole(value: string): boolean {
+        if (value && this.isLogged()) {
+            let userMaxRole = UserRoleDefinition.NonUser;
+            let requirementRole = ConvertRoleKeyToRoleObject(value);
+            this.getUser()?.Roles?.forEach(i => {
+                let role = ConvertRoleKeyToRoleObject(i);
+                if (role && userMaxRole.Priority > role.Priority) {
+                    userMaxRole = role;
+                }
+            });
+            return requirementRole.Priority >= userMaxRole.Priority;
+        }
+        return true;
     }
 
     private setLocalStorage(model: LoginResultModel) {

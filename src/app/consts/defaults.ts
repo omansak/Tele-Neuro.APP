@@ -23,3 +23,41 @@ export const DEFAULT_BASE_SERVICE_CONFIGURATION: IBaseServiceConfiguration = {
 }
 
 export const MIN_LOG_LEVEL: LogLevel = LogLevel.Access
+
+export const UserRoleDefinition = {
+    Administrator: {
+        Key: "ADMIN",
+        Priority: 0
+    },
+    Editor: {
+        Key: "EDITOR",
+        Priority: 1
+    },
+    Contributor: {
+        Key: "CONTRIBUTOR",
+        Priority: 2
+    },
+    Subscriber: {
+        Key: "SUBSCRIBER",
+        Priority: 3
+    },
+    NonUser: {
+        Key: "NON-USER",
+        Priority: 99
+    },
+}
+
+export const ConvertRoleKeyToRoleObject = (role: string) => {
+    switch (role) {
+        case "ADMIN":
+            return UserRoleDefinition.Administrator;
+        case "EDITOR":
+            return UserRoleDefinition.Editor;
+        case "CONTRIBUTOR":
+            return UserRoleDefinition.Contributor;
+        case "SUBSCRIBER":
+            return UserRoleDefinition.Subscriber;
+        default:
+            return UserRoleDefinition.NonUser;
+    }
+}

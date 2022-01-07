@@ -65,6 +65,7 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
       this.userInfo = new UserInfo();
       this.userInfo.User = new UserModel();
       this.userInfo.User.Password = Helper.RandomString();
+      this.userInfo.User.IsActive = true;
       this.userInfo.UserProfile = new UserProfileModel();
     }
     
@@ -147,8 +148,6 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
           (i) => {
             if (i) {
               this.editModel.User.Id = i;
-
-
               this.userInfo = <UserInfo>this.editModel;
               this.hideModal();
               this.emitChangeEvent();

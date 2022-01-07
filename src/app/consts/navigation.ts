@@ -1,3 +1,5 @@
+import { UserRoleDefinition } from "./defaults";
+
 export const ROUTE = ``;
 export const ROUTE_FAULT = `**`;
 export const ROUTE_ROOT = `/`;
@@ -8,35 +10,40 @@ export const NAVIGATION_ROUTE = {
         PageHeader: "Kategori Yönetimi",
         MenuName: "Kategori Yönetimi",
         IconClass: "link-icon icon sli-book-open",
-        Route: "category-management"
+        Route: "category-management",
+        Role: UserRoleDefinition.Editor
     },
     ROUTE_EXERCISE_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Egzersiz Yönetimi",
         PageHeader: "Egzersiz Yönetimi",
         MenuName: "Egzersiz Yönetimi",
         IconClass: "link-icon icon sli-magic-wand",
-        Route: "exercise-management"
+        Route: "exercise-management",
+        Role: UserRoleDefinition.Editor
     },
     ROUTE_PROGRAM_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Program Yönetimi",
         PageHeader: "Program Yönetimi",
         MenuName: "Program Yönetimi",
         IconClass: "link-icon icon sli-grid",
-        Route: "program-management"
+        Route: "program-management",
+        Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM_USER_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Program Kullanıcı Yönetimi",
         PageHeader: "Program Kullanıcı Yönetimi",
         MenuName: "Program Kullanıcı Yönetimi",
         IconClass: "link-icon icon sli-grid",
-        Route: "program-user-management/:id"
+        Route: "program-user-management/:id",
+        Role: UserRoleDefinition.Contributor
     },
     ROUTE_USER_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Kullanıcı Yönetimi",
         PageHeader: "Kullanıcı Yönetimi",
         MenuName: "Kullanıcı Yönetimi",
         IconClass: "link-icon icon sli-user",
-        Route: "user-management"
+        Route: "user-management",
+        Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM: {
         PageTitle: "Tele-Neuro | %s",

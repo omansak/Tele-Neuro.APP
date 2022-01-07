@@ -61,7 +61,7 @@ export class LoginPage implements AfterViewInit, OnInit {
                 .subscribe(
                     (i) => {
                         if (i) {
-                            this._router.navigate([this._activatedRoute.snapshot.queryParams['returnUrl'] || ROUTE]).finally(() => {
+                            this._router.navigate([/*this._activatedRoute.snapshot.queryParams['returnUrl'] ||*/ ROUTE]).finally(() => {
                                 this._appComponent.changeBodyVerticalLayoutClass();
                             });
                             toast.success();

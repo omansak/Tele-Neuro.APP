@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   request: {
-    host: "https://api.telenororehab.com/",
+    host: "https://localhost:44384/",
     rootEndPoint: "api/",
     endPoints: {
       category: {
