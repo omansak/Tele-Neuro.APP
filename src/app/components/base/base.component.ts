@@ -30,8 +30,8 @@ export class BaseComponent implements AfterViewInit {
         mergeMap(route => route.data)
       )
       .subscribe(i => {
-        this.setPageHeader(i?.PageHeader ?? '');
-        this.setPageTitle(i?.PageTitle ?? '');
+        this.setPageHeader(i?.PageHeader ?? null);
+        this.setPageTitle(i?.PageTitle ?? null);
       });
   }
 

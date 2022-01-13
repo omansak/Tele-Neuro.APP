@@ -1,0 +1,386 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container bootstrap snippets bootdey">
+    <div class="tile tile-alt" id="messages-main">
+        <div class="p-15 send-new-msg">
+            <div class="dropdown">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-block btn-alt" (click)="showNewConversationModal()">
+                        Yeni Mesaj Gönder<span class="btn-icon icofont-plus-circle ms-2"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="ms-menu ms-menu-to">
+            <div class="list-group lg-alt">
+                <div class="text-center d-block w-100" style="position: absolute;top: 35%;"
+                    *ngIf="conversations?.length == 0;else conversationListElement">
+                    <i class="icofont-people icofont-5x text-muted"></i>
+                    <span>Herhangi bir konuşma bulunamadı.</span>
+                </div>
+                <ng-template #conversationListElement>
+                    <a class="list-group-item media conv-border-bottom mt-1" (click)="setActiveConversation(item)"
+                        [ngClass]="{'has-unread': item.HasUnread,'active':isActiveConversation(item)}"
+                        href="javascript:;" *ngFor="let item of conversations">
+                        <div class="float-start">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                        </div>
+                        <div class="media-body">
+                            <small class="list-group-item-heading message-text-overflow fw-bolder fs-6"
+                                [innerText]="getConversationName(item)"></small>
+                            <small class="list-group-item-text c-gray d-block message-text-overflow"
+                                [innerText]="item.LastMessage"></small>
+                            <span class="badge badge-danger badge-sm unread-badge">1</span>
+                        </div>
+                    </a>
+                </ng-template>
+            </div>
+        </div>
+        <div class="action-header clearfix">
+            <div class="d-block d-md-none" id="ms-menu-trigger" (click)="toggleMenu()">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <div class="float-start d-none d-md-block ms-4">
+                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar m-r-10">
+                <div class="lv-avatar float-start">
+                </div>
+                <span class="ms-2">David Parbell</span>
+            </div>
+            <ul class="ah-actions actions">
+                <li class="mx-1">
+                    <button class="btn btn-outline-secondary btn-square rounded-pill btn-alt" type="button">
+                        <span class="btn-icon icofont-refresh"></span>
+                    </button>
+                </li>
+                <li class="mx-1">
+                    <button class="btn btn-outline-primary btn-square rounded-pill btn-alt send-new-msg-m"
+                        type="button">
+                        <span class="btn-icon icofont-plus"></span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="ms-body ms-body-to">
+            <div class="message-feed-body">
+                <div class="ms-body-image"></div>
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Quisque consequat arcu eget odio cursus, ut tempor arcu vestibulum. Etiam ex arcu, porta a
+                            urna
+                            non, lacinia pellentesque orci. Proin semper sagittis erat, eget condimentum sapien viverra
+                            et.
+                            Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a
+                            sem
+                            pulvinar lobortis.
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:00</small>
+                    </div>
+                </div>
+
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a
+                            sem
+                            pulvinar lobortis.
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:30</small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam ex arcumentum
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:33</small>
+                    </div>
+                </div>
+
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem
+                            consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus
+                            et
+                            magnis dis parturient montes,
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:10</small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
+                            ac
+                            tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum
+                            elit
+                            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae
+                            rhoncus sapien volutpat eget
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:24</small>
+                    </div>
+                </div>
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem
+                            consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus
+                            et
+                            magnis dis parturient montes,
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:10</small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
+                            ac
+                            tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum
+                            elit
+                            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae
+                            rhoncus sapien volutpat eget
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:24</small>
+                    </div>
+                </div>
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem
+                            consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus
+                            et
+                            magnis dis parturient montes,
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:10</small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
+                            ac
+                            tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum
+                            elit
+                            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae
+                            rhoncus sapien volutpat eget
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:24</small>
+                    </div>
+                </div>
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem
+                            consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus
+                            et
+                            magnis dis parturient montes,
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:10</small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
+                            ac
+                            tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum
+                            elit
+                            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae
+                            rhoncus sapien volutpat eget
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:24</small>
+                    </div>
+                </div>
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem
+                            consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus
+                            et
+                            magnis dis parturient montes,
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:10</small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
+                            ac
+                            tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum
+                            elit
+                            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae
+                            rhoncus sapien volutpat eget
+                        </div>
+                        <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:24</small>
+                    </div>
+                </div>
+                <div class="message-feed date-badge-container">
+                    <div class="date-badge">
+                        <span>20/02/2015</span>
+                    </div>
+                </div>
+                <div class="message-feed right">
+                    <div class="float-end">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem
+                            consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus
+                            et
+                            magnis dis parturient montes,
+                        </div>
+                        <small class="mf-date">
+                            <span style="margin-right: 5px;">
+                                <svg viewBox="0 0 15 15" width="15" height="15" style="margin-bottom: 4px;">
+                                    <path fill="#4fc3f7"
+                                        d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z">
+                                    </path>
+                                </svg> Okundu
+                            </span>
+                            <i class="fa fa-clock-o me-1"></i> 10:24
+                        </small>
+                    </div>
+                </div>
+
+                <div class="message-feed media">
+                    <div class="float-start">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
+                    </div>
+                    <div class="media-body">
+                        <div class="mf-content">
+                            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
+                            ac
+                            tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum
+                            elit
+                            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae
+                            rhoncus sapien volutpat eget
+                        </div>
+                        <small class="mf-date">
+                            <span style="margin-right: 5px;">
+                                <svg viewBox="0 0 15 15" width="15" height="15" style="margin-bottom: 4px;">
+                                    <path fill="currentColor"
+                                        d="M10.91 3.316l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z">
+                                    </path>
+                                </svg> Gönderildi
+                            </span>
+                            <i class="fa fa-clock-o me-1"></i> 10:24
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="msb-reply msb-reply-to">
+            <o-ng-textarea placeholder="Bir mesaj yazın" containerClass="msb-reply-margin "></o-ng-textarea>
+            <button class="btn btn-outline-primary btn-square rounded-pill btn-alt" type="button">
+                <span class="btn-icon icofont-paper-plane"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Create Conversation Modal -->
+<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    style="overflow:scroll;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" cardLoader>
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Mesaj Oluştur</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <o-ng-select #newConversationUserSelectElement header="Kişiler"
+                        [(ngModel)]="newConversationSelectedUserIds" [multiple]="true"
+                        [typeahead]="newConversationUserSearchTermSubject"
+                        [searchLoading]="newConversationUserInfoSearchLoading" [clearable]="true"
+                        [items]="newConversationUserInfoObservable | async" bindValue="User.Id"
+                        description="Ad, Soyad, Email ile sorgulanabilir." [validate]="validate.select">
+                        <ng-template #labelTemplate let-item="item" let-clear="clear">
+                            <span aria-hidden="true" class="ng-value-icon left" (click)="clear(item)">×</span>
+                            <span class="ng-option-label">{{item.UserProfile.Name}} {{item.UserProfile.Surname}}</span>
+                        </ng-template>
+                        <ng-template #optionTemplate let-item="item" let-index="index">
+                            <span class="ng-option-label" ng-reflect-escape="true">
+                                <b>{{item.UserProfile.Name}} {{item.UserProfile.Surname}}</b>
+                            </span>
+                            <br />
+                            <span class="ng-option-label text-muted" ng-reflect-escape="true">{{item.User.Email}}</span>
+                        </ng-template>
+                    </o-ng-select>
+                </div>
+
+                <div class="form-group"
+                    *ngIf="newConversationSelectedUserIds && newConversationSelectedUserIds.length > 1">
+                    <o-ng-input #newConversationGroupNameElement type="text" header="Grup Adı"
+                        placeholder="Bir grup adı yazın" [(ngModel)]="newConversationGroupName"
+                        [validate]="validate.text" suffixIcon="icofont-pencil-alt-5">
+                    </o-ng-input>
+                </div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <div class="actions justify-content-between">
+                    <button class="btn btn-outline-danger btn-alt" (click)="hideNewConversationModal()">
+                        <span class="btn-icon icofont-close-circled me-2"></span>
+                        Kapat
+                    </button>
+                    <button class="btn btn-outline-success btn-alt" (click)="createConversation()">
+                        <span class="btn-icon icofont-save me-2"></span>
+                        Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create Conversation Modal -->

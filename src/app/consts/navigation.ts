@@ -50,6 +50,10 @@ export const NAVIGATION_ROUTE = {
         PageHeader: "Program İçeriği",
         Route: "program/:id",
     },
+    ROUTE_CONVERSATION: {
+        PageTitle: "Mesajlaşma",
+        Route: "conversation",
+    },
     ROUTE_CATEGORIES: {
         PageTitle: "Tele-Neuro | Kategoriler",
         PageHeader: "Kategoriler",

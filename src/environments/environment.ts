@@ -55,7 +55,12 @@ export const environment = {
         listFilterUsers: "User/ListFilterUsers",
         addUser: "User/AddUser",
         toggleUserStatus: "User/ToggleUserStatus",
-      }
+      },
+      conversation: {
+        createConversation: "Conversation/CreateConversation",
+        userConversations: "Conversation/UserConversations",
+        conversationMessages: "Conversation/ConversationMessages",
+      },
     }
   }
 };
