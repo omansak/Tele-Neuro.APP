@@ -23,6 +23,14 @@ const routes: Routes = [
         loadChildren: () => import('./pages/exercise-management-page/exercise-management.page.module').then(i => i.ExerciseManagementPageModule),
       },
       {
+        path: NAVIGATION_ROUTE.ROUTE_BROCHURE_MANAGEMENT.Route,
+        loadChildren: () => import('./pages/brochure-management-page/brochure-management.page.module').then(i => i.BrochureManagementPageModule),
+      },
+      {
+        path: NAVIGATION_ROUTE.ROUTE_BROCHURE_USER_MANAGEMENT.Route,
+        loadChildren: () => import('./pages/brochure-user-management-page/brochure-user-management.page.module').then(i => i.BrochureUserManagementPageModule),
+      },
+      {
         path: NAVIGATION_ROUTE.ROUTE_PROGRAM_MANAGEMENT.Route,
         loadChildren: () => import('./pages/program-management-page/program-management.page.module').then(i => i.ProgramManagementPageModule),
       },

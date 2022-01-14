@@ -21,6 +21,14 @@ export const NAVIGATION_ROUTE = {
         Route: "exercise-management",
         Role: UserRoleDefinition.Editor
     },
+    ROUTE_BROCHURE_MANAGEMENT: {
+        PageTitle: "Tele-Neuro | Broşür Yönetimi",
+        PageHeader: "Broşür Yönetimi",
+        MenuName: "Broşür Yönetimi",
+        IconClass: "link-icon icon sli-notebook",
+        Route: "brochure-management",
+        Role: UserRoleDefinition.Editor
+    },
     ROUTE_PROGRAM_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Program Yönetimi",
         PageHeader: "Program Yönetimi",
@@ -33,8 +41,14 @@ export const NAVIGATION_ROUTE = {
         PageTitle: "Tele-Neuro | Program Kullanıcı Yönetimi",
         PageHeader: "Program Kullanıcı Yönetimi",
         MenuName: "Program Kullanıcı Yönetimi",
-        IconClass: "link-icon icon sli-grid",
         Route: "program-user-management/:id",
+        Role: UserRoleDefinition.Contributor
+    },
+    ROUTE_BROCHURE_USER_MANAGEMENT: {
+        PageTitle: "Tele-Neuro | Broşür Kullanıcı Yönetimi",
+        PageHeader: "Broşür Kullanıcı Yönetimi",
+        MenuName: "Broşür Kullanıcı Yönetimi",
+        Route: "brochure-user-management/:id",
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_USER_MANAGEMENT: {
@@ -95,6 +109,7 @@ export const NAVIGATION_MENU = [
             NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_PROGRAM_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_USER_MANAGEMENT,
+            NAVIGATION_ROUTE.ROUTE_BROCHURE_MANAGEMENT,
         ],
     },
     // {

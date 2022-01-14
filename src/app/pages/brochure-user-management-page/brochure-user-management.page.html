@@ -1,14 +1,10 @@
-<div class="row" *ngIf="programInfo">
-    <div class="col-12 col-md-6">
-        <p class="text-muted mb-4">{{programInfo.Program.Description}}
-        </p>
-    </div>
-    <div class="col-12 col-md-6">
+<div class="row" *ngIf="brochureInfo">
+    <div class="col-12">
         <div class="card bg-dark text-white">
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-12">
-                        <strong class="fs-20 text-white">{{programInfo.Program.Name}}</strong>
+                        <strong class="fs-20 text-white">{{brochureInfo.Brochure.Name}}</strong>
                     </div>
                 </div>
             </div>
@@ -60,11 +56,11 @@
 
 <div class="add-action-box animate__animated animate__bounce">
     <button class="btn btn-primary btn-lg btn-square rounded-pill" title="Kullanıcı Ata"
-        (click)="showAssignUserOfProgramModal(programId)">
+        (click)="showAssignUserOfBrochureModal(brochureId)">
         <span class="btn-icon icofont-plus"></span>
     </button>
 </div>
 
-<o-assign-program-user-modal [programId]="programId" (assignedUserChange)="onAssignedUserChanged($event)"
-    *ngIf="showStatusAssignUserOfProgramModal" [(show)]="showStatusAssignUserOfProgramModal">
-</o-assign-program-user-modal>
+<o-assign-brochure-user-modal [brochureId]="brochureId" (assignedUserChange)="onAssignedUserChanged($event)"
+    *ngIf="showStatusAssignUserOfBrochureModal" [(show)]="showStatusAssignUserOfBrochureModal">
+</o-assign-brochure-user-modal>

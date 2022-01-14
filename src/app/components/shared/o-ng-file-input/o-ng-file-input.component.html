@@ -7,8 +7,7 @@
         isValid == 'Success' ? 'is-valid' : isValid == 'Error' ? 'is-invalid' : '',
         isLoading ? 'is-loading' : ''
         ]">
-        <input #fileInput type="file" [ngClass]="inputClass" [attr.data-show-preview]="showPreview"
-            [disabled]="disabled" (blur)="emitFocusEvent()">
+        <input #fileInput type="file" [ngClass]="inputClass" [disabled]="disabled" (blur)="emitFocusEvent()">
         <div class="form-text text-muted" [innerHtml]="description" *ngIf="description"></div>
         <div [ngClass]="{'valid-tooltip': isValid == 'Success','invalid-tooltip':isValid == 'Error'}"
             *ngIf="validateMessage" [innerHtml]="validateMessage"></div>

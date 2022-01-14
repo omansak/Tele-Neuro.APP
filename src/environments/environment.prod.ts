@@ -36,6 +36,7 @@ export const environment = {
         assignedExercises: "Content/AssignedExercises",
         getActiveExercise: "Content/GetActiveExercise",
         selfAssignedPrograms: "Content/SelfAssignedPrograms",
+        selfAssignedBrochures: "Content/SelfAssignedBrochures",
       },
       utility: {
         listExercisePropertyDefinitions: "Utility/ListExercisePropertyDefinitions",
@@ -61,6 +62,14 @@ export const environment = {
         userConversations: "Conversation/UserConversations",
         conversationMessages: "Conversation/ConversationMessages",
       },
+      brochure: {
+        listBrochures: "Brochure/ListBrochures",
+        updateBrochure: "Brochure/UpdateBrochure",
+        toggleBrochureStatus: "Brochure/ToggleBrochureStatus",
+        assignUser: "Brochure/AssignUser",
+        deleteAssignedUser: "Brochure/DeleteAssignedUser",
+        listAssignedUsers: "Brochure/ListAssignedUsers",
+      }
     }
   }
 };

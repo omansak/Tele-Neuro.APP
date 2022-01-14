@@ -1,0 +1,43 @@
+<!-- Add Department Modal -->
+<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    style="overflow:scroll;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" cardLoader>
+            <div class="modal-header">
+                <h5 class="modal-title">Egzersiz Ekle</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <o-ng-file-input #fileElement header="İçerik" [allowedFileTypes]="['pdf']" [showPreview]="true"
+                        [(ngModel)]="editModel.Brochure.File" [validate]="validate.file">
+                    </o-ng-file-input>
+                </div>
+                <div class="form-group">
+                    <o-ng-input #nameElement type="text" header="Broşür Adı" placeholder="Ad"
+                        suffixIcon="icofont-pencil-alt-5" [(ngModel)]="editModel.Brochure.Name"
+                        [validate]="validate.text">
+                    </o-ng-input>
+                </div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <div class="mb-2" *ngIf="progressOption.show">
+                    <progressbar class="progress" [value]="progressOption.value" [max]="progressOption.max"
+                        [animate]="progressOption.animate" [striped]="progressOption.animate">
+                        {{progressOption.value}}%</progressbar>
+                </div>
+                <div class="actions justify-content-between">
+                    <button class="btn btn-outline-danger" (click)="hideModal()">
+                        <span class="btn-icon icofont-close-circled me-2"></span>
+                        Kapat
+                    </button>
+                    <button class="btn btn-outline-success" (click)="save()">
+                        <span class="btn-icon icofont-save me-2"></span>
+                        Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Department Modal -->

@@ -165,6 +165,7 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
 
   private initFileInput(initialInput: ONgFileInput | null = null) {
     let config: any = {
+      showPreview: this.showPreview,
       overwriteInitial: true,
       maxFileSize: this.maxFileSize,
       showUpload: false,
@@ -260,6 +261,12 @@ export class ONgFileInputComponent implements ControlValueAccessor, AfterViewIni
         config.initialPreview = [`<iframe src="${initialInput.Url}" frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
         style="width: 100%;height:100%;"></iframe>`];
+        config.initialPreviewConfig = [
+          { previewAsData: false },
+        ];
+      }
+      if (initialInput.Type == FileType.Pdf) {
+        config.initialPreview = [`<object class="kv-preview-data file-preview-pdf content-pdf" data="${initialInput.Url}" type="application/pdf"></object>`];
         config.initialPreviewConfig = [
           { previewAsData: false },
         ];

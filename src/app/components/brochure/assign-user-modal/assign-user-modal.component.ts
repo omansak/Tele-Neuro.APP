@@ -4,23 +4,23 @@ import { distinctUntilChanged, finalize, map, switchMap, tap } from "rxjs/operat
 import { VALIDATE_SELECT } from "src/app/consts/validate";
 import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { FilterType, GenericBaseFilterModel } from "src/app/models/base-filter-model";
+import { AssignedBrochureUserInfo } from "src/app/models/brochure/assigned-brochure-users-info";
 import { AssignedProgramUserInfo } from "src/app/models/program/assigned-program-users-info";
 import { UserInfo } from "src/app/models/user/user-info";
+import { BrochureService } from "src/app/services/brochure/brochure-service";
 import { ToastService } from "src/app/services/common/toastr-service";
-import { ProgramService } from "src/app/services/program/program-service";
 import { UserService } from "src/app/services/user/user-service";
 import { ONgSelectComponent } from "../../shared/o-ng-select/o-ng-select.component";
 
 @Component({
-    selector: "o-assign-program-user-modal",
+    selector: "o-assign-brochure-user-modal",
     templateUrl: './assign-user-modal.component.html',
-    providers: [ProgramService, UserService],
     encapsulation: ViewEncapsulation.None
 })
 export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
     // Inputs
     @Input()
-    public programId: number;
+    public brochureId: number;
     @Input()
     public show: boolean = false;
     // Outputs
@@ -45,7 +45,7 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
     public userSelectElement: ONgSelectComponent;
     @ViewChild(CardLoaderDirective)
     public cardLoaderDirective: CardLoaderDirective;
-    constructor(private _programService: ProgramService, private _userService: UserService, private _toastService: ToastService) { }
+    constructor(private _brochureService: BrochureService, private _userService: UserService, private _toastService: ToastService) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.show) {
@@ -100,8 +100,8 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
             let selectedUserInfo = this.listedUsers?.find(j => j.User.Id == this.selectedUserId);
 
             this.cardLoaderDirective.start();
-            this._programService
-                .assignUser({ ProgramId: this.programId, UserId: this.selectedUserId })
+            this._brochureService
+                .assignUser({ BrochureId: this.brochureId, UserId: this.selectedUserId })
                 .pipe(finalize(() => {
                     this.cardLoaderDirective.stop();
                 }))
@@ -110,7 +110,7 @@ export class AssignUserModal implements OnInit, AfterViewInit, OnChanges {
                         if (i) {
                             this.hideModal();
                             if (selectedUserInfo) {
-                                let e = new AssignedProgramUserInfo();
+                                let e = new AssignedBrochureUserInfo();
                                 e.Email = selectedUserInfo!.User.Email;
                                 e.Name = selectedUserInfo!.UserProfile.Name;
                                 e.Surname = selectedUserInfo!.UserProfile.Surname;

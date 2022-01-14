@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-12 col-md-8">
+        <p class="text-muted mb-4">Huzur içinde yaşayan mesut olan bir felakete uğramadıkça o huzur ve saadetin kıymetin
+            bilmez. İnsan hasta olmadıkça sağlığı takdir etmez.
+            <br />
+            <br />
+            Sadi Şirazi
+        </p>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div>Aktif Broşür Program Sayısı</div><strong
+                            class="fs-20 text-success">{{totalBrochureCount}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<o-ng-paginated-view [pageInfo]="pageInfo" (pageInfoChanged)="onPageInfoChanged($event)">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div style="position: absolute; top: -40px;right: 0;">
+                <button class="btn btn-secondary btn-sm btn-square rounded-pill" title="Yenile"
+                    (click)="getBrochures()">
+                    <span class="btn-icon icofont-refresh">
+                    </span>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover" cardLoader>
+                    <thead>
+                        <tr>
+                            <th scope="col">Broşür</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of brochures">
+                            <td style="width: 50%;">
+                                <div *ngIf="item.Document">
+                                    <i class="icofont-download me-2 text-primary"></i>
+                                    <a href="{{item.Document.HostFullPath}}" target="_blank"
+                                        [innerText]="item.Brochure.Name"></a>
+                                </div>
+                            </td>
+                            <td style="width: 25%;">
+                                <div class="text-nowrap "
+                                    [ngClass]="{'text-success': item.Brochure.IsActive,'text-danger': !item.Brochure.IsActive}">
+                                    <i class="icofont-check-circled me-1"
+                                        [ngClass]="{'icofont-check-circled': item.Brochure.IsActive,'icofont-close-circled' : !item.Brochure.IsActive}"></i>
+                                    <span>{{item.Brochure.IsActive ? 'Aktif' : 'Pasif'}}</span>
+                                </div>
+                            </td>
+                            <td style="width: 25%;">
+                                <div class="actions">
+                                    <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        (click)="showAddBrochureModal(item)">
+                                        <span class="btn-icon icofont-ui-edit">
+                                        </span>
+                                    </button>
+                                    <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        title="Broşür aktiflik durumunu değiştir"
+                                        (click)="toggleBrochureStatus(item.Brochure.Id)">
+                                        <span class="btn-icon icofont-exchange"></span>
+                                    </button>
+                                    <button class="btn btn-success btn-sm btn-square rounded-pill"
+                                    title="Kullanıcı Atama" (click)="navigateBrochureAssignedUsers(item.Brochure.Id)">
+                                    <span class="btn-icon icofont-user"></span>
+                                </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</o-ng-paginated-view>
+
+<div class="add-action-box animate__animated animate__bounce">
+    <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddBrochureModal()"
+        title="Egzersiz Ekle">
+        <span class="btn-icon icofont-plus"></span>
+    </button>
+</div>
+
+<o-update-brochure-modal *ngIf="showStatusAddBrochureModal" [brochureInfo]="forEditBrochure"
+    (brochureInfoChange)="onBrochureUpdated($event)" [(show)]="showStatusAddBrochureModal">
+</o-update-brochure-modal>

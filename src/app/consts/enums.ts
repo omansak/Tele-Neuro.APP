@@ -10,6 +10,7 @@ export enum FileType {
     Video = "video",
     Audio = "audio",
     Text = "text",
+    Pdf = "pdf",
     Unknown = "unknown"
 }
 
@@ -28,6 +29,8 @@ export const ConvertNumberToFileType = (value: number): FileType => {
             return FileType.Image;
         case 3:
             return FileType.Video;
+        case 6:
+            return FileType.Pdf;
         default:
             return FileType.Unknown;
     }

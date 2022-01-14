@@ -7,6 +7,10 @@ import { SharedComponentsModule } from 'src/app/components/shared/shared.compone
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { DashboardPage } from './dashboard.page';
 import { CategoryComponentsModule } from 'src/app/components/category/category.components.module';
+import { CategoryService } from 'src/app/services/category/category-service';
+import { ContentService } from 'src/app/services/content/content-service';
+import { StatService } from 'src/app/services/utility/stat-service';
+import { RelationStatLogService } from 'src/app/services/utility/relation-stat-log-service';
 
 @NgModule({
     imports: [
@@ -28,6 +32,6 @@ import { CategoryComponentsModule } from 'src/app/components/category/category.c
     ],
     exports: [],
     declarations: [DashboardPage],
-    providers: [],
+    providers: [CategoryService, ContentService, StatService, RelationStatLogService],
 })
 export class DashboardPageModule { }

@@ -91,28 +91,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of selfAssignedPrograms">
-                            <td>
-                                <strong>{{item.ProgramName}}</strong>
-                            </td>
-                            <td>
-                                <div class="text-muted text-nowrap">{{item.CategoryName}}</div>
-                            </td>
-                            <td>
-                                <div class="text-muted text-nowrap">{{item.AssignDate | date: 'dd/MM/yyyy'}}</div>
-                            </td>
-                            <td>
-                                <strong>{{item.CompletedExercisesCount}} / {{item.ExerciseCount}}</strong>
-                            </td>
-                            <td>
-                                <div class="actions">
-                                    <button class="btn btn-warning btn-sm btn-square rounded-pill"
-                                        title="Programa gözat" (click)="navigateProgramContent(item.ProgramId)">
-                                        <span class="btn-icon icofont-exit"></span>
-                                    </button>
+                        <tr *ngIf="!selfAssignedPrograms;else programTable">
+                            <td colspan="5">
+                                <div class="alert alert-danger outline with-before-icon with-after-icon" role="alert">
+                                    <div class="alert-icon"><i class="icofont-warning"></i></div>
+                                    <div class="alert-content">Herhangi bir atanmış program bulunamadı</div>
+                                    <div class="alert-icon"><i class="icofont-award"></i></div>
                                 </div>
                             </td>
                         </tr>
+                        <ng-template #programTable>
+                            <tr *ngFor="let item of selfAssignedPrograms">
+                                <td>
+                                    <strong>{{item.ProgramName}}</strong>
+                                </td>
+                                <td>
+                                    <div class="text-muted text-nowrap">{{item.CategoryName}}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted text-nowrap">{{item.AssignDate | date: 'dd/MM/yyyy'}}</div>
+                                </td>
+                                <td>
+                                    <strong>{{item.CompletedExercisesCount}} / {{item.ExerciseCount}}</strong>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="btn btn-warning btn-sm btn-square rounded-pill"
+                                            title="Programa gözat" (click)="navigateProgramContent(item.ProgramId)">
+                                            <span class="btn-icon icofont-exit"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+
                     </tbody>
                 </table>
             </div>
@@ -122,32 +134,50 @@
 
 <div class="card">
     <div class="card-header">
-        Kategoriler
+        Bana Atanan Broşürler
     </div>
     <div class="card-body">
-        <div id="categoryCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#categoryCarousel" [attr.data-bs-slide-to]="idx"
-                    [ngClass]="{'active': idx == 0}" *ngFor="let item of categories;index as idx"></button>
+        <o-ng-paginated-view [pageInfo]="selfAssignedBrochuresPageInfo"
+            (pageInfoChanged)="onSelfAssignedBrochuresPageInfoChanged($event)">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Broşür Adı</th>
+                            <th scope="col">Atama Tarihi</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="!selfAssignedBrochures;else brochureTable">
+                            <td colspan="5">
+                                <div class="alert alert-danger outline with-before-icon with-after-icon" role="alert">
+                                    <div class="alert-icon"><i class="icofont-warning"></i></div>
+                                    <div class="alert-content">Herhangi bir atanmış broşür bulunamadı</div>
+                                    <div class="alert-icon"><i class="icofont-award"></i></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <ng-template #brochureTable>
+                            <tr *ngFor="let item of selfAssignedBrochures">
+                                <td>
+                                    <strong>{{item.BrochureName}}</strong>
+                                </td>
+                                <td>
+                                    <div class="text-muted text-nowrap">{{item.AssignDate | date: 'dd/MM/yyyy'}}</div>
+                                </td>
+                                <td>
+                                    <div *ngIf="item.Document">
+                                        <i class="icofont-download me-2 text-primary"></i>
+                                        <a href="javascript:;" (click)="downloadBrochureDocument(item)">İndir/Görüntüle</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                    </tbody>
+                </table>
             </div>
-            <div class="carousel-inner">
-                <div class="carousel-item" [ngClass]="{'active': idx==0}" data-bs-interval="10000000"
-                    *ngFor="let item of categories;index as idx">
-                    <div class="row">
-                        <div class="col-12 col-md-4" *ngFor="let subItem of item">
-                            <o-category-card [categoryInfo]="subItem"></o-category-card>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #dc3545;"></span>
-                <span class="visually-hidden">Geri</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #dc3545;"></span>
-                <span class="visually-hidden">İleri</span>
-            </button>
-        </div>
+        </o-ng-paginated-view>
     </div>
 </div>

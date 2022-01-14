@@ -8,19 +8,27 @@ import { ProgramInfo } from 'src/app/models/program/program-info';
 import { ProgramAssignedExerciseInfo } from 'src/app/models/program/program-assigned-exercise-info';
 import { PageInfo } from 'src/app/models/base-model';
 import { AssignedProgramOfUserInfo } from 'src/app/models/program/assigned-program-of-user-info';
+import { AssignedBrochureOfUserInfo } from 'src/app/models/brochure/assigned-brochure-of-user-info';
 
 @Injectable()
 export class ContentService extends BaseService {
     constructor(httpClient: HttpClient, exceptionHandler: ExceptionHandler) {
         super(httpClient, exceptionHandler);
     }
+
     public programInfo(programId: number): Observable<ProgramInfo | null> {
         return super.httpGetModel<ProgramInfo>(ProgramInfo, `${environment.request.endPoints.content.programInfo}/${programId}`);
     }
+
     public assignedExercises(programId: number): Observable<Array<ProgramAssignedExerciseInfo> | null> {
         return super.httpGetArrayModel<ProgramAssignedExerciseInfo>(ProgramAssignedExerciseInfo, `${environment.request.endPoints.content.assignedExercises}/${programId}`);
     }
+
     public selfAssignedPrograms(pageInfo: PageInfo): Observable<Array<AssignedProgramOfUserInfo> | null> {
         return super.httpPostArrayModel<AssignedProgramOfUserInfo>(AssignedProgramOfUserInfo, environment.request.endPoints.content.selfAssignedPrograms, pageInfo);
+    }
+
+    public selfAssignedBrochures(pageInfo: PageInfo): Observable<Array<AssignedBrochureOfUserInfo> | null> {
+        return super.httpPostArrayModel<AssignedBrochureOfUserInfo>(AssignedBrochureOfUserInfo, environment.request.endPoints.content.selfAssignedBrochures, pageInfo);
     }
 }
