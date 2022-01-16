@@ -32,6 +32,6 @@ import { BrochureComponentsModule } from 'src/app/components/brochure/brochure.c
   ],
   exports: [],
   declarations: [BrochureManagementPage],
-  providers: [ToastService, BrochureService, ExerciseService],
+  providers: [BrochureService, ExerciseService],
 })
 export class BrochureManagementPageModule { }

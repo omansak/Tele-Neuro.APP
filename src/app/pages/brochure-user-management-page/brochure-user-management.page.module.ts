@@ -7,9 +7,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { BrochureUserManagementPage } from './brochure-user-management.page';
 import { NAVIGATION_ROUTE, ROUTE } from 'src/app/consts/navigation';
 import { RouterModule } from '@angular/router';
-import { ProgramComponentsModule } from 'src/app/components/program/program.components.module';
 import { BrochureService } from 'src/app/services/brochure/brochure-service';
-import { ToastService } from 'src/app/services/common/toastr-service';
 import { BrochureComponentsModule } from 'src/app/components/brochure/brochure.components.module';
 import { UserService } from 'src/app/services/user/user-service';
 @NgModule({
@@ -33,6 +31,6 @@ import { UserService } from 'src/app/services/user/user-service';
     ],
     exports: [],
     declarations: [BrochureUserManagementPage],
-    providers: [BrochureService, ToastService, UserService],
+    providers: [BrochureService, UserService],
 })
 export class BrochureUserManagementPageModule { }

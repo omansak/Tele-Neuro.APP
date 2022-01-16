@@ -9,7 +9,7 @@ import { ExerciseService } from 'src/app/services/exercise/exercise-service';
 
 @Component({
   templateUrl: './exercise-management.page.html',
-  providers: [ExerciseService, ToastService]
+  providers: [ExerciseService]
 })
 export class ExerciseManagementPage implements AfterViewInit {
   //Publics

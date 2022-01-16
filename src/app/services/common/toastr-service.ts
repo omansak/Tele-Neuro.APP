@@ -3,10 +3,7 @@ import { IndividualConfig, ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ToastService {
-    constructor(private _toastrService: ToastrService) {
-        console.log(123);
-
-    }
+    constructor(private _toastrService: ToastrService) {}
 
     success(message?: string, title?: string, override?: Partial<IndividualConfig>) {
         this._toastrService.success(message, title, override)

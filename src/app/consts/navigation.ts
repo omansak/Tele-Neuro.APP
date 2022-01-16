@@ -66,6 +66,8 @@ export const NAVIGATION_ROUTE = {
     },
     ROUTE_CONVERSATION: {
         PageTitle: "Mesajlaşma",
+        MenuName: "Mesajlaşma",
+        IconClass: "link-icon icon sli-briefcase",
         Route: "conversation",
     },
     ROUTE_CATEGORIES: {
@@ -105,6 +107,7 @@ export const NAVIGATION_MENU = [
     {
         Header: "YÖNETİM",
         Children: [
+            NAVIGATION_ROUTE.ROUTE_CONVERSATION,
             NAVIGATION_ROUTE.ROUTE_CATEGORY_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_EXERCISE_MANAGEMENT,
             NAVIGATION_ROUTE.ROUTE_PROGRAM_MANAGEMENT,

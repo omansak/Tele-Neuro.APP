@@ -16,8 +16,6 @@ export class MainMenuComponent implements OnInit {
   ngOnInit(): void { }
 
   userHasRole(roleKey: string) {
-    console.log(roleKey);
-
     return this._authenticationService.userHasRole(roleKey);
   }
 

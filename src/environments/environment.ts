@@ -2,8 +2,10 @@ export const environment = {
   production: false,
   request: {
     host: "https://localhost:44384/",
+    hubEndpoint: "Hub/",
     rootEndPoint: "api/",
     endPoints: {
+      notificationHub: "Notification",
       category: {
         updateCategory: "Category/UpdateCategory",
         listCategories: "Category/ListCategories",
@@ -61,6 +63,9 @@ export const environment = {
         createConversation: "Conversation/CreateConversation",
         userConversations: "Conversation/UserConversations",
         conversationMessages: "Conversation/ConversationMessages",
+        insertMessage: "Conversation/InsertMessage",
+        readConversationAllMessages: "Conversation/ReadConversationAllMessages/:id",
+        userUnreadConversationCount: "Conversation/UserUnreadConversationCount",
       },
       brochure: {
         brochureInfo: "Brochure/BrochureInfo",

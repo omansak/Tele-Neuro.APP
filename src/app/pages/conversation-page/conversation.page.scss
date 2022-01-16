@@ -97,6 +97,8 @@
 
 .message-feed {
   padding: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 #footer,
@@ -627,7 +629,7 @@ a.list-group-item-danger.active:hover {
   width: 160px;
 }
 
-.unread-badge{
+.unread-badge {
   justify-content: center;
   min-width: 21px;
   padding-left: 2px;
@@ -636,4 +638,32 @@ a.list-group-item-danger.active:hover {
   right: 7.5px;
   text-align: center;
   top: 19px;
+}
+
+#messages-main .ms-body-empty {
+  height: 600px;
+
+  div {
+    @media (min-width:768px) {
+      position: absolute;
+      top: 30%;
+      right: 280px;
+    }
+  }
+
+  img {
+    opacity: 0.4;
+  }
+}
+
+@media (min-width:768px) {
+  #messages-main .ms-body-empty {
+    padding-left: 240px;
+  }
+}
+
+.mf-owner {
+  display: block;
+  color: #868686;
+  margin-bottom: 5px;
 }

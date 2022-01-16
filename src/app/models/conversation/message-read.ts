@@ -15,8 +15,8 @@ export class MessageRead implements IBaseModel<MessageRead> {
         this.MessageId = json.messageId
         this.UserId = json.userId
         this.IsRead = json.isRead
-        this.CreateDate = json.createDate
-        this.UpdateDate = json.updateDate
+        this.CreateDate = new Date(json.createDate);
+        this.UpdateDate = new Date(json.updateDate);
         return this;
     }
 }

@@ -6,6 +6,7 @@ export class ConversationSummary implements IBaseModel<ConversationSummary> {
     IsGroup: boolean;
     Name: string;
     LastMessage: string;
+    LastMessageDate: Date | null;
     HasUnread: boolean;
     Participants: Array<ParticipantUserInfo>;
 
@@ -14,6 +15,7 @@ export class ConversationSummary implements IBaseModel<ConversationSummary> {
         this.IsGroup = json.isGroup
         this.Name = json.name
         this.LastMessage = json.lastMessage
+        this.LastMessageDate = json.lastMessageDate != null ? new Date(json.lastMessageDate) : null;
         this.HasUnread = json.hasUnread
         if (json.participants) {
             let arr: Array<ParticipantUserInfo> = [];

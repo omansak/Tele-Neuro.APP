@@ -6,6 +6,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { HorizontalNavbarComponent } from './horizontal-navbar/horizontal-navbar.component';
 import { RouterModule } from '@angular/router';
+import { ConversationService } from 'src/app/services/conversation/conversation-service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [],
   declarations: [BaseComponent, NavbarComponent, MainMenuComponent, FooterComponent, HorizontalNavbarComponent],
-  providers: [],
+  providers: [ConversationService],
 })
 export class BaseComponentModule { }

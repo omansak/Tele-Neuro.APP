@@ -31,8 +31,6 @@ export class BrochureUserManagementPage implements AfterViewInit, OnInit {
             .brochureInfo(this.brochureId)
             .subscribe(
                 (i) => {
-                    console.log(i);
-                    
                     if (i) {
                         this.brochureInfo = i;
                     }

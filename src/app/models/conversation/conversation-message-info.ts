@@ -10,7 +10,7 @@ export class ConversationMessageInfo implements IBaseModel<ConversationMessageIn
         this.Cursor = json.cursor;
         if (json.conversationMessage) {
             let arr: Array<ConversationMessage> = [];
-            (json.participants as Array<ConversationMessage>).forEach(i => {
+            (json.conversationMessage as Array<ConversationMessage>).forEach(i => {
                 arr.push(new ConversationMessage().mapModel(i));
             });
             this.ConversationMessage = arr;

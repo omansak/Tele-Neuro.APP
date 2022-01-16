@@ -2,8 +2,10 @@ export const environment = {
   production: true,
   request: {
     host: "https://api.telenororehab.com/",
+    hubEndpoint: "Hub/",
     rootEndPoint: "api/",
     endPoints: {
+      notificationHub: "Notification",
       category: {
         updateCategory: "Category/UpdateCategory",
         listCategories: "Category/ListCategories",
@@ -61,8 +63,12 @@ export const environment = {
         createConversation: "Conversation/CreateConversation",
         userConversations: "Conversation/UserConversations",
         conversationMessages: "Conversation/ConversationMessages",
+        insertMessage: "Conversation/InsertMessage",
+        readConversationAllMessages: "Conversation/ReadConversationAllMessages/:id",
+        userUnreadConversationCount: "Conversation/UserUnreadConversationCount",
       },
       brochure: {
+        brochureInfo: "Brochure/BrochureInfo",
         listBrochures: "Brochure/ListBrochures",
         updateBrochure: "Brochure/UpdateBrochure",
         toggleBrochureStatus: "Brochure/ToggleBrochureStatus",
@@ -73,4 +79,3 @@ export const environment = {
     }
   }
 };
-
