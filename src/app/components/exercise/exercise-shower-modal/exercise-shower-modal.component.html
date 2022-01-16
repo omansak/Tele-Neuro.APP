@@ -79,6 +79,11 @@
                         Sonraki
                         <span class="btn-icon icofont-arrow-right ms-2"></span>
                     </button>
+
+                    <button class="btn btn-outline-primary" *ngIf="!hasNext" (click)="completeProgram()">
+                        Bitir
+                        <span class="btn-icon icofont-award ms-2"></span>
+                    </button>
                 </div>
             </div>
         </div>

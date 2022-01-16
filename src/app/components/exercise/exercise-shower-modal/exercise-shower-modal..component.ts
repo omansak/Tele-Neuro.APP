@@ -4,6 +4,7 @@ import { CardLoaderDirective } from "src/app/directives/card-loader.directive";
 import { Helper } from "src/app/helpers/helper";
 import { ExerciseInfo } from "src/app/models/exercise/exercise-info";
 import { ProgramAssignedExerciseInfo } from "src/app/models/program/program-assigned-exercise-info";
+import { ToastService } from "src/app/services/common/toastr-service";
 import { RelationStatLogService } from "src/app/services/utility/relation-stat-log-service";
 
 @Component({
@@ -49,7 +50,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
 
     // Private's
     private videoPlayer: any;
-    constructor(private _relationStatLogService: RelationStatLogService) { }
+    constructor(private _relationStatLogService: RelationStatLogService, private _toastService: ToastService) { }
 
     ngOnDestroy(): void {
         this.cancelAutoSkipCounter();
@@ -86,6 +87,15 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
     }
 
     ngOnInit(): void { }
+
+    public completeProgram() {
+        this._toastService.success("Tebrikler programı tamamladınız.");
+        this._relationStatLogService.insertRelationStatLog({
+            ActionKey: "PROGRAM_COMPLETE_BUTTON_CLICK",
+            ProgramId: this.assignedExercise.ProgramId
+        });
+        this.hideModal();
+    }
 
     public emitTriggeredNextEvent() {
         if (this.hasNext) {
@@ -191,6 +201,13 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
                             ExerciseProgramRelationId: this.assignedExercise.RelationId,
                             ExerciseId: this.assignedExercise.Exercise?.Id
                         }, LogLevel.Important);
+
+                        if (!this.hasNext) {
+                            this._relationStatLogService.insertRelationStatLog({
+                                ActionKey: "PROGRAM_COMPLETED",
+                                ProgramId: this.assignedExercise.ProgramId
+                            }, LogLevel.Important);
+                        }
                     }
                     // Log
                     let timeAs5 = Math.round((this.assignedExercise.AutoSkipTime! - this.autoSkipTimerTimeLimit) / 5);
@@ -265,6 +282,13 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
                 ExerciseProgramRelationId: this.assignedExercise.RelationId,
                 ExerciseId: this.assignedExercise.Exercise?.Id
             }, LogLevel.Important);
+
+            if (!this.hasNext) {
+                this._relationStatLogService.insertRelationStatLog({
+                    ActionKey: "PROGRAM_COMPLETED",
+                    ProgramId: this.assignedExercise.ProgramId
+                }, LogLevel.Important);
+            }
         });
 
         this.videoPlayer.on('timeupdate', (e: any) => {

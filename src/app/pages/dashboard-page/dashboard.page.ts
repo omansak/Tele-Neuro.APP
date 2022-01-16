@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
+import { LogLevel } from "src/app/consts/enums";
 import { NAVIGATION_ROUTE } from "src/app/consts/navigation";
 import { Helper } from "src/app/helpers/helper";
 import { PageInfo } from "src/app/models/base-model";
@@ -35,7 +36,7 @@ export class DashboardPage implements OnInit, AfterViewInit {
         private _router: Router) { }
 
     ngAfterViewInit(): void {
-        this._relationStatLogService.insertRelationStatLog({ ActionKey: "DASHBOARD_OPENED" });
+        this._relationStatLogService.insertRelationStatLog({ ActionKey: "DASHBOARD_OPENED" }, LogLevel.Info);
     }
 
     ngOnInit(): void {
@@ -62,7 +63,7 @@ export class DashboardPage implements OnInit, AfterViewInit {
     public downloadBrochureDocument(e: AssignedBrochureOfUserInfo) {
         if (e?.Document) {
             window.open(e.Document.HostFullPath, "_blank");
-            this._relationStatLogService.insertRelationStatLog({ ActionKey: "BROCHURE_OPENED", ActionArgument: e.BrochureId.toString() });
+            this._relationStatLogService.insertRelationStatLog({ ActionKey: "BROCHURE_OPENED", ActionArgument: e.BrochureId.toString() }, LogLevel.Info);
         }
     }
 
