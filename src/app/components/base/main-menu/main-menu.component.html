@@ -6,7 +6,7 @@
           <span class="group-title" [innerText]="group.Header"></span>
         </li>
         <ng-container *ngFor="let item of group.Children">
-          <ng-container *ngIf="!item.Role || userHasRole(item.Role?.Key)">
+          <ng-container *ngIf="!item.Role || (item.Role?.Key | hasRole)">
             <li class="menu-item" [ngClass]="{'has-sub': item.Children}">
               <a class="item-link" [routerLink]="item.Route" [ngClass]="{'cursor-pointer': item.Children}">
                 <span [attr.class]="item.IconClass"></span>
@@ -25,6 +25,13 @@
           </ng-container>
         </ng-container>
       </ng-container>
+
+      <li class="menu-item">
+        <a class="item-link" (click)="logout()" href="javascript:;">
+          <span class="link-icon icon sli-logout"></span>
+          <span class="link-text">Çıkış Yap</span>
+        </a>
+      </li>
     </ul>
   </nav>
 </div>

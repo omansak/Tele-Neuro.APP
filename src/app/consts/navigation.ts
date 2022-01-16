@@ -76,6 +76,7 @@ export const NAVIGATION_ROUTE = {
         MenuName: "Kategoriler",
         IconClass: "link-icon icon sli-chemistry",
         Route: "categories",
+        Role: UserRoleDefinition.Contributor
     },
     ROUTE_CATEGORY: {
         PageTitle: "Tele-Neuro | %s",

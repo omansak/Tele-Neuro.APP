@@ -13,10 +13,9 @@ export class MainMenuComponent implements OnInit {
 
   constructor(public _authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void { }
-
-  userHasRole(roleKey: string) {
-    return this._authenticationService.userHasRole(roleKey);
+  logout() {
+    this._authenticationService.logout().subscribe()
   }
-
+  
+  ngOnInit(): void { }
 }
