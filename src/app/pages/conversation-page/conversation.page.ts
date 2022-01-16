@@ -104,8 +104,6 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
 
     isAllRead(e: Array<MessageRead>) {
-        console.log(123);
-        
         return !e?.some(i => i.IsRead == false);
     }
 
