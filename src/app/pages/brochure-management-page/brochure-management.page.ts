@@ -108,8 +108,4 @@ export class BrochureManagementPage implements AfterViewInit {
     this.pageInfo.TotalPage = response.Result.PageInfo.TotalPage;
     this.pageInfo.TotalCount = response.Result.PageInfo.TotalCount;
   }
-
-  getDocumentType(value: number): FileType {
-    return ConvertNumberToFileType(value);
-  }
 }
