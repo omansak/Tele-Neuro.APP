@@ -1,5 +1,4 @@
-import { convertActionBinding } from "@angular/compiler/src/compiler_util/expression_converter";
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { Observable, of, Subject, Subscription } from "rxjs";
 import { distinctUntilChanged, tap, switchMap, finalize } from "rxjs/operators";
 import { ONgInputComponent } from "src/app/components/shared/o-ng-input/o-ng-input.component";
@@ -22,7 +21,8 @@ import { UserService } from "src/app/services/user/user-service";
 @Component({
     templateUrl: './conversation.page.html',
     styleUrls: ['./conversation.page.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConversationPage implements OnInit, OnDestroy {
     // New Conversation Publics
@@ -73,7 +73,8 @@ export class ConversationPage implements OnInit, OnDestroy {
         private _conversationService: ConversationService,
         private _toastService: ToastService,
         private _authenticationService: AuthenticationService,
-        private _notificationHubService: NotificationHubService) {
+        private _notificationHubService: NotificationHubService,
+        private _changeDetectionRef: ChangeDetectorRef) {
 
         this.handleNewMessage();
         this.handleConversationRead();
@@ -103,6 +104,8 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
 
     isAllRead(e: Array<MessageRead>) {
+        console.log(123);
+        
         return !e?.some(i => i.IsRead == false);
     }
 
@@ -180,6 +183,7 @@ export class ConversationPage implements OnInit, OnDestroy {
                         }
                         this.hideNewConversationModal();
                         toast.success();
+                        this._changeDetectionRef.detectChanges();
                     }
                 })
         }
@@ -246,6 +250,7 @@ export class ConversationPage implements OnInit, OnDestroy {
                                 this.messageBoxScrollToBottom();
                             }
                         }
+                        this._changeDetectionRef.detectChanges();
                     }
                 )
         }
@@ -263,8 +268,8 @@ export class ConversationPage implements OnInit, OnDestroy {
                     else {
                         this.conversations = [];
                     }
-
                     onComplete();
+                    this._changeDetectionRef.detectChanges();
                 },
                 (err) => {
                     this._toastService.error("Konuşmalar yüklenirken hata oluştu");
@@ -325,7 +330,8 @@ export class ConversationPage implements OnInit, OnDestroy {
                             participant.IsRead = true;
                             participant.UpdateDate = new Date();
                         }
-                    })
+                    });
+                    this._changeDetectionRef.detectChanges();
                 }
             }
         });
@@ -357,6 +363,7 @@ export class ConversationPage implements OnInit, OnDestroy {
         else {
             this.loadUserConversations();
         }
+        this._changeDetectionRef.detectChanges();
     }
 
     private readConversationAllMessages(conversationId: number, forceRead: boolean = false) {
@@ -376,6 +383,7 @@ export class ConversationPage implements OnInit, OnDestroy {
                         });
                     }
                 }
+                this._changeDetectionRef.detectChanges();
             });
         }
     }
