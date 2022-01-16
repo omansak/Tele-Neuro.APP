@@ -5,6 +5,7 @@ export class ExerciseModel implements IBaseModel<ExerciseModel> {
     Id: number;
     Name: string;
     Description: string;
+    Keywords: string;
     IsActive: boolean;
     CreatedDate: Date | string;
     CreatedUser: string;
@@ -16,6 +17,7 @@ export class ExerciseModel implements IBaseModel<ExerciseModel> {
         this.Id = json.id
         this.Name = json.name
         this.Description = json.description
+        this.Keywords = json.keywords
         this.IsActive = json.isActive
         this.CreatedDate = json.createdDate
         this.CreatedUser = json.createdUser

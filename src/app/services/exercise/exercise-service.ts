@@ -28,6 +28,7 @@ export class ExerciseService extends BaseService {
         form.append("Id", (model.Id || 0).toString());
         form.append("Name", model.Name);
         form.append("Description", model.Description);
+        form.append("Keywords", model.Keywords);
         form.append("IsActive", model.IsActive ? "true" : "false");
         if (model.File.IsChanged) {
             form.append("File", model.File.File!);

@@ -1,5 +1,6 @@
 <!-- Add Department Modal -->
-<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" style="overflow:scroll;">
+<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    style="overflow:scroll;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" cardLoader>
             <div class="modal-header">
@@ -8,7 +9,8 @@
             <div class="modal-body">
                 <div class="form-group">
                     <o-ng-file-input #fileElement header="İçerik" [allowedFileTypes]="['image','video']"
-                        [(ngModel)]="editModel.Exercise.File" [validate]="validate.file" [cropperActive]="true" [cropperMaintainAspectRatio]="false">
+                        [(ngModel)]="editModel.Exercise.File" [validate]="validate.file" [cropperActive]="true"
+                        [cropperMaintainAspectRatio]="false">
                     </o-ng-file-input>
                 </div>
                 <div class="form-group">
@@ -21,6 +23,12 @@
                     <o-ng-textarea #descriptionElement header="Açıklama" placeholder="Açıklama" [rows]="3"
                         [resize]="true" [(ngModel)]="editModel.Exercise.Description" [validate]="validate.text">
                     </o-ng-textarea>
+                </div>
+
+                <div class="form-group">
+                    <o-ng-input type="text" header="Arama anahtarları" placeholder="Arama anahtarları"
+                        suffixIcon="icofont-pencil-alt-5" [(ngModel)]="editModel.Exercise.Keywords">
+                    </o-ng-input>
                 </div>
             </div>
 
