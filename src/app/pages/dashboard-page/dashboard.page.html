@@ -46,8 +46,7 @@
                             <div class="col col-7">
                                 <h6 class="mt-0 mb-1">Toplam Sürem</h6>
                                 <div class="count text-primary fs-20">{{userStats?.TotalTimeAs5 ?
-                                    toFormatSeconds(userStats.TotalTimeAs5 * 5)
-                                    : 'N/A'}}</div>
+                                    ((userStats.TotalTimeAs5 * 5) | formatSeconds): 'N/A'}}</div>
                             </div>
                         </div>
                     </div>
@@ -169,7 +168,8 @@
                                 <td>
                                     <div *ngIf="item.Document">
                                         <i class="icofont-download me-2 text-primary"></i>
-                                        <a href="javascript:;" (click)="downloadBrochureDocument(item)">İndir/Görüntüle</a>
+                                        <a href="javascript:;"
+                                            (click)="downloadBrochureDocument(item)">İndir/Görüntüle</a>
                                     </div>
                                 </td>
                             </tr>

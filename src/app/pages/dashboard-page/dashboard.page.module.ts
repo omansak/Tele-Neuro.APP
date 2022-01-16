@@ -11,6 +11,7 @@ import { CategoryService } from 'src/app/services/category/category-service';
 import { ContentService } from 'src/app/services/content/content-service';
 import { StatService } from 'src/app/services/utility/stat-service';
 import { RelationStatLogService } from 'src/app/services/utility/relation-stat-log-service';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { RelationStatLogService } from 'src/app/services/utility/relation-stat-l
         // App
         SharedComponentsModule,
         DirectivesModule,
+        PipesModule,
         CategoryComponentsModule,
     ],
     exports: [],

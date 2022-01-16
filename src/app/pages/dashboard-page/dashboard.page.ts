@@ -59,10 +59,6 @@ export class DashboardPage implements OnInit, AfterViewInit {
         this._router.navigate([NAVIGATION_ROUTE.ROUTE_PROGRAM.Route.replace(':id', e)]);
     }
 
-    public toFormatSeconds(e: number) {
-        return Helper.FormatSeconds(e);
-    }
-
     public downloadBrochureDocument(e: AssignedBrochureOfUserInfo) {
         if (e?.Document) {
             window.open(e.Document.HostFullPath, "_blank");
