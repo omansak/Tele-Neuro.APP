@@ -64,7 +64,6 @@ export class BrochureManagementPage implements AfterViewInit {
             let brochure = this.brochures.find(i => i.Brochure.Id == id);
             if (brochure) {
               brochure.Brochure.IsActive = !brochure.Brochure.IsActive;
-              this._changeDetectionRef.detectChanges();
               toast.success();
             }
             else {
