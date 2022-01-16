@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ConvertNumberToFileType, FileType } from 'src/app/consts/enums';
@@ -10,7 +10,8 @@ import { BrochureService } from 'src/app/services/brochure/brochure-service';
 import { ToastService } from 'src/app/services/common/toastr-service';
 
 @Component({
-  templateUrl: './brochure-management.page.html'
+  templateUrl: './brochure-management.page.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BrochureManagementPage implements AfterViewInit {
   //Publics
@@ -25,7 +26,11 @@ export class BrochureManagementPage implements AfterViewInit {
   // View children
   @ViewChild(CardLoaderDirective)
   public cardLoaderDirective: CardLoaderDirective;
-  constructor(private _brochureService: BrochureService, private _toastService: ToastService, private _router: Router) { }
+  constructor(
+    private _brochureService: BrochureService,
+    private _toastService: ToastService,
+    private _router: Router,
+    private _changeDetectionRef: ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
     this.getBrochures();
@@ -49,6 +54,7 @@ export class BrochureManagementPage implements AfterViewInit {
             this.brochures = new Array<BrochureInfo>();
           }
           this.setPageInfo(this._brochureService.getResponse());
+          this._changeDetectionRef.detectChanges();
         });
   }
 
@@ -107,9 +113,5 @@ export class BrochureManagementPage implements AfterViewInit {
     this.pageInfo.PageSize = response.Result.PageInfo.PageSize;
     this.pageInfo.TotalPage = response.Result.PageInfo.TotalPage;
     this.pageInfo.TotalCount = response.Result.PageInfo.TotalCount;
-  }
-
-  getDocumentType(value: number): FileType {
-    return ConvertNumberToFileType(value);
   }
 }
