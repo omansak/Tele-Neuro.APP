@@ -138,8 +138,8 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.listedUsers = null;
         this.newConversationGroupName = null;
         this.showWewConversation = true;
-
-        setTimeout($(this.modal.nativeElement).modal('show'), 128);
+        this._changeDetectionRef.detectChanges();
+        setTimeout(() => $(this.modal.nativeElement).modal('show'), 128);
     }
 
     setActiveConversation(e: ConversationSummary) {
