@@ -58,7 +58,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="text-nowrap"><strong>{{join(item.Roles)}}</strong></div>
+                                <div class="text-nowrap"><strong>{{(item.Roles | pluck:'Name') | stringJoin}}</strong>
+                                </div>
                             </td>
                             <td>
                                 <div class="text-nowrap "
@@ -71,6 +72,7 @@
                             <td>
                                 <div class="actions">
                                     <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        *ngIf="item.MaxPriorityRole.Key | hasRole:false"
                                         (click)="showUpdateUserInfoModal(item)">
                                         <span class="btn-icon icofont-ui-edit">
                                         </span>

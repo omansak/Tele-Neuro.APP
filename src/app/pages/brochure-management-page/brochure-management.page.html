@@ -59,19 +59,22 @@
                             <td style="width: 25%;">
                                 <div class="actions">
                                     <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        *ngIf="userRoleDefinition.Editor.Key | hasRole"
                                         (click)="showAddBrochureModal(item)">
                                         <span class="btn-icon icofont-ui-edit">
                                         </span>
                                     </button>
                                     <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        *ngIf="userRoleDefinition.Editor.Key | hasRole"
                                         title="Broşür aktiflik durumunu değiştir"
                                         (click)="toggleBrochureStatus(item.Brochure.Id)">
                                         <span class="btn-icon icofont-exchange"></span>
                                     </button>
                                     <button class="btn btn-success btn-sm btn-square rounded-pill"
-                                    title="Kullanıcı Atama" (click)="navigateBrochureAssignedUsers(item.Brochure.Id)">
-                                    <span class="btn-icon icofont-user"></span>
-                                </button>
+                                        title="Kullanıcı Atama"
+                                        (click)="navigateBrochureAssignedUsers(item.Brochure.Id)">
+                                        <span class="btn-icon icofont-user"></span>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -82,7 +85,7 @@
     </div>
 </o-ng-paginated-view>
 
-<div class="add-action-box animate__animated animate__bounce">
+<div class="add-action-box animate__animated animate__bounce" *ngIf="userRoleDefinition.Editor.Key | hasRole">
     <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddBrochureModal()"
         title="Egzersiz Ekle">
         <span class="btn-icon icofont-plus"></span>

@@ -5,7 +5,7 @@ export class Helper {
         }) + currency;
     }
 
-    public static Join(array: Array<string>, separator: string = ''): String {
+    public static Join(array: Array<string>, separator: string = ''): string {
         let stringBuilder: string[] = [];
         array?.forEach(i => {
             if (i) {

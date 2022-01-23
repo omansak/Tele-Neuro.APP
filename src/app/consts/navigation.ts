@@ -19,7 +19,7 @@ export const NAVIGATION_ROUTE = {
         MenuName: "Egzersiz Yönetimi",
         IconClass: "link-icon icon sli-magic-wand",
         Route: "exercise-management",
-        Role: UserRoleDefinition.Editor
+        Role: UserRoleDefinition.Contributor
     },
     ROUTE_BROCHURE_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Broşür Yönetimi",
@@ -27,7 +27,7 @@ export const NAVIGATION_ROUTE = {
         MenuName: "Broşür Yönetimi",
         IconClass: "link-icon icon sli-notebook",
         Route: "brochure-management",
-        Role: UserRoleDefinition.Editor
+        Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM_MANAGEMENT: {
         PageTitle: "Tele-Neuro | Program Yönetimi",

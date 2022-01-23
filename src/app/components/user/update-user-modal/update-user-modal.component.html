@@ -32,8 +32,8 @@
                     </o-ng-input>
                 </div>
                 <div class="form-group">
-                    <o-ng-select #roleSelectElement header="Kullanıcı Rolü" [items]="roles" bindLabel="Name"
-                        bindValue="Key" [multiple]="true" [ngModel]="getSelectedRoles()"
+                    <o-ng-select #roleSelectElement header="Kullanıcı Rolü" [items]="availableAssignRoles" bindLabel="Name"
+                        bindValue="Key" [multiple]="true" [ngModel]="editModel.Roles | pluck : 'Key'"
                         (ngModelChange)="setRoles($event)" [validate]="validate.select">
                     </o-ng-select>
                 </div>

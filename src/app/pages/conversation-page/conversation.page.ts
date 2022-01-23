@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { Observable, of, Subject, Subscription } from "rxjs";
-import { distinctUntilChanged, tap, switchMap, finalize } from "rxjs/operators";
+import { distinctUntilChanged, tap, switchMap, finalize, filter, map } from "rxjs/operators";
 import { ONgInputComponent } from "src/app/components/shared/o-ng-input/o-ng-input.component";
 import { ONgSelectComponent } from "src/app/components/shared/o-ng-select/o-ng-select.component";
+import { ConvertRoleKeyToRoleObject, UserRoleDefinition } from "src/app/consts/defaults";
 import { VALIDATE_SELECT, VALIDATE_TEXT } from "src/app/consts/validate";
 import { GenericBaseFilterModel, FilterType } from "src/app/models/base-filter-model";
 import { ConversationMessage } from "src/app/models/conversation/conversation-message";
@@ -48,7 +49,8 @@ export class ConversationPage implements OnInit, OnDestroy {
     // Privates
     private conversationMessages: Array<{ Id: number, Messages: Array<ConversationMessage>, Cursor: Date | null }> = [];
     private userInfo: AuthUserModel | null;
-    private listedUsers: Array<UserInfo> | never[] | null;
+    private isOnlySubscriber: boolean = false;
+    private listedUsers: Array<UserInfo> | never[] | null | undefined;
 
     // Subscriptions
     private handleNewMessage$: Subscription;
@@ -92,6 +94,10 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.userInfo = this._authenticationService.getUser()
         this.ownerId = this.userInfo!.Id;
         this.loadUserConversations();
+
+        if (this.userInfo && this.userInfo.Roles.map(i => ConvertRoleKeyToRoleObject(i)).reduce(function (prev, current) { return (prev.Priority < current.Priority) ? prev : current }) == UserRoleDefinition.Subscriber) {
+            this.isOnlySubscriber = true
+        }
     }
 
     toggleMenu() {
@@ -288,6 +294,7 @@ export class ConversationPage implements OnInit, OnDestroy {
                     return this._userService.listFilterUsers(model)
                         .pipe(
                             finalize(() => this.newConversationUserInfoSearchLoading = false),
+                            map(i => this.isOnlySubscriber ? i?.filter(j => j.Roles.some(k => k.Priority < UserRoleDefinition.Subscriber.Priority)) ?? null : i),
                             tap((i) => this.listedUsers = i)
                         );
                 }

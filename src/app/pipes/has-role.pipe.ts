@@ -5,7 +5,7 @@ import { AuthenticationService } from '../services/authentication/authentication
 export class HasRolePipe implements PipeTransform {
   constructor(public _authenticationService: AuthenticationService) { }
 
-  transform(role: string): boolean {
-    return this._authenticationService.userHasRole(role);
+  transform(role: string, greaterEqual: boolean = true): boolean {
+    return this._authenticationService.userHasRole(role,greaterEqual);
   }
 }

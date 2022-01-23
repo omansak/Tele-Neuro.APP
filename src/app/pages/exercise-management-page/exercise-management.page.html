@@ -74,11 +74,13 @@
                             <td>
                                 <div class="actions">
                                     <button class="btn btn-warning btn-sm btn-square rounded-pill" title="Güncelle"
+                                        *ngIf="userRoleDefinition.Editor.Key | hasRole"
                                         (click)="showAddExerciseModal(item)">
                                         <span class="btn-icon icofont-ui-edit">
                                         </span>
                                     </button>
                                     <button class="btn btn-info btn-sm btn-square rounded-pill"
+                                        *ngIf="userRoleDefinition.Editor.Key | hasRole"
                                         title="Egzersiz aktiflik durumunu değiştir"
                                         (click)="toggleExerciseStatus(item.Exercise.Id)">
                                         <span class="btn-icon icofont-exchange"></span>
@@ -93,7 +95,7 @@
     </div>
 </o-ng-paginated-view>
 
-<div class="add-action-box animate__animated animate__bounce">
+<div class="add-action-box animate__animated animate__bounce" *ngIf="userRoleDefinition.Editor.Key | hasRole">
     <button class="btn btn-primary btn-lg btn-square rounded-pill" (click)="showAddExerciseModal()"
         title="Egzersiz Ekle">
         <span class="btn-icon icofont-plus"></span>

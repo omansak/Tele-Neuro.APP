@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { UserRoleDefinition } from 'src/app/consts/defaults';
 import { ConvertNumberToFileType, FileType } from 'src/app/consts/enums';
 import { NAVIGATION_ROUTE } from 'src/app/consts/navigation';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
@@ -22,6 +23,7 @@ export class BrochureManagementPage implements AfterViewInit {
   };
   public pageInfo: PageInfo = new PageInfo(1, 10);
   public fileType = FileType;
+  public userRoleDefinition = UserRoleDefinition
   // View children
   @ViewChild(CardLoaderDirective)
   public cardLoaderDirective: CardLoaderDirective;

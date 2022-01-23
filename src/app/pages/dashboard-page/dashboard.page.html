@@ -1,75 +1,28 @@
-<div class="card">
-    <div class="card-header">
-        Istatistiklerim
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col col-12 col-md-6 col-xl-3">
-                <div class="card animated fadeInUp delay-01s bg-light mb-0">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col col-5">
-                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-first-aid-alt"></div>
-                            </div>
-                            <div class="col col-7">
-                                <h6 class="mt-0 mb-1">Programlarım</h6>
-                                <div class="count text-primary fs-20">{{userStats?.TotalPrograms ?? 'N/A'}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-12 col-md-6 d-flex align-items-center">
+        <div class="card text-info border-info">
+            <div class="card-header text-center">
+                <img src="/assets/img/logo_mavi.png" alt="" width="130" height="33" class="logo-img">
             </div>
-            <div class="col col-12 col-md-6 col-xl-3">
-                <div class="card animated fadeInUp delay-02s bg-light mb-0">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col col-5">
-                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-wheelchair"></div>
-                            </div>
-                            <div class="col col-7">
-                                <h6 class="mt-0 mb-1">Tamamladıklarım</h6>
-                                <div class="count text-primary fs-20">{{userStats?.TotalCompletedExercises ?? 'N/A'}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-12 col-md-6 col-xl-3">
-                <div class="card animated fadeInUp delay-03s bg-light mb-0">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col col-5">
-                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-blood"></div>
-                            </div>
-
-                            <div class="col col-7">
-                                <h6 class="mt-0 mb-1">Toplam Sürem</h6>
-                                <div class="count text-primary fs-20">{{userStats?.TotalTimeAs5 ?
-                                    ((userStats.TotalTimeAs5 * 5) | formatSeconds): 'N/A'}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-12 col-md-6 col-xl-3">
-                <div class="card animated fadeInUp delay-04s bg-light mb-0">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col col-5">
-                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-dollar-true"></div>
-                            </div>
-                            <div class="col col-7">
-                                <h6 class="mt-0 mb-1 text-nowrap">Liderlik Puanım</h6>
-                                <div class="count text-primary fs-20">N/A</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+                TÜBİTAK tarafından desteklenmekte olan Tele-NöroRehabilitasyon Sisteminin Geliştirilmesi ve Uygulanması:
+                Sağlıkta Dijital Dönüşüm Örneği (Proje No:120S843) başlıklı proje kapsamında hazırlanmıştır.
             </div>
         </div>
     </div>
+
+    <div class="col-12 col-md-6">
+        <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube-nocookie.com/embed/0ojBTydKKrI" title="Hasta Bilgilendirme Videosu"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+
+    </div>
 </div>
+
+
 
 <div class="card">
     <div class="card-header">
@@ -83,15 +36,15 @@
                     <thead>
                         <tr>
                             <th scope="col">Program Adı</th>
-                            <th scope="col">Kategori</th>
+                            <!-- <th scope="col">Kategori</th> -->
                             <th scope="col">Atama Tarihi</th>
-                            <th scope="col">Durum</th>
+                            <!-- <th scope="col">Durum</th> -->
                             <th scope="col">#</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngIf="!selfAssignedPrograms;else programTable">
-                            <td colspan="5">
+                            <td colspan="3">
                                 <div class="alert alert-danger outline with-before-icon with-after-icon" role="alert">
                                     <div class="alert-icon"><i class="icofont-warning"></i></div>
                                     <div class="alert-content">Herhangi bir atanmış program bulunamadı</div>
@@ -104,15 +57,15 @@
                                 <td>
                                     <strong>{{item.ProgramName}}</strong>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div class="text-muted text-nowrap">{{item.CategoryName}}</div>
-                                </td>
+                                </td> -->
                                 <td>
                                     <div class="text-muted text-nowrap">{{item.AssignDate | date: 'dd/MM/yyyy'}}</div>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <strong>{{item.CompletedExercisesCount}} / {{item.ExerciseCount}}</strong>
-                                </td>
+                                </td> -->
                                 <td>
                                     <div class="actions">
                                         <button class="btn btn-warning btn-sm btn-square rounded-pill"
@@ -179,5 +132,63 @@
                 </table>
             </div>
         </o-ng-paginated-view>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Istatistiklerim
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col col-12 col-md-6 col-xl-4">
+                <div class="card animated fadeInUp delay-01s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-page"></div>
+                            </div>
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1">Programlarım</h6>
+                                <div class="count text-primary fs-20">{{userStats?.TotalPrograms ?? 'N/A'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6 col-xl-4">
+                <div class="card animated fadeInUp delay-02s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-award"></div>
+                            </div>
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1">Tamamladıklarım</h6>
+                                <div class="count text-primary fs-20">{{userStats?.TotalCompletedExercises ?? 'N/A'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6 col-xl-4">
+                <div class="card animated fadeInUp delay-03s bg-light mb-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col col-5">
+                                <div class="icon p-0 fs-48 text-primary opacity-50 icofont-sand-clock"></div>
+                            </div>
+
+                            <div class="col col-7">
+                                <h6 class="mt-0 mb-1">Toplam Sürem</h6>
+                                <div class="count text-primary fs-20">{{userStats?.TotalTimeAs5 ?
+                                    ((userStats.TotalTimeAs5 * 5) | formatSeconds): 'N/A'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

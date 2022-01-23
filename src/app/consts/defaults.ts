@@ -27,22 +27,27 @@ export const MIN_LOG_LEVEL: LogLevel = LogLevel.Access
 export const UserRoleDefinition = {
     Administrator: {
         Key: "ADMIN",
+        Name: "Yönetici",
         Priority: 0
     },
     Editor: {
         Key: "EDITOR",
+        Name: "Editör",
         Priority: 1
     },
     Contributor: {
         Key: "CONTRIBUTOR",
+        Name: "Fizyoterapist",
         Priority: 2
     },
     Subscriber: {
         Key: "SUBSCRIBER",
+        Name: "Hasta",
         Priority: 3
     },
     NonUser: {
         Key: "NON-USER",
+        Name: "NonUser",
         Priority: 99
     },
 }

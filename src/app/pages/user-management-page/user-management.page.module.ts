@@ -7,6 +7,7 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
 import { ROUTE, NAVIGATION_ROUTE } from 'src/app/consts/navigation';
 import { UserManagementPage } from './user-management.page';
 import { UpdateUserModalComponent } from 'src/app/components/user/update-user-modal/update-user-modalcomponent';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 @NgModule({
   imports: [
     // Angular
@@ -22,7 +23,8 @@ import { UpdateUserModalComponent } from 'src/app/components/user/update-user-mo
     ]),
     // App
     SharedComponentsModule,
-    DirectivesModule
+    DirectivesModule,
+    PipesModule
   ],
   exports: [],
   declarations: [UserManagementPage, UpdateUserModalComponent],

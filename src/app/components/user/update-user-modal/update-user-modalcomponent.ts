@@ -33,11 +33,13 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
   public showChange = new EventEmitter();
   // Public's
   public editModel: UserInfo;
-  public roles: Array<UserRole>;
+  public availableAssignRoles: Array<UserRole>;
   public validate = {
     text: VALIDATE_TEXT,
     select: VALIDATE_SELECT
   }
+  // Private's
+  private userRoleDefinitions: Array<UserRole>;
   // View children
   @ViewChild('nameElement', { static: true })
   public nameElement: ONgTextareaComponent;
@@ -68,9 +70,11 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
       this.userInfo.User.IsActive = true;
       this.userInfo.UserProfile = new UserProfileModel();
     }
-    
+
+
     this.editModel = Helper.Clone(this.userInfo);
     this.getRoles();
+    this.initUserRolesDefinition();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -120,12 +124,8 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
       this.roleSelectElement.check();
   }
 
-  getSelectedRoles() {
-    return this.editModel.Roles;
-  }
-
   setRoles(e: Array<string>) {
-    this.editModel.Roles = e;
+    this.editModel.Roles = this.userRoleDefinitions?.filter(i => e.some(j => i.Key == j)) ?? [];
   }
 
   save() {
@@ -138,7 +138,7 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
           Email: this.editModel.User.Email,
           Name: this.editModel.UserProfile.Name,
           Surname: this.editModel.UserProfile.Surname,
-          RoleKey: this.editModel.Roles,
+          RoleKey: this.editModel.Roles.map(i => i.Key),
           Password: this.editModel.User.Password
         })
         .pipe(finalize(() => {
@@ -160,8 +160,16 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
   private getRoles() {
     this._utilityService.listRoleDefinitions().subscribe(i => {
       if (i) {
-        this.roles = i.filter(j => j.Priority > Math.min(...(i.filter(j => this._authenticationService.getUser()!.Roles.includes(j.Key)).map(j => j.Priority))));
+        this.availableAssignRoles = i.filter(j => j.Priority > Math.min(...(i.filter(j => this._authenticationService.getUser()!.Roles.includes(j.Key)).map(j => j.Priority))));
       }
     });
+  }
+
+  private initUserRolesDefinition() {
+    this._utilityService.listRoleDefinitions().subscribe(i => {
+      if (i) {
+        this.userRoleDefinitions = i
+      }
+    })
   }
 }

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import { UserRoleDefinition } from 'src/app/consts/defaults';
 import { CardLoaderDirective } from 'src/app/directives/card-loader.directive';
-import { Helper } from 'src/app/helpers/helper';
 import { GenericBaseFilterModel, OrderType } from 'src/app/models/base-filter-model';
 import { BaseResponse, PageInfo } from 'src/app/models/base-model';
 import { UserInfo } from 'src/app/models/user/user-info';
@@ -18,6 +18,7 @@ export class UserManagementPage implements AfterViewInit {
   public users: Array<UserInfo>;
   public showStatusUpdateUserInfoModal: boolean = false;
   public forEditUserInfo: UserInfo | undefined;
+  public staticUserRoleDefinition = UserRoleDefinition;
   // View children
   @ViewChild(CardLoaderDirective)
   public cardLoaderDirective: CardLoaderDirective;
@@ -35,7 +36,7 @@ export class UserManagementPage implements AfterViewInit {
       .setPaging(this.pageInfo.PageSize, (this.pageInfo.Page - 1) * this.pageInfo.PageSize)
       .addSort(i => i.User.CreatedDate, OrderType.Descending)
       .toBaseFilterModel();
-      
+
     this._userService.listFilterUsers(model)
       .pipe(finalize(() => this.cardLoaderDirective.stop()))
       .subscribe(i => {
@@ -44,10 +45,6 @@ export class UserManagementPage implements AfterViewInit {
         }
         this.setPageInfo(this._userService.getResponse());
       });
-  }
-
-  join(arr: string[]) {
-    return Helper.Join(arr, ",");
   }
 
   onUserInfoUpdated(val: any) {
@@ -81,6 +78,7 @@ export class UserManagementPage implements AfterViewInit {
         });
     }
   }
+
   showUpdateUserInfoModal(e?: any) {
     this.forEditUserInfo = e;
     this.showStatusUpdateUserInfoModal = true;

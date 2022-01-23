@@ -100,7 +100,7 @@ export class AuthenticationService extends BaseService {
         this.stopTokenTimer();
     }
 
-    userHasRole(value: string): boolean {
+    userHasRole(value: string, greaterEqual: boolean = true): boolean {
         if (value && this.isLogged()) {
             let userMaxRole = UserRoleDefinition.NonUser;
             let requirementRole = ConvertRoleKeyToRoleObject(value);
@@ -110,7 +110,7 @@ export class AuthenticationService extends BaseService {
                     userMaxRole = role;
                 }
             });
-            return requirementRole.Priority >= userMaxRole.Priority;
+            return greaterEqual ? requirementRole.Priority >= userMaxRole.Priority : requirementRole.Priority > userMaxRole.Priority;
         }
         return true;
     }
