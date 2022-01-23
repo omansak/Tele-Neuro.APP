@@ -10,7 +10,6 @@ export class UserInfo implements IBaseModel<UserInfo> {
 
     // NotMapped
     MaxPriorityRole: UserRole;
-    MinPriorityRole: UserRole;
     mapModel(json: any): UserInfo {
         if (json.user) {
             this.User = new UserModel().mapModel(json.user);
@@ -20,10 +19,14 @@ export class UserInfo implements IBaseModel<UserInfo> {
         }
         if (json.roles) {
             this.Roles = (<Array<any>>json.roles).map(i => new UserRole().mapModel(i));
-            this.MaxPriorityRole = this.Roles.reduce(function (prev, current) {
-                return (prev.Priority < current.Priority) ? prev : current
-            });
+            this.setMaxPriorityRole();
         }
         return this;
+    }
+
+    setMaxPriorityRole() {
+        this.MaxPriorityRole = this.Roles.reduce(function (prev, current) {
+            return (prev.Priority < current.Priority) ? prev : current
+        });
     }
 }

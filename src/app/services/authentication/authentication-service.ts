@@ -48,8 +48,8 @@ export class AuthenticationService extends BaseService {
         return super.httpPostValue<boolean>(`${environment.request.endPoints.login.logout}`).pipe(
             tap(i => {
                 if (i) {
-                    this.clear();
                     this.router.navigate([NAVIGATION_ROUTE.ROUTE_LOGIN.Route]);
+                    this.clear();
                 }
             })
         );

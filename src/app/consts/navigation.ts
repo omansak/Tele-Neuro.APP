@@ -6,7 +6,7 @@ export const ROUTE_ROOT = `/`;
 
 export const NAVIGATION_ROUTE = {
     ROUTE_CATEGORY_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Kategori Yönetimi",
+        PageTitle: "Tele-NöroRehab | Kategori Yönetimi",
         PageHeader: "Kategori Yönetimi",
         MenuName: "Kategori Yönetimi",
         IconClass: "link-icon icon sli-book-open",
@@ -14,7 +14,7 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Editor
     },
     ROUTE_EXERCISE_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Egzersiz Yönetimi",
+        PageTitle: "Tele-NöroRehab | Egzersiz Yönetimi",
         PageHeader: "Egzersiz Yönetimi",
         MenuName: "Egzersiz Yönetimi",
         IconClass: "link-icon icon sli-magic-wand",
@@ -22,7 +22,7 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_BROCHURE_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Broşür Yönetimi",
+        PageTitle: "Tele-NöroRehab | Broşür Yönetimi",
         PageHeader: "Broşür Yönetimi",
         MenuName: "Broşür Yönetimi",
         IconClass: "link-icon icon sli-notebook",
@@ -30,7 +30,7 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Program Yönetimi",
+        PageTitle: "Tele-NöroRehab | Program Yönetimi",
         PageHeader: "Program Yönetimi",
         MenuName: "Program Yönetimi",
         IconClass: "link-icon icon sli-grid",
@@ -38,21 +38,21 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM_USER_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Program Kullanıcı Yönetimi",
+        PageTitle: "Tele-NöroRehab | Program Kullanıcı Yönetimi",
         PageHeader: "Program Kullanıcı Yönetimi",
         MenuName: "Program Kullanıcı Yönetimi",
         Route: "program-user-management/:id",
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_BROCHURE_USER_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Broşür Kullanıcı Yönetimi",
+        PageTitle: "Tele-NöroRehab | Broşür Kullanıcı Yönetimi",
         PageHeader: "Broşür Kullanıcı Yönetimi",
         MenuName: "Broşür Kullanıcı Yönetimi",
         Route: "brochure-user-management/:id",
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_USER_MANAGEMENT: {
-        PageTitle: "Tele-Neuro | Kullanıcı Yönetimi",
+        PageTitle: "Tele-NöroRehab | Kullanıcı Yönetimi",
         PageHeader: "Kullanıcı Yönetimi",
         MenuName: "Kullanıcı Yönetimi",
         IconClass: "link-icon icon sli-user",
@@ -60,7 +60,7 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM: {
-        PageTitle: "Tele-Neuro | %s",
+        PageTitle: "Tele-NöroRehab | %s",
         PageHeader: "Program İçeriği",
         Route: "program/:id",
     },
@@ -71,7 +71,7 @@ export const NAVIGATION_ROUTE = {
         Route: "conversation",
     },
     ROUTE_CATEGORIES: {
-        PageTitle: "Tele-Neuro | Kategoriler",
+        PageTitle: "Tele-NöroRehab | Kategoriler",
         PageHeader: "Kategoriler",
         MenuName: "Kategoriler",
         IconClass: "link-icon icon sli-chemistry",
@@ -79,17 +79,17 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_CATEGORY: {
-        PageTitle: "Tele-Neuro | %s",
+        PageTitle: "Tele-NöroRehab | %s",
         PageHeader: "%s",
         Route: "category-detail/:id",
     },
     ROUTE_LOGIN: {
-        PageTitle: "Tele-Neuro | Giriş",
-        PageHeader: "Tele-Neuro | Giriş",
+        PageTitle: "Tele-NöroRehab | Giriş",
+        PageHeader: "Tele-NöroRehab | Giriş",
         Route: "login",
     },
     ROUTE_DASHBOARD: {
-        PageTitle: "Tele-Neuro | Dashboard",
+        PageTitle: "Tele-NöroRehab | Dashboard",
         MenuName: "Dashboard",
         IconClass: "link-icon icon sli-home",
         Route: ""
@@ -99,7 +99,7 @@ export const NAVIGATION_ROUTE = {
 
 export const NAVIGATION_MENU = [
     {
-        Header: "Tele-Neuro",
+        Header: "Tele-NöroRehab",
         Children: [
             NAVIGATION_ROUTE.ROUTE_DASHBOARD,
             NAVIGATION_ROUTE.ROUTE_CATEGORIES,
@@ -124,14 +124,14 @@ export const NAVIGATION_MENU = [
     //             IconClass: "link-icon icofont-stethoscope-alt",
     //             Children: [
     //                 {
-    //                     PageTitle: "Tele-Neuro | Appointments",
+    //                     PageTitle: "Tele-NöroRehab | Appointments",
     //                     PageHeader: "Appointments",
     //                     MenuName: "Appointments",
     //                     IconClass: "link-icon icofont-stethoscope-alt",
     //                     Route: "#"
     //                 },
     //                 {
-    //                     PageTitle: "Tele-Neuro | Appointments",
+    //                     PageTitle: "Tele-NöroRehab | Appointments",
     //                     PageHeader: "Appointments",
     //                     MenuName: "Appointments",
     //                     IconClass: "link-icon icofont-stethoscope-alt",

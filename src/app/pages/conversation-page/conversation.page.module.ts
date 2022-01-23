@@ -9,7 +9,6 @@ import { ConversationPage } from './conversation.page';
 import { SharedComponentsModule } from 'src/app/components/shared/shared.components.module';
 import { UserService } from 'src/app/services/user/user-service';
 import { ConversationService } from 'src/app/services/conversation/conversation-service';
-import { AuthenticationService } from 'src/app/services/authentication/authentication-service';
 @NgModule({
     imports: [
         // Angular
@@ -30,6 +29,6 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
     ],
     exports: [],
     declarations: [ConversationPage],
-    providers: [UserService, ConversationService, AuthenticationService],
+    providers: [UserService, ConversationService],
 })
 export class ConversationPageModule { }

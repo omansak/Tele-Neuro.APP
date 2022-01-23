@@ -17,7 +17,8 @@
                         </ng-template>
                         <ng-template #optionTemplate let-item="item" let-index="index">
                             <span class="ng-option-label" ng-reflect-escape="true">
-                                <b>{{item.UserProfile.Name}} {{item.UserProfile.Surname}}</b>
+                                <b>{{item.UserProfile.Name}} {{item.UserProfile.Surname}} ( {{(item.Roles |
+                                    pluck:'Name') | stringJoin}} )</b>
                             </span>
                             <br />
                             <span class="ng-option-label text-muted" ng-reflect-escape="true">{{item.User.Email}}</span>

@@ -22,8 +22,7 @@ import { UserService } from "src/app/services/user/user-service";
 @Component({
     templateUrl: './conversation.page.html',
     styleUrls: ['./conversation.page.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    encapsulation: ViewEncapsulation.None
 })
 export class ConversationPage implements OnInit, OnDestroy {
     // New Conversation Publics
@@ -93,11 +92,12 @@ export class ConversationPage implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.userInfo = this._authenticationService.getUser()
         this.ownerId = this.userInfo!.Id;
-        this.loadUserConversations();
-
+        
         if (this.userInfo && this.userInfo.Roles.map(i => ConvertRoleKeyToRoleObject(i)).reduce(function (prev, current) { return (prev.Priority < current.Priority) ? prev : current }) == UserRoleDefinition.Subscriber) {
             this.isOnlySubscriber = true
         }
+
+        this.loadUserConversations();
     }
 
     toggleMenu() {
@@ -298,8 +298,7 @@ export class ConversationPage implements OnInit, OnDestroy {
                             tap((i) => this.listedUsers = i)
                         );
                 }
-                return of([])
-                    .pipe(finalize(() => this.newConversationUserInfoSearchLoading = false));
+                return of([]).pipe(finalize(() => this.newConversationUserInfoSearchLoading = false));
             })
         );
     }

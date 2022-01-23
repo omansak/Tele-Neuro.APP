@@ -126,6 +126,7 @@ export class UpdateUserModalComponent implements OnChanges, OnInit, AfterViewIni
 
   setRoles(e: Array<string>) {
     this.editModel.Roles = this.userRoleDefinitions?.filter(i => e.some(j => i.Key == j)) ?? [];
+    this.editModel.setMaxPriorityRole();
   }
 
   save() {

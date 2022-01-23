@@ -7,6 +7,7 @@ import { UpdateProgramModalComponent } from './update-program-modal/update-progr
 import { UpdateExerciseOfProgramModalComponent } from './update-exercise-of-program-modal/update-exercise-of-program-modal.component';
 import { AssignedExercisesModal } from './assigned-exercises-modal/assigned-exercises-modal.component';
 import { AssignUserModal } from './assign-user-modal/assign-user-modal.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { AssignUserModal } from './assign-user-modal/assign-user-modal.component
 
         //App
         SharedComponentsModule,
-        DirectivesModule
+        DirectivesModule,
+        PipesModule
     ],
     exports: [UpdateProgramModalComponent, UpdateExerciseOfProgramModalComponent, AssignedExercisesModal, AssignUserModal],
     declarations: [UpdateProgramModalComponent, UpdateExerciseOfProgramModalComponent, AssignedExercisesModal, AssignUserModal]
