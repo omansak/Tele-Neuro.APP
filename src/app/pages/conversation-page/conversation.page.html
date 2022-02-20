@@ -23,7 +23,7 @@
                         [ngClass]="{'has-unread': item.HasUnread,'active': item?.ConversationId == this.activeConversation?.ConversationId}"
                         href="javascript:;" *ngFor="let item of conversations">
                         <div class="float-start">
-                            <img src="{{item.IsGroup ? '/assets/img/pngegg.png' : '/assets/img/pngegg-4.png'}}"
+                            <img src="{{item.IsGroup ? 'assets/img/pngegg.png' : 'assets/img/pngegg-4.png'}}"
                                 style="opacity: 0.6;" class="img-avatar">
                         </div>
                         <div class="media-body">
@@ -44,7 +44,7 @@
 
             <div class="float-start d-none d-md-block ms-4" *ngIf="!!this.activeConversation?.ConversationId">
                 <ng-container *ngLet="this.activeConversation as conversation">
-                    <img src="{{conversation.IsGroup ? '/assets/img/pngegg.png' : '/assets/img/pngegg-4.png'}}"
+                    <img src="{{conversation.IsGroup ? 'assets/img/pngegg.png' : 'assets/img/pngegg-4.png'}}"
                         style="opacity: 0.6;" alt="" class="img-avatar m-r-10">
                     <div class="lv-avatar float-start">
                     </div>
@@ -124,7 +124,7 @@
         <ng-template #noActiveConversation>
             <div class="ms-body-empty">
                 <div class="text-center">
-                    <img src="/assets/img/66934-tumbleweed-rolling.gif" style="max-height: 280px;"
+                    <img src="assets/img/66934-tumbleweed-rolling.gif" style="max-height: 280px;"
                         class="justify-content-center" />
                 </div>
             </div>
