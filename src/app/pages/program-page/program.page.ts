@@ -151,7 +151,7 @@ export class ProgramPage implements AfterViewInit {
                                 if (ConvertNumberToFileType(j.ExerciseDocument?.Type) == FileType.Image)
                                     j.ExerciseDocument.Thumbnail = `${j.ExerciseDocument.HostFullPath}?height = 300`;
                                 if (ConvertNumberToFileType(j.ExerciseDocument?.Type) == FileType.Video)
-                                    j.ExerciseDocument.Thumbnail = (await this._vimeoService.getVimeoVideoThumbnail(j?.ExerciseDocument?.Guid)).thumbnail_medium;
+                                    j.ExerciseDocument.Thumbnail = (await this._vimeoService.getVimeoVideoThumbnail(j?.ExerciseDocument?.Guid)).thumbnail_url;
                             }
                             return j;
                         });

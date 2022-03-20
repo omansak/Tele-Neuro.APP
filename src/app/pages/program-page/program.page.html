@@ -1,138 +1,133 @@
 <div class="container" cardLoader>
-    <div class="light" *ngIf="programInfo">
-        <div>
-            <div></div>
-            <article class="postcard light blue">
-                <div class="postcard__img_link">
-                    <img class="postcard__img" src="{{programInfo?.CategoryDocument?.HostFullPath}}?height=175"
-                        [attr.alt]="programInfo?.Category?.Name" />
-                </div>
-                <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue">
-                        <a href="javascript:;" [innerText]="programInfo?.Program?.Name"></a>
-                    </h1>
-                    <div class="postcard__subtitle small">
-                        <span [innerText]="programInfo?.Category?.Name">
-                        </span>
-                    </div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt" [innerText]="programInfo?.Program?.Description"></div>
-                    <div class="row mt-2">
-                        <div class="col-12 col-sm-6">
-                            <div class="elements-list">
-                                <span class="badge badge-secondary badge-sm badge-pill">
-                                    <span class="icofont-clock-time me-2" style="font-size: 14px;"></span>
-                                    <b>Ortalama Süre</b>
-                                    <span class="ms-2 my-1 badge badge-light badge-sm bg-white"
-                                        style="border-color: white;"> <b
-                                            [innerText]="formatSeconds(totalDuration)"></b></span>
-                                </span>
-                                <span class="badge badge-secondary badge-sm badge-pill">
-                                    <span class="icofont-racing-flag-alt me-2" style="font-size: 14px;"></span>
-                                    <b>Toplam Egzersiz</b>
-                                    <span class="ms-2 my-1 badge badge-light badge-sm bg-white"
-                                        style="border-color: white;"> <b
-                                            [innerText]="assignedExercises?.length"></b></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 d-flex flex-row-reverse mt-2 mt-sm-0">
-                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                <button class="btn btn-outline-primary" (click)="startExerciseShower()">
-                                    <ng-container *ngLet="firstCompletedIndex as idx;">
-                                        <ng-container *ngIf="idx > -1; else elseIdx">
-                                            <ng-template *ngIf="isAllExerciseCompleted; then thenEvery else elseEvery">
-                                            </ng-template>
-                                            <ng-template #thenEvery>Baştan Başlat</ng-template>
-                                            <ng-template #elseEvery>Devam</ng-template>
-                                        </ng-container>
-                                        <ng-template #elseIdx>
-                                            Başlat
-                                        </ng-template>
-                                    </ng-container>
-                                    <span class="btn-icon icofont-play ms-2"></span>
-                                </button>
-                                <div class="btn-group" role="group">
-                                    <button id="btnGroupDrop" type="button"
-                                        class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Baştan Başla</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
+  <div class="light" *ngIf="programInfo">
+    <div>
+      <div></div>
+      <article class="postcard light blue">
+        <div class="postcard__img_link">
+          <img class="postcard__img" src="{{programInfo?.CategoryDocument?.HostFullPath}}?height=175"
+            [attr.alt]="programInfo?.Category?.Name" />
         </div>
-    </div>
-    <div class="row" *ngIf="assignedExercises">
-        <div class="col-12">
-            <div class="card mb-0">
-                <div class="card-body">
-                    <div class="v-timeline">
-                        <div class="line"></div>
-                        <div class="timeline-box">
-                            <div class="box-label">
-                                <span class="badge badge-success">Başlangıç</span>
-                            </div>
-                            <div class="box-items" *ngLet='["red", "green", "yellow", "blue"] as colors'>
-                                <div class="item" *ngFor="let item of assignedExercises;let idx = index">
-                                    <div class="icon-block">
-                                        <div class="item-icon"
-                                            [ngClass]="{'bg-secondary': item.IsCompleted,'bg-info': !item.IsCompleted}">
-                                            {{idx + 1}}</div>
-                                    </div>
-                                    <article class="postcard light {{colors[idx % 4]}}">
-                                        <a class="postcard__img_link" *ngIf="item.ExerciseDocument.Thumbnail" href="javascript:;" (click)="startExerciseShower(item)">
-                                            <img class="postcard__img" *oneTimeBind
-                                                [src]="item.ExerciseDocument.Thumbnail | safeUrl" />
-                                        </a>
-                                        <div class="postcard__text t-dark p-4">
-                                            <h1 class="postcard__title {{colors[idx % 4]}}">
-                                                <a href="javscript:;" [innerText]="item.Exercise?.Name"></a>
-                                            </h1>
-                                            <div class="postcard__bar"></div>
-                                            <div class="postcard__preview-txt" [innerText]="item.Exercise?.Description">
-                                            </div>
-                                            <div class="elements-list mt-2">
-                                                <span class="badge badge-secondary badge-sm badge-pill">
-                                                    <span class="icofont-ui-file me-2" style="font-size: 14px;"></span>
-                                                    <b>İçerik</b>
-                                                    <span class="ms-2 my-1 badge badge-light badge-sm bg-white"
-                                                        style="border-color: white;"> <b *oneTimeBind
-                                                            [innerText]="getContentTypeName(item.ExerciseDocument)"></b>
-                                                    </span>
-                                                </span>
-                                                <span class="badge badge-secondary badge-sm badge-pill"
-                                                    *ngFor="let property of item.Properties">
-                                                    <span class="icofont-label me-2" style="font-size: 14px;"></span>
-                                                    <b>{{property.Definition?.Name}}</b>
-                                                    <span class="ms-2 my-1 badge badge-light badge-sm bg-white"
-                                                        style="border-color: white;"> <b
-                                                            [innerText]="property.Value"></b></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="box-label">
-                                <span class="badge badge-danger">Bitiş</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="postcard__text t-dark">
+          <h1 class="postcard__title blue">
+            <a href="javascript:;" [innerText]="programInfo?.Program?.Name"></a>
+          </h1>
+          <div class="postcard__subtitle small">
+            <span [innerText]="programInfo?.Category?.Name">
+            </span>
+          </div>
+          <div class="postcard__bar"></div>
+          <div class="postcard__preview-txt" [innerText]="programInfo?.Program?.Description"></div>
+          <div class="row mt-2">
+            <div class="col-12 col-sm-6">
+              <div class="elements-list">
+                <span class="badge badge-secondary badge-sm badge-pill">
+                  <span class="icofont-clock-time me-2" style="font-size: 14px;"></span>
+                  <b>Ortalama Süre</b>
+                  <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
+                      [innerText]="formatSeconds(totalDuration)"></b></span>
+                </span>
+                <span class="badge badge-secondary badge-sm badge-pill">
+                  <span class="icofont-racing-flag-alt me-2" style="font-size: 14px;"></span>
+                  <b>Toplam Egzersiz</b>
+                  <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
+                      [innerText]="assignedExercises?.length"></b></span>
+                </span>
+              </div>
             </div>
+            <div class="col-12 col-sm-6 d-flex flex-row-reverse mt-2 mt-sm-0">
+              <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-outline-primary" (click)="startExerciseShower()">
+                  <ng-container *ngLet="firstCompletedIndex as idx;">
+                    <ng-container *ngIf="idx > -1; else elseIdx">
+                      <ng-template *ngIf="isAllExerciseCompleted; then thenEvery else elseEvery">
+                      </ng-template>
+                      <ng-template #thenEvery>Baştan Başlat</ng-template>
+                      <ng-template #elseEvery>Devam</ng-template>
+                    </ng-container>
+                    <ng-template #elseIdx>
+                      Başlat
+                    </ng-template>
+                  </ng-container>
+                  <span class="btn-icon icofont-play ms-2"></span>
+                </button>
+                <div class="btn-group" role="group">
+                  <button id="btnGroupDrop" type="button" class="btn btn-outline-primary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="btnGroupDrop">
+                    <li>
+                      <a class="dropdown-item" href="#">Baştan Başla</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </article>
     </div>
+  </div>
+  <div class="row" *ngIf="assignedExercises">
+    <div class="col-12">
+      <div class="card mb-0">
+        <div class="card-body">
+          <div class="v-timeline">
+            <div class="line"></div>
+            <div class="timeline-box">
+              <div class="box-label">
+                <span class="badge badge-success">Başlangıç</span>
+              </div>
+              <div class="box-items" *ngLet='["red", "green", "yellow", "blue"] as colors'>
+                <div class="item" *ngFor="let item of assignedExercises;let idx = index">
+                  <div class="icon-block">
+                    <div class="item-icon" [ngClass]="{'bg-secondary': item.IsCompleted,'bg-info': !item.IsCompleted}">
+                      {{idx + 1}}</div>
+                  </div>
+                  <article class="postcard light {{colors[idx % 4]}}">
+                    <a class="postcard__img_link" *ngIf="item.ExerciseDocument.Thumbnail" href="javascript:;"
+                      (click)="startExerciseShower(item)">
+                      <img class="postcard__img" [src]="item.ExerciseDocument.Thumbnail | safeUrl" />
+                    </a>
+                    <div class="postcard__text t-dark p-4">
+                      <h1 class="postcard__title {{colors[idx % 4]}}">
+                        <a href="javscript:;" [innerText]="item.Exercise?.Name"></a>
+                      </h1>
+                      <div class="postcard__bar"></div>
+                      <div class="postcard__preview-txt" [innerText]="item.Exercise?.Description">
+                      </div>
+                      <div class="elements-list mt-2">
+                        <span class="badge badge-secondary badge-sm badge-pill">
+                          <span class="icofont-ui-file me-2" style="font-size: 14px;"></span>
+                          <b>İçerik</b>
+                          <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;">
+                            <b *oneTimeBind [innerText]="getContentTypeName(item.ExerciseDocument)"></b>
+                          </span>
+                        </span>
+                        <span class="badge badge-secondary badge-sm badge-pill"
+                          *ngFor="let property of item.Properties">
+                          <span class="icofont-label me-2" style="font-size: 14px;"></span>
+                          <b>{{property.Definition?.Name}}</b>
+                          <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;">
+                            <b [innerText]="property.Value"></b>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+              <div class="box-label">
+                <span class="badge badge-danger">Bitiş</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <o-exercise-shower-modal *ngIf="showStatusExerciseShowerModal" [(show)]="showStatusExerciseShowerModal"
-    [assignedExercise]="selectedAssignedExercise" [hasPrev]="hasPrevExerciseForShower"
-    [hasNext]="hasNextExerciseForShower" (triggeredNext)="onTriggeredNext()" (triggeredPrev)="onTriggeredPrev()">
+  [assignedExercise]="selectedAssignedExercise" [hasPrev]="hasPrevExerciseForShower"
+  [hasNext]="hasNextExerciseForShower" (triggeredNext)="onTriggeredNext()" (triggeredPrev)="onTriggeredPrev()">
 </o-exercise-shower-modal>

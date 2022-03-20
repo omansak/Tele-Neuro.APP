@@ -1,92 +1,87 @@
 <!-- Add Department Modal -->
-<div #modal class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
-    style="overflow:scroll;">
-    <div class="modal-dialog" [ngClass]="{'modal-fullscreen': isFullscreen,'modal-xl modal-margin-top':!isFullscreen}">
-        <div class="modal-content" cardLoader>
-            <button class="modal-video-close-btn" (click)="hideModal()"></button>
-            <button class="modal-video-fullscreen-btn" (click)="toggleFullscreen()">
-                <i class="icon icon-fullscreen"
-                    [ngClass]="{'sli-size-fullscreen':!isFullscreen,'sli-size-actual': isFullscreen}"></i>
+<div #modal class="modal fade" role="dialog" data-bs-backdrop="false" data-bs-keyboard="false" style="overflow:scroll;">
+  <div class="modal-dialog" [ngClass]="{'modal-fullscreen': isFullscreen,'modal-xl modal-margin-top':!isFullscreen}">
+    <div class="modal-content" cardLoader>
+      <button class="modal-video-close-btn" (click)="hideModal()"></button>
+      <button class="modal-video-fullscreen-btn" (click)="toggleFullscreen()">
+        <i class="icon icon-fullscreen"
+          [ngClass]="{'sli-size-fullscreen':!isFullscreen,'sli-size-actual': isFullscreen}"></i>
+      </button>
+      <div class="card bg-secondary text-white mb-0">
+        <div class="content-container" *ngIf="assignedExercise.ExerciseDocument">
+          <div class="base-timer-container" *ngIf="autoSkipCounterShow">
+            <div class="base-timer-backdrop"></div>
+            <div class="base-timer">
+              <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g class="base-timer__circle">
+                  <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                  <path id="base-timer-path-remaining" stroke-dasharray="283" class="base-timer__path-remaining green"
+                    d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"></path>
+                </g>
+              </svg>
+              <span id="base-timer-label" class="base-timer__label"></span>
+            </div>
+            <button class="btn btn-outline-danger base-timer-cancel-button" (click)="cancelAutoSkipCounter()">
+              İptal <span class="btn-icon icofont-close-circled ms-2"></span>
             </button>
-            <div class="card bg-secondary text-white mb-0">
-                <div class="content-container" *ngIf="assignedExercise.ExerciseDocument">
-                    <div class="base-timer-container" *ngIf="autoSkipCounterShow">
-                        <div class="base-timer-backdrop"></div>
-                        <div class="base-timer">
-                            <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <g class="base-timer__circle">
-                                    <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-                                    <path id="base-timer-path-remaining" stroke-dasharray="283"
-                                        class="base-timer__path-remaining green"
-                                        d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"></path>
-                                </g>
-                            </svg>
-                            <span id="base-timer-label" class="base-timer__label"></span>
-                        </div>
-                        <button class="btn btn-outline-danger base-timer-cancel-button"
-                            (click)="cancelAutoSkipCounter()">
-                            İptal <span class="btn-icon icofont-close-circled ms-2"></span>
-                        </button>
-                        <button class="btn btn-outline-primary base-timer-next-button"
-                            (click)="onAutoSkipTriggeredNext()">
-                            Sonraki
-                            <span class="btn-icon icofont-arrow-right ms-2"></span>
-                        </button>
-                    </div>
-                    <div *ngIf="getDocumentType(assignedExercise.ExerciseDocument.Type) == fileType.Image">
-                        <img src="{{assignedExercise.ExerciseDocument.HostFullPath}}" class="card-img-top">
-                    </div>
-                    <div *ngIf="getDocumentType(assignedExercise.ExerciseDocument.Type) == fileType.Video">
-                        <div #videoContainer class="ratio ratio-16x9">
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title mt-0">{{assignedExercise.Exercise.Name}}</h5>
-                    <p class="card-text">{{assignedExercise.Exercise.Description}}</p>
-                    <div class="elements-list mt-2">
-                        <span class="badge badge-white badge-sm badge-pill" *ngIf="assignedExercise.AutoSkip">
-                            <span class="icofont-clock-time me-2" style="font-size: 14px;"></span>
-                            <b>Ortalama Süre</b>
-                            <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
-                                    [innerText]="formatSeconds(assignedExercise.AutoSkipTime)"></b></span>
-                        </span>
-                        <span class="badge badge-white badge-sm badge-pill"
-                            *ngFor="let property of assignedExercise.Properties">
-                            <span class="icofont-label me-2" style="font-size: 14px;"></span>
-                            <b>{{property.Definition?.Name}}</b>
-                            <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
-                                    [innerText]="property.Value"></b></span>
-                        </span>
-                    </div>
-                </div>
+            <button class="btn btn-outline-primary base-timer-next-button" (click)="onAutoSkipTriggeredNext()">
+              Sonraki
+              <span class="btn-icon icofont-arrow-right ms-2"></span>
+            </button>
+          </div>
+          <div *ngIf="getDocumentType(assignedExercise.ExerciseDocument.Type) == fileType.Image">
+            <img src="{{assignedExercise.ExerciseDocument.HostFullPath}}" class="card-img-top">
+          </div>
+          <div *ngIf="getDocumentType(assignedExercise.ExerciseDocument.Type) == fileType.Video">
+            <div #videoContainer class="ratio ratio-16x9">
             </div>
-            <div class="modal-footer d-block">
-                <div class="actions justify-content-between">
-                    <button class="btn btn-outline-danger" *ngIf="hasPrev" (click)="emitTriggeredPrevEvent()">
-                        <span class="btn-icon icofont-arrow-left me-2"></span>
-                        Önceki
-                    </button>
-                    <div class="d-flex align-items-center" *ngIf="hasNext">
-                        <o-ng-switch header="Otomatik Geçiş" [(ngModel)]="autoSkipStatus" style="margin-top: 7px;"
-                            *ngIf="assignedExercise.AutoSkip">
-                        </o-ng-switch>
-                        <h6 class="ms-2"
-                            *ngIf="autoSkipStatus && getDocumentType(assignedExercise.ExerciseDocument.Type) != fileType.Video">
-                            ({{formatSeconds(autoSkipTimerTimeLimit)}})</h6>
-                    </div>
-                    <button class="btn btn-outline-success" *ngIf="hasNext" (click)="emitTriggeredNextEvent()">
-                        Sonraki
-                        <span class="btn-icon icofont-arrow-right ms-2"></span>
-                    </button>
-
-                    <button class="btn btn-outline-primary" *ngIf="!hasNext" (click)="completeProgram()">
-                        Bitir
-                        <span class="btn-icon icofont-award ms-2"></span>
-                    </button>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="card-body">
+          <h5 class="card-title mt-0">{{assignedExercise.Exercise.Name}}</h5>
+          <p class="card-text">{{assignedExercise.Exercise.Description}}</p>
+          <div class="elements-list mt-2">
+            <span class="badge badge-white badge-sm badge-pill" *ngIf="assignedExercise.AutoSkip">
+              <span class="icofont-clock-time me-2" style="font-size: 14px;"></span>
+              <b>Ortalama Süre</b>
+              <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
+                  [innerText]="formatSeconds(assignedExercise.AutoSkipTime)"></b></span>
+            </span>
+            <span class="badge badge-white badge-sm badge-pill" *ngFor="let property of assignedExercise.Properties">
+              <span class="icofont-label me-2" style="font-size: 14px;"></span>
+              <b>{{property.Definition?.Name}}</b>
+              <span class="ms-2 my-1 badge badge-light badge-sm bg-white" style="border-color: white;"> <b
+                  [innerText]="property.Value"></b></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer d-block">
+        <div class="actions justify-content-between">
+          <button class="btn btn-outline-danger" *ngIf="hasPrev" (click)="emitTriggeredPrevEvent()">
+            <span class="btn-icon icofont-arrow-left me-2"></span>
+            Önceki
+          </button>
+          <div class="d-flex align-items-center" *ngIf="hasNext">
+            <o-ng-switch header="Otomatik Geçiş" [(ngModel)]="autoSkipStatus" style="margin-top: 7px;"
+              *ngIf="assignedExercise.AutoSkip">
+            </o-ng-switch>
+            <h6 class="ms-2"
+              *ngIf="autoSkipStatus && getDocumentType(assignedExercise.ExerciseDocument.Type) != fileType.Video">
+              ({{formatSeconds(autoSkipTimerTimeLimit)}})</h6>
+          </div>
+          <button class="btn btn-outline-success" *ngIf="hasNext" (click)="emitTriggeredNextEvent()">
+            Sonraki
+            <span class="btn-icon icofont-arrow-right ms-2"></span>
+          </button>
+
+          <button class="btn btn-outline-primary" *ngIf="!hasNext" (click)="completeProgram()">
+            Bitir
+            <span class="btn-icon icofont-award ms-2"></span>
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- Add Department Modal -->

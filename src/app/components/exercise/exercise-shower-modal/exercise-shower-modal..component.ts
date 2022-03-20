@@ -149,6 +149,7 @@ export class ExerciseShowerModalComponent implements OnChanges, OnInit, OnDestro
 
     public showModal() {
         $(this.modal.nativeElement)
+            .appendTo("body")
             .modal('show');
         this.show = true;
         this.emitShowEvent();

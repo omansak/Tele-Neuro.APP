@@ -1,25 +1,23 @@
-export interface VimeoThumbnail {
-    id: number;
+export interface VimeoEmbedObject {
+    type: string;
+    version: string;
+    provider_name: string;
+    provider_url: string;
     title: string;
-    description: string;
-    url: string;
-    upload_date: string;
-    thumbnail_small: string;
-    thumbnail_medium: string;
-    thumbnail_large: string;
-    user_id: number;
-    user_name: string;
-    user_url: string;
-    user_portrait_small: string;
-    user_portrait_medium: string;
-    user_portrait_large: string;
-    user_portrait_huge: string;
-    stats_number_of_likes: number;
-    stats_number_of_plays: number;
-    stats_number_of_comments: number;
-    duration: number;
+    author_name: string;
+    author_url: string;
+    is_plus: string;
+    account_type: string;
+    html: string;
     width: number;
     height: number;
-    tags: string;
-    embed_privacy: string;
+    duration: number;
+    description: string;
+    thumbnail_url: string;
+    thumbnail_width: number;
+    thumbnail_height: number;
+    thumbnail_url_with_play_button: string;
+    upload_date: string;
+    video_id: number;
+    uri: string;
 }
