@@ -60,7 +60,8 @@ export const NAVIGATION_ROUTE = {
         Role: UserRoleDefinition.Contributor
     },
     ROUTE_PROGRAM: {
-        PageTitle: "Tele-NöroRehab | %s",
+        //TODO PageTitle: "Tele-NöroRehab | %s", 
+        PageTitle: "Tele-NöroRehab | Egzersiz ProgramI",
         PageHeader: "Program İçeriği",
         Route: "program/:id",
     },

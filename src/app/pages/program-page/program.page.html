@@ -84,9 +84,9 @@
                       {{idx + 1}}</div>
                   </div>
                   <article class="postcard light {{colors[idx % 4]}}">
-                    <a class="postcard__img_link" *ngIf="item.ExerciseDocument.Thumbnail" href="javascript:;"
+                    <a class="postcard__img_link" *ngIf="item.ExerciseDocument?.Thumbnail" href="javascript:;"
                       (click)="startExerciseShower(item)">
-                      <img class="postcard__img" [src]="item.ExerciseDocument.Thumbnail | safeUrl" />
+                      <img class="postcard__img" [src]="item.ExerciseDocument?.Thumbnail | safeUrl" />
                     </a>
                     <div class="postcard__text t-dark p-4">
                       <h1 class="postcard__title {{colors[idx % 4]}}">
